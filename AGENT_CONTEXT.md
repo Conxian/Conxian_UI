@@ -1,6 +1,6 @@
 # Conxian_UI — Agent Context Dump (Save/Resume State)
 
-Date: Monday, 2025-12-22
+Date: Monday, 2025-12-29
 Repo: `Conxian_UI`
 
 ## Objective (Tier0 Alignment)
@@ -18,6 +18,11 @@ Non-goals for this pass:
 
 - No palette changes (values must remain the same).
 - No P1/P2 features.
+
+## Decisions (Locked)
+
+- Final logo mark: `public/conxian-mark-b.svg`
+- Theme: unify **all routes** (including dev/ops tooling pages) to the same light Tier0 theme using the existing palette (no separate dark/pro theme).
 
 ## Source-of-Truth Theme Tokens (Tailwind)
 
@@ -40,25 +45,67 @@ Canonical usage patterns:
 - Accents/borders: `border-accent/20`
 - Primary CTA: `bg-primary text-primary-foreground`
 
+## Repo Map (Entry Points)
+
+- `src/app/layout.tsx`
+  - Global shell: `Sidebar` + `Header` + `Providers`
+  - Currently hardcodes favicon via `<link rel="icon" href="/logo.jpg" />`.
+- `src/app/providers.tsx`
+  - Wraps app in `WalletProvider` and also renders a `ToastContainer`.
+- `src/app/globals.css`
+  - Hard-sets body background/text to palette values (matches Tailwind config).
+- `src/lib/wallet.tsx`
+  - WalletProvider using `@stacks/connect` `showConnect`.
+  - `appDetails.icon` currently points to `/favicon.ico`.
+  - Note: `ToastContainer` is also rendered here (in addition to `src/app/providers.tsx`).
+- `src/components/Header.tsx`
+  - Sticky top bar; currently only renders `ConnectWallet`.
+- `src/components/Sidebar.tsx`
+  - Primary nav shell; currently uses invalid `text-light` tokens.
+
+## Route Inventory (App Router)
+
+User-facing flows:
+
+- `/` (Dashboard)
+- `/swap`
+- `/launch`
+- `/invest`
+- `/add-liquidity`
+- `/positions`
+- `/shielded`
+
+Developer / ops tooling pages (must also be Tier0 light; currently heavy gray-token drift):
+
+- `/tokens`
+- `/contracts`
+- `/tx`
+- `/router`
+- `/pools`
+- `/network`
+- `/overview`
+
 ## Branding Assets (Public)
 
 Current files in `public/`:
 
 - `logo.jpg` (legacy raster)
-- `conxian-mark-a.svg` (new flat mark; filled shield + gold outline)
-- `conxian-mark-b.svg` (new flat mark; outlined shield)
+- `conxian-mark-a.svg` (new flat mark; filled shield + gold outline; not selected)
+- `conxian-mark-b.svg` (new flat mark; outlined shield; FINAL)
 
 ### Current wiring (needs update)
 
 - `src/app/layout.tsx`
   - Favicon currently: `<link rel="icon" href="/logo.jpg" />`
+- `src/app/favicon.ico`
+  - App Router favicon asset (served at `/favicon.ico`).
 - `src/lib/wallet.tsx`
-  - `appDetails.icon` currently: `'/favicon.ico'` (note: no `public/favicon.ico` exists)
+  - `appDetails.icon` currently: `'/favicon.ico'` (currently resolves to `src/app/favicon.ico`).
 
 P0 intent:
 
-- Replace favicon with the new SVG mark.
-- Align wallet connect app icon with the same new SVG.
+- Replace favicon with `/conxian-mark-b.svg`.
+- Align wallet connect app icon with `/conxian-mark-b.svg`.
 
 ## Design-Token Drift — Known Hotspots
 
@@ -122,6 +169,28 @@ These are not aligned with the Conxian theme tokens yet:
 - `src/components/ui/Card.tsx`
   - `CardDescription` uses `text-gray-500`.
 
+Additional drift discovered in full repo scan:
+
+- `src/app/overview/page.tsx`
+  - Uses `text-white`, `text-gray-400`.
+- `src/components/ui/SystemStatus.tsx`
+  - Uses `text-white`, `text-gray-400`, `text-gray-500`.
+- `src/components/ui/CoreContracts.tsx`
+  - Uses `text-gray-500`.
+- `src/app/network/page.tsx`, `src/app/pools/page.tsx`, `src/app/router/page.tsx`, `src/app/tx/page.tsx`, `src/app/contracts/page.tsx`, `src/app/tokens/page.tsx`
+  - Extensive use of `bg-gray-*`, `border-gray-*`, `text-gray-*`, and `ring-blue-*`.
+
+## Invalid / Nonexistent Tailwind Classes Found
+
+- `bg-primary-DEFAULT` (in `src/app/swap/page.tsx`)
+  - Should be `bg-primary`.
+- `text-neutral-medium` (in `src/app/pools/page.tsx`)
+  - Not present in `tailwind.config.ts` (`neutral.light` exists; `neutral.medium` does not).
+- Shadcn-style tokens used without definitions:
+  - `border-input` (Button outline variant)
+  - `focus-visible:ring-ring` (Button focus ring)
+  - These likely resolve to defaults (or no-op) and should be mapped to Conxian tokens (e.g. `border-accent/20`, `focus-visible:ring-accent`).
+
 ## Canonical UI Components (Use These Everywhere)
 
 - `src/components/ui/Button.tsx`
@@ -184,19 +253,23 @@ From `package.json`:
 ## Resume Checklist (Tomorrow)
 
 1) **Brand wiring**
-   - Pick the final mark (`conxian-mark-a.svg` vs `conxian-mark-b.svg`).
+   - Final mark: `conxian-mark-b.svg`.
    - Update favicon in `src/app/layout.tsx` to new SVG.
-   - Update `src/lib/wallet.tsx` `appDetails.icon` to the same SVG path.
+   - Update `src/lib/wallet.tsx` `appDetails.icon` to `/conxian-mark-b.svg`.
    - Update sidebar (and optionally header) to show mark + wordmark.
 
 2) **Token drift cleanup**
    - Replace `bg-paper` -> `bg-background-paper`.
    - Replace `text-light` -> `text-primary-foreground` (on primary) / theme tokens elsewhere.
+   - Replace invalid `bg-primary-DEFAULT` -> `bg-primary`.
+   - Replace invalid `text-neutral-medium` -> `text-text-secondary` (or `text-text/80`).
+   - Replace `bg-gray|text-gray|border-gray|ring-blue` usage across dev/ops pages with theme tokens.
 
 3) **Component unification**
    - Update `ConnectWallet` to use canonical `Button`.
    - Ensure Invest/Add Liquidity actions use canonical `Button`.
    - Ensure any remaining ad-hoc `<input>` uses `Input`.
+   - Ensure `ToastContainer` is rendered exactly once (currently duplicated in `Providers` + `WalletProvider`, and also rendered in `src/app/invest/page.tsx`).
 
 4) **Header baseline**
    - Add route-aware page title.
@@ -215,6 +288,10 @@ Suggested searches:
 
 - `bg-paper`
 - `text-light`
+- `primary-DEFAULT`
+- `neutral-medium`
+- `border-input|ring-ring|accent-foreground|ring-blue`
+- `ToastContainer`
 - `bg-gray|text-gray|border-gray`
 - `text-white`
 
