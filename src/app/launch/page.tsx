@@ -223,7 +223,7 @@ export default function LaunchPage() {
                   communityStats.topContributors.map((contrib, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center p-3 border border-accent/20 rounded bg-paper"
+                      className="flex justify-between items-center p-3 border border-accent/20 rounded bg-background-light"
                     >
                       <div>
                         <div className="font-medium text-text">

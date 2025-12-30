@@ -2,13 +2,15 @@
 "use client";
 
 import { useState } from 'react';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import { useApi } from '@/lib/api-client';
-import { useToasts } from '@/hooks/useToasts';
+import { useWallet } from '@/lib/wallet';
 
 export default function InvestPage() {
   const [amount, setAmount] = useState('');
   const api = useApi();
-  const { addToast, ToastContainer } = useToasts();
+  const { addToast } = useWallet();
 
   const handleInvest = async () => {
     if (!amount) {
@@ -35,25 +37,20 @@ export default function InvestPage() {
 
   return (
     <div>
-      <ToastContainer />
       <h1 className="text-2xl font-bold mb-4 text-text">Invest in Liquidity Pool</h1>
       <p className="mb-4 text-text/80">
         Invest your tokens in our liquidity pools to earn rewards.
       </p>
       <div className="flex flex-col space-y-4">
-        <input
+        <Input
           type="number"
           placeholder="Amount to invest"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="border border-accent/20 p-2 rounded bg-paper text-text"
         />
-        <button
-          onClick={handleInvest}
-          className="bg-primary text-light p-2 rounded hover:bg-primary/90"
-        >
+        <Button onClick={handleInvest}>
           Invest
-        </button>
+        </Button>
       </div>
     </div>
   );

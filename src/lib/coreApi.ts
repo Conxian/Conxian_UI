@@ -13,6 +13,11 @@ export type ReadOnlyOk = { ok: true; result?: string; events?: unknown };
 export type ReadOnlyErr = { ok: false; status?: number; error: string };
 export type ReadOnlyResponse = ReadOnlyOk | ReadOnlyErr;
 
+export type TxInfo = {
+  tx_id?: string;
+  tx_status?: string;
+};
+
 function baseUrl(): string {
   return (process.env.NEXT_PUBLIC_CORE_API_URL || AppConfig.coreApiUrl).replace(/\/$/, "");
 }
@@ -79,6 +84,55 @@ export async function getContractInterface(principal: string, name: string): Pro
   } catch {
     return null;
   }
+}
+
+export async function getContractSource(principal: string, name: string): Promise<string | null> {
+  try {
+    const r = await fetch(`${baseUrl()}/v2/contracts/source/${principal}/${name}`, { cache: "no-store" });
+    if (!r.ok) return null;
+    const text = await r.text();
+    try {
+      const j = JSON.parse(text) as { source?: unknown };
+      return typeof j?.source === "string" ? j.source : text;
+    } catch {
+      return text;
+    }
+  } catch {
+    return null;
+  }
+}
+
+export async function getTx(txId: string): Promise<TxInfo | null> {
+  try {
+    const r = await fetch(`${baseUrl()}/extended/v1/tx/${txId}`, { cache: "no-store" });
+    if (!r.ok) return null;
+    return (await r.json()) as TxInfo;
+  } catch {
+    return null;
+  }
+}
+
+export async function waitForTx(
+  txId: string,
+  opts?: { timeoutMs?: number; intervalMs?: number }
+): Promise<TxInfo> {
+  const timeoutMs = opts?.timeoutMs ?? 180000;
+  const intervalMs = opts?.intervalMs ?? 4000;
+  const start = Date.now();
+
+  while (Date.now() - start < timeoutMs) {
+    const tx = await getTx(txId);
+    const status = tx?.tx_status;
+
+    if (status === "success") return tx;
+    if (typeof status === "string" && status !== "pending") {
+      throw new Error(`tx_status=${status}`);
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, intervalMs));
+  }
+
+  throw new Error("tx-timeout");
 }
 
 // Read-only contract call via Hiro API. Args must be hex-encoded Clarity values (0x...)

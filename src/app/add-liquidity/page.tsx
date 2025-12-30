@@ -1,15 +1,18 @@
 'use client';
 
 import React from 'react';
-import { openContractCall } from "@stacks/connect";
+import { useSearchParams } from 'next/navigation';
+import { openContractCall, openContractDeploy } from "@stacks/connect";
 import { 
   uintCV, 
+  intCV,
+  stringAsciiCV,
   cvToHex, 
   contractPrincipalCV, 
   PostConditionMode
 } from "@stacks/transactions";
 import { Tokens, CoreContracts } from '@/lib/contracts';
-import { callReadOnly } from "@/lib/coreApi";
+import { callReadOnly, getContractSource, waitForTx } from "@/lib/coreApi";
 import { decodeResultHex, getTupleField } from "@/lib/clarity";
 import { useWallet } from '@/lib/wallet';
 import ConnectWallet from '@/components/ConnectWallet';
@@ -32,7 +35,23 @@ function getPrincipalValue(json: unknown): string | null {
   return typeof json["value"] === "string" ? json["value"] : null;
 }
 
+function findTokenIdFromSymbol(symbol: string): string | undefined {
+  const sym = symbol.trim().toLowerCase();
+  if (!sym) return undefined;
+  const tok = Tokens.find(
+    (t) =>
+      t.id.toLowerCase().includes(sym) ||
+      (typeof t.label === "string" && t.label.toLowerCase().includes(sym))
+  );
+  return tok?.id;
+}
+
 export default function AddLiquidityPage() {
+  const searchParams = useSearchParams();
+  const pairParam = searchParams.get("pair");
+  const tokenAParam = searchParams.get("tokenA");
+  const tokenBParam = searchParams.get("tokenB");
+
   const [tokenA, setTokenA] = React.useState(Tokens[0].id);
   const [tokenB, setTokenB] = React.useState(Tokens[1].id);
   const [amountA, setAmountA] = React.useState('100');
@@ -40,6 +59,27 @@ export default function AddLiquidityPage() {
   const [status, setStatus] = React.useState('');
   const [sending, setSending] = React.useState(false);
   const { connectWallet, stxAddress } = useWallet();
+
+  React.useEffect(() => {
+    let nextA: string | undefined;
+    let nextB: string | undefined;
+
+    if (tokenAParam && Tokens.some((t) => t.id === tokenAParam)) {
+      nextA = tokenAParam;
+    }
+    if (tokenBParam && Tokens.some((t) => t.id === tokenBParam)) {
+      nextB = tokenBParam;
+    }
+
+    if ((!nextA || !nextB) && pairParam) {
+      const [symA, symB] = pairParam.split("-");
+      if (!nextA && symA) nextA = findTokenIdFromSymbol(symA);
+      if (!nextB && symB) nextB = findTokenIdFromSymbol(symB);
+    }
+
+    if (nextA) setTokenA(nextA);
+    if (nextB) setTokenB(nextB);
+  }, [tokenAParam, tokenBParam, pairParam]);
 
   const handleAddLiquidity = async () => {
     if (!stxAddress) {
@@ -177,7 +217,7 @@ export default function AddLiquidityPage() {
                 id="token-a"
                 value={tokenA}
                 onChange={(e) => setTokenA(e.target.value)}
-                className="w-full rounded-md border-gray-600 bg-background-paper text-text-primary py-2 px-3"
+                className="w-full rounded-md border border-accent/20 bg-background-light text-text py-2 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 {Tokens.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
               </select>
@@ -200,7 +240,7 @@ export default function AddLiquidityPage() {
                 id="token-b"
                 value={tokenB}
                 onChange={(e) => setTokenB(e.target.value)}
-                className="w-full rounded-md border-gray-600 bg-background-paper text-text-primary py-2 px-3"
+                className="w-full rounded-md border border-accent/20 bg-background-light text-text py-2 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 {Tokens.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
               </select>
@@ -221,12 +261,12 @@ export default function AddLiquidityPage() {
               <Button
                 onClick={handleAddLiquidity}
                 disabled={sending}
-                className="w-full bg-primary hover:bg-primary/90 text-light"
+                className="w-full"
               >
                 {sending ? 'Adding...' : 'Add Liquidity'}
               </Button>
             ) : (
-              <Button onClick={connectWallet} className="w-full bg-primary hover:bg-primary/90 text-light">
+              <Button onClick={connectWallet} className="w-full">
                 Connect Wallet
               </Button>
             )}

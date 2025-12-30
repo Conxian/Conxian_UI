@@ -24,7 +24,7 @@ export const useToasts = () => {
   }, [removeToast]);
 
   const ToastContainer = () => (
-    <div className="fixed top-5 right-5 z-50">
+    <div className="fixed top-5 right-5 z-50 flex flex-col gap-2">
       {toasts.map((toast) => (
         <Toast
           key={toast.id}

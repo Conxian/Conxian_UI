@@ -13,6 +13,7 @@ import ClarityArgBuilder, {
   ArgType,
 } from "@/components/ClarityArgBuilder";
 import { decodeResultHex } from "@/lib/clarity";
+import { Button } from "@/components/ui/Button";
 
 export default function RouterPage() {
   const router =
@@ -105,23 +106,21 @@ export default function RouterPage() {
   return (
     <div className="min-h-screen w-full p-6 sm:p-10 space-y-8">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-neutral-light">
-          Router Estimator
-        </h1>
-        <div className="text-sm text-gray-400">
+        <h1 className="text-2xl font-semibold text-text">Router Estimator</h1>
+        <div className="text-sm text-text-secondary">
           Network: {AppConfig.network}
         </div>
       </header>
 
-      <div className="rounded-lg border border-gray-700 bg-gray-900 p-4 space-y-4">
+      <div className="rounded-lg border border-accent/20 bg-background-paper p-4 space-y-4">
         <div className="grid gap-3 md:grid-cols-3">
           <div>
-            <label className="text-xs block mb-1 text-gray-300">
+            <label className="text-xs block mb-1 text-text-secondary">
               Router Contract
             </label>
             <select
               aria-label="Router contract"
-              className="border rounded px-2 py-1 w-full text-black"
+              className="border border-accent/20 rounded px-2 py-1 w-full bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
             >
@@ -135,11 +134,11 @@ export default function RouterPage() {
             </select>
           </div>
           <div>
-            <label className="text-xs block mb-1 text-gray-300">Function</label>
+            <label className="text-xs block mb-1 text-text-secondary">Function</label>
             {fnList.length > 0 ? (
               <select
                 aria-label="Function"
-                className="border rounded px-2 py-1 w-full text-black"
+                className="border border-accent/20 rounded px-2 py-1 w-full bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 value={fnName}
                 onChange={(e) => setFnName(e.target.value)}
               >
@@ -152,7 +151,7 @@ export default function RouterPage() {
             ) : (
               <input
                 aria-label="Function name"
-                className="border rounded px-2 py-1 w-full text-black"
+                className="border border-accent/20 rounded px-2 py-1 w-full bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 value={fnName}
                 onChange={(e) => setFnName(e.target.value)}
                 placeholder="estimate-output"
@@ -164,26 +163,27 @@ export default function RouterPage() {
         <ClarityArgBuilder onChange={onBuild} preset={presetRows} />
 
         <div className="flex items-center gap-3">
-          <button
+          <Button
             onClick={onEstimate}
             disabled={loading || !fnName}
-            className="text-sm px-3 py-1.5 rounded-md border border-gray-600 hover:bg-gray-800 text-gray-300"
+            variant="outline"
+            size="sm"
           >
             {loading ? "Estimating..." : "Estimate"}
-          </button>
-          {status && <div className="text-xs text-gray-400">{status}</div>}
+          </Button>
+          {status && <div className="text-xs text-text-secondary">{status}</div>}
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded border border-gray-700 bg-gray-800 p-3">
-            <div className="font-medium mb-1 text-gray-300">Raw Result</div>
-            <pre className="text-xs overflow-auto text-gray-400">
+          <div className="rounded border border-accent/20 bg-background-light p-3">
+            <div className="font-medium mb-1 text-text">Raw Result</div>
+            <pre className="text-xs overflow-auto text-text-secondary">
               {result ? JSON.stringify(result, null, 2) : "—"}
             </pre>
           </div>
-          <div className="rounded border border-gray-700 bg-gray-800 p-3">
-            <div className="font-medium mb-1 text-gray-300">Decoded</div>
-            <pre className="text-xs overflow-auto text-gray-400">
+          <div className="rounded border border-accent/20 bg-background-light p-3">
+            <div className="font-medium mb-1 text-text">Decoded</div>
+            <pre className="text-xs overflow-auto text-text-secondary">
               {decoded ? JSON.stringify(decoded, null, 2) : "—"}
             </pre>
           </div>

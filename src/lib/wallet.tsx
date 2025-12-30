@@ -31,7 +31,7 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
     const authOptions: AuthOptions = {
       appDetails: {
         name: 'Conxian Unified Dashboard',
-        icon: '/favicon.ico',
+        icon: '/conxian-mark-b.svg',
       },
       redirectTo: '/',
       onFinish: () => {

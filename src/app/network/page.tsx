@@ -9,6 +9,8 @@ import {
   CoreStatus,
   MempoolTx,
 } from "@/lib/coreApi";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 
 export default function NetworkPage() {
   const [status, setStatus] = React.useState<CoreStatus | null>(null);
@@ -36,85 +38,85 @@ export default function NetworkPage() {
   return (
     <div className="min-h-screen w-full p-6 sm:p-10 space-y-8">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-neutral-light">Network</h1>
-        <button
-          onClick={refresh}
-          disabled={loading}
-          className="text-sm px-3 py-1.5 rounded-md border border-gray-600 text-gray-300 hover:bg-gray-800"
-        >
+        <h1 className="text-2xl font-semibold text-text">Network</h1>
+        <Button onClick={refresh} disabled={loading} variant="outline" size="sm">
           {loading ? "Refreshing..." : "Refresh"}
-        </button>
+        </Button>
       </header>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-lg border border-gray-700 bg-gray-900 p-4">
-          <h2 className="text-lg font-semibold mb-2 text-neutral-light">
-            Environment
-          </h2>
-          <div className="text-sm space-y-1 text-gray-400">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Environment</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm space-y-1 text-text-secondary">
             <div>
-              <span className="font-medium text-gray-300">Core API:</span>{" "}
+              <span className="font-medium text-text">Core API:</span>{" "}
               {AppConfig.coreApiUrl}
             </div>
             <div>
-              <span className="font-medium text-gray-300">Network:</span>{" "}
+              <span className="font-medium text-text">Network:</span>{" "}
               {AppConfig.network}
             </div>
             <div>
-              <span className="font-medium text-gray-300">Status:</span>{" "}
+              <span className="font-medium text-text">Status:</span>{" "}
               {status?.ok
                 ? `OK (chain_id=${status.chain_id}, network=${status.network_id})`
                 : `Error ${status?.error || "unknown"}`}
             </div>
-          </div>
-        </div>
-        <div className="rounded-lg border border-gray-700 bg-gray-900 p-4">
-          <h2 className="text-lg font-semibold mb-2 text-neutral-light">
-            Block Times
-          </h2>
-          <pre className="text-xs overflow-auto text-gray-300">
-            {blocks ? JSON.stringify(blocks, null, 2) : "No data"}
-          </pre>
-        </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Block Times</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <pre className="text-xs overflow-auto text-text-secondary">
+              {blocks ? JSON.stringify(blocks, null, 2) : "No data"}
+            </pre>
+          </CardContent>
+        </Card>
       </div>
 
-      <div className="rounded-lg border border-gray-700 bg-gray-900 p-4">
-        <h2 className="text-lg font-semibold mb-3 text-neutral-light">
-          Mempool (latest)
-        </h2>
-        <div className="overflow-auto">
-          <table className="w-full text-sm text-left">
-            <thead>
-              <tr className="border-b border-gray-700 text-gray-300">
-                <th className="py-2 pr-4">Tx ID</th>
-                <th className="py-2 pr-4">Type</th>
-                <th className="py-2 pr-4">Sender</th>
-                <th className="py-2 pr-4">Nonce</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-400">
-              {mempool.map((tx: MempoolTx) => (
-                <tr
-                  key={tx.tx_id}
-                  className="border-b border-gray-800 hover:bg-gray-800"
-                >
-                  <td className="py-2 pr-4 break-all">{tx.tx_id}</td>
-                  <td className="py-2 pr-4">{tx.tx_type}</td>
-                  <td className="py-2 pr-4 break-all">{tx.sender_address}</td>
-                  <td className="py-2 pr-4">{tx.nonce}</td>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Mempool (latest)</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="border-b border-accent/20 text-text-secondary">
+                  <th className="py-2 pr-4">Tx ID</th>
+                  <th className="py-2 pr-4">Type</th>
+                  <th className="py-2 pr-4">Sender</th>
+                  <th className="py-2 pr-4">Nonce</th>
                 </tr>
-              ))}
-              {mempool.length === 0 && (
-                <tr>
-                  <td className="py-4 text-center" colSpan={4}>
-                    No transactions in mempool.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              </thead>
+              <tbody className="text-text-secondary">
+                {mempool.map((tx: MempoolTx) => (
+                  <tr
+                    key={tx.tx_id}
+                    className="border-b border-accent/20 hover:bg-accent/10"
+                  >
+                    <td className="py-2 pr-4 break-all">{tx.tx_id}</td>
+                    <td className="py-2 pr-4">{tx.tx_type}</td>
+                    <td className="py-2 pr-4 break-all">{tx.sender_address}</td>
+                    <td className="py-2 pr-4">{tx.nonce}</td>
+                  </tr>
+                ))}
+                {mempool.length === 0 && (
+                  <tr>
+                    <td className="py-4 text-center" colSpan={4}>
+                      No transactions in mempool.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

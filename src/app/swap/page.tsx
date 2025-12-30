@@ -308,7 +308,7 @@ export default function SwapPage() {
   }, [stxAddress]);
 
   return (
-    <div className="min-h-screen w-full p-6 sm:p-10 space-y-8 bg-background-light dark:bg-background-DEFAULT">
+    <div className="min-h-screen w-full p-6 sm:p-10 space-y-8 bg-background">
       <header className="flex items-center justify-between mb-10">
         <h1 className="text-3xl font-bold text-text-primary">Swap</h1>
         <div className="lg:hidden">
@@ -339,7 +339,7 @@ export default function SwapPage() {
                     id="from-token"
                     value={fromToken}
                     onChange={handleFromTokenChange}
-                    className="w-full rounded-md border-gray-600 bg-background-paper text-text-primary py-2 px-3"
+                    className="w-full rounded-md border border-accent/20 bg-background-light text-text py-2 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     {Tokens.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
                   </select>
@@ -370,7 +370,7 @@ export default function SwapPage() {
                     id="to-token"
                     value={toToken}
                     onChange={handleToTokenChange}
-                    className="w-full rounded-md border-gray-600 bg-background-paper text-text-primary py-2 px-3"
+                    className="w-full rounded-md border border-accent/20 bg-background-light text-text py-2 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     {Tokens.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
                   </select>
@@ -393,7 +393,8 @@ export default function SwapPage() {
                     <Badge
                       key={val}
                       onClick={() => setSlippage(val)}
-                      className={`cursor-pointer ${slippage === val ? 'bg-primary-dark' : 'bg-gray-700'}`}
+                      variant={slippage === val ? "default" : "secondary"}
+                      className="cursor-pointer"
                     >
                       {val}%
                     </Badge>
@@ -413,12 +414,12 @@ export default function SwapPage() {
                   <Button
                     onClick={handleSwap}
                     disabled={loading || sending || isSameToken}
-                    className="w-full bg-primary-DEFAULT hover:bg-primary-dark text-white"
+                    className="w-full"
                   >
                     {sending ? "Sending..." : loading ? "Getting estimate..." : "Swap"}
                   </Button>
                 ) : (
-                  <Button onClick={connectWallet} className="w-full bg-primary-DEFAULT hover:bg-primary-dark">
+                  <Button onClick={connectWallet} className="w-full">
                     Connect Wallet
                   </Button>
                 )}

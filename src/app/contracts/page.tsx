@@ -8,6 +8,9 @@ import {
   callReadOnly,
   ReadOnlyResponse,
 } from "@/lib/coreApi";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
 
 export default function ContractsPage() {
   const [principal, setPrincipal] = React.useState<string>(
@@ -59,23 +62,21 @@ export default function ContractsPage() {
   return (
     <div className="min-h-screen w-full p-6 sm:p-10 space-y-8">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-neutral-light">
-          Contracts
-        </h1>
-        <div className="text-sm text-gray-400">
+        <h1 className="text-2xl font-semibold text-text">Contracts</h1>
+        <div className="text-sm text-text-secondary">
           Network: {AppConfig.network}
         </div>
       </header>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-lg border border-gray-700 bg-gray-900 p-4">
-          <h2 className="text-lg font-semibold mb-2 text-neutral-light">
-            Select Contract
-          </h2>
-          <div className="text-sm space-y-2 text-gray-300">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Select Contract</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm space-y-2 text-text-secondary">
             <select
               aria-label="Select contract"
-              className="border rounded px-2 py-1 w-full text-black"
+              className="border border-accent/20 rounded px-2 py-1 w-full bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               value={`${principal}.${name}`}
               onChange={(e) => onSelect(e.target.value)}
             >
@@ -86,9 +87,9 @@ export default function ContractsPage() {
               ))}
             </select>
             <div>
-              <span className="font-medium text-gray-300">Explorer:</span>{" "}
+              <span className="font-medium text-text">Explorer:</span>{" "}
               <a
-                className="text-blue-400 hover:underline"
+                className="text-accent hover:underline"
                 href={explorerContractUrl(
                   `${principal}.${name}`,
                   AppConfig.network as "devnet" | "testnet" | "mainnet"
@@ -99,76 +100,71 @@ export default function ContractsPage() {
                 Open
               </a>
             </div>
-            <button
-              onClick={loadInterface}
-              disabled={loading}
-              className="text-sm px-3 py-1.5 rounded-md border border-gray-600 hover:bg-gray-800"
-            >
+            <Button onClick={loadInterface} disabled={loading} variant="outline" size="sm">
               {loading ? "Loading..." : "Fetch Interface"}
-            </button>
-          </div>
-        </div>
-        <div className="rounded-lg border border-gray-700 bg-gray-900 p-4">
-          <h2 className="text-lg font-semibold mb-2 text-neutral-light">
-            Interface
-          </h2>
-          <pre className="text-xs overflow-auto text-gray-300 bg-gray-800 p-2 rounded">
-            {iface ? JSON.stringify(iface, null, 2) : "No interface loaded"}
-          </pre>
-        </div>
+            </Button>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Interface</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <pre className="text-xs overflow-auto text-text-secondary bg-background-light p-2 rounded border border-accent/20">
+              {iface ? JSON.stringify(iface, null, 2) : "No interface loaded"}
+            </pre>
+          </CardContent>
+        </Card>
       </div>
 
-      <div className="rounded-lg border border-gray-700 bg-gray-900 p-4">
-        <h2 className="text-lg font-semibold mb-2 text-neutral-light">
-          Read-Only Call
-        </h2>
-        <div className="grid gap-3 md:grid-cols-3">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Read-Only Call</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-3 md:grid-cols-3">
           <div>
-            <label className="text-xs block mb-1 text-gray-400">
+            <label className="text-xs block mb-1 text-text-secondary">
               Function Name
             </label>
-            <input
+            <Input
               value={fnName}
               onChange={(e) => setFnName(e.target.value)}
-              className="border rounded px-2 py-1 w-full text-black"
               placeholder="get-balance-of"
             />
           </div>
           <div>
-            <label className="text-xs block mb-1 text-gray-400">Sender</label>
-            <input
+            <label className="text-xs block mb-1 text-text-secondary">Sender</label>
+            <Input
               value={sender}
               onChange={(e) => setSender(e.target.value)}
-              className="border rounded px-2 py-1 w-full text-black"
               placeholder="ST..."
             />
           </div>
           <div>
-            <label className="text-xs block mb-1 text-gray-400">
+            <label className="text-xs block mb-1 text-text-secondary">
               Arguments (hex, one per line)
             </label>
             <textarea
               value={args}
               onChange={(e) => setArgs(e.target.value)}
-              className="border rounded px-2 py-1 w-full h-24 text-black"
+              className="border border-accent/20 rounded px-2 py-1 w-full h-24 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               placeholder="0x0000000000000000000000000000000000000000\n0x0000000000000000000000000000000000000001"
             />
           </div>
-        </div>
-        <div className="mt-3">
-          <button
-            onClick={makeReadOnly}
-            className="text-sm px-3 py-1.5 rounded-md border border-gray-600 hover:bg-gray-800 text-gray-300"
-          >
-            Call
-          </button>
-        </div>
-        <div className="mt-3">
-          <pre className="text-xs overflow-auto text-gray-300 bg-gray-800 p-2 rounded">
-            {callRes ? JSON.stringify(callRes, null, 2) : "No call yet"}
-          </pre>
-        </div>
-      </div>
+          </div>
+          <div className="mt-3">
+            <Button onClick={makeReadOnly} variant="outline" size="sm">
+              Call
+            </Button>
+          </div>
+          <div className="mt-3">
+            <pre className="text-xs overflow-auto text-text-secondary bg-background-light p-2 rounded border border-accent/20">
+              {callRes ? JSON.stringify(callRes, null, 2) : "No call yet"}
+            </pre>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

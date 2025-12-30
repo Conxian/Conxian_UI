@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useSearchParams } from "next/navigation";
 import { AppConfig } from "@/lib/config";
 import { CoreContracts, Tokens } from "@/lib/contracts";
 import { userSession } from "@/lib/wallet";
@@ -12,6 +13,8 @@ import { openContractCall } from "@stacks/connect";
 import { createNetwork } from "@stacks/network";
 import type { StacksNetwork } from "@stacks/network";
 import { getContractInterface } from "@/lib/coreApi";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 
 type AbiArg = { name?: string; type?: unknown };
 type AbiFn = { name?: string; args?: AbiArg[] };
@@ -29,6 +32,9 @@ function getNetwork(): StacksNetwork {
 }
 
 export default function TxPage() {
+  const searchParams = useSearchParams();
+  const templateParam = searchParams.get("template");
+
   const [selected, setSelected] = React.useState<string>(
     `${CoreContracts[0].id}`
   );
@@ -140,20 +146,23 @@ export default function TxPage() {
     }));
   }, [fnName, abiFns]);
 
-  async function hasFunction(contractId: string, fn: string): Promise<boolean> {
-    const [addr, name] = contractId.split(".");
-    const abi = (await getContractInterface(addr, name)) as ContractAbi | null;
-    const names: string[] = Array.isArray(abi?.functions)
-      ? (abi!.functions as AbiFn[])
-          .map((f) =>
-            typeof f?.name === "string" ? (f.name as string) : undefined
-          )
-          .filter((n): n is string => typeof n === "string")
-      : [];
-    return names.includes(fn);
-  }
+  const hasFunction = React.useCallback(
+    async (contractId: string, fn: string): Promise<boolean> => {
+      const [addr, name] = contractId.split(".");
+      const abi = (await getContractInterface(addr, name)) as ContractAbi | null;
+      const names: string[] = Array.isArray(abi?.functions)
+        ? (abi!.functions as AbiFn[])
+            .map((f) =>
+              typeof f?.name === "string" ? (f.name as string) : undefined
+            )
+            .filter((n): n is string => typeof n === "string")
+        : [];
+      return names.includes(fn);
+    },
+    []
+  );
 
-  const applyTemplate = async (tpl: string) => {
+  const applyTemplate = React.useCallback(async (tpl: string) => {
     setStatus("");
     if (tpl === "sip10-transfer") {
       // Choose first token contract
@@ -225,7 +234,9 @@ export default function TxPage() {
       ]);
     } else if (tpl === "pool-add-liquidity") {
       const pool =
-        CoreContracts.find((c) => c.kind === "dex") || CoreContracts[0];
+        CoreContracts.find((c) => c.id.endsWith(".liquidity-pool")) ||
+        CoreContracts.find((c) => c.kind === "dex") ||
+        CoreContracts[0];
       if (pool) setSelected(pool.id);
       const supported = pool
         ? await hasFunction(pool.id, "add-liquidity")
@@ -243,7 +254,9 @@ export default function TxPage() {
       ]);
     } else if (tpl === "pool-remove-liquidity") {
       const pool =
-        CoreContracts.find((c) => c.kind === "dex") || CoreContracts[0];
+        CoreContracts.find((c) => c.id.endsWith(".liquidity-pool")) ||
+        CoreContracts.find((c) => c.kind === "dex") ||
+        CoreContracts[0];
       if (pool) setSelected(pool.id);
       const supported = pool
         ? await hasFunction(pool.id, "remove-liquidity")
@@ -261,7 +274,9 @@ export default function TxPage() {
       ]);
     } else if (tpl === "pool-swap-exact-in") {
       const pool =
-        CoreContracts.find((c) => c.kind === "dex") || CoreContracts[0];
+        CoreContracts.find((c) => c.id.endsWith(".liquidity-pool")) ||
+        CoreContracts.find((c) => c.kind === "dex") ||
+        CoreContracts[0];
       if (pool) setSelected(pool.id);
       // note: the pool has two versions; we use the simple signature swap-exact-in(amount-in,min-amount-out,x-to-y,deadline)
       const supported = pool
@@ -281,7 +296,9 @@ export default function TxPage() {
       ]);
     } else if (tpl === "pool-swap-exact-out") {
       const pool =
-        CoreContracts.find((c) => c.kind === "dex") || CoreContracts[0];
+        CoreContracts.find((c) => c.id.endsWith(".liquidity-pool")) ||
+        CoreContracts.find((c) => c.kind === "dex") ||
+        CoreContracts[0];
       if (pool) setSelected(pool.id);
       const supported = pool
         ? await hasFunction(pool.id, "swap-exact-out")
@@ -301,36 +318,32 @@ export default function TxPage() {
     } else {
       setPresetRows(undefined);
     }
-  };
+  }, [hasFunction]);
+
+  React.useEffect(() => {
+    if (!templateParam) return;
+    applyTemplate(templateParam);
+  }, [templateParam, applyTemplate]);
 
   return (
     <div className="min-h-screen w-full p-6 sm:p-10 space-y-8">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-neutral-light">
-          Transactions
-        </h1>
+        <h1 className="text-2xl font-semibold text-text">Transactions</h1>
         <div
           className="text-sm flex items-center gap-2"
           aria-label="Current network"
         >
-          <span className="text-gray-400">Network</span>
+          <span className="text-text-secondary">Network</span>
           <span
-            className={`px-2 py-0.5 rounded-full text-xs font-medium border
-              ${
-                AppConfig.network === "mainnet"
-                  ? "bg-red-900 text-red-200 border-red-800"
-                  : AppConfig.network === "testnet"
-                  ? "bg-yellow-900 text-yellow-200 border-yellow-800"
-                  : "bg-green-900 text-green-200 border-green-800"
-              }`}
+            className="px-2 py-0.5 rounded-full text-xs font-medium border border-accent/20 bg-background-light text-text/80"
           >
-            {AppConfig.network}
+            {AppConfig.network.toUpperCase()}
           </span>
         </div>
       </header>
 
       <form
-        className="rounded-lg border border-gray-700 bg-gray-900 p-4 space-y-4"
+        className="rounded-lg border border-accent/20 bg-background-paper p-4 space-y-4"
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit();
@@ -339,7 +352,7 @@ export default function TxPage() {
       >
         {/* Interface Mode toggle */}
         <div
-          className="flex items-center gap-4 text-gray-300"
+          className="flex items-center gap-4 text-text-secondary"
           role="radiogroup"
           aria-labelledby="mode-label"
         >
@@ -353,7 +366,7 @@ export default function TxPage() {
               value="basic"
               checked={mode === "basic"}
               onChange={() => setMode("basic")}
-              className="accent-blue-500"
+              className="accent-accent"
             />
             Basic
           </label>
@@ -364,7 +377,7 @@ export default function TxPage() {
               value="advanced"
               checked={mode === "advanced"}
               onChange={() => setMode("advanced")}
-              className="accent-blue-500"
+              className="accent-accent"
             />
             Advanced
           </label>
@@ -374,14 +387,14 @@ export default function TxPage() {
           <div>
             <label
               htmlFor="contract-select"
-              className="text-xs block mb-1 text-gray-300"
+              className="text-xs block mb-1 text-text-secondary"
             >
               Contract
             </label>
             <select
               id="contract-select"
               aria-label="Contract"
-              className="border rounded px-2 py-1 w-full text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              className="border border-accent/20 rounded px-2 py-1 w-full bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
             >
@@ -396,14 +409,14 @@ export default function TxPage() {
             <div>
               <label
                 htmlFor="function-select"
-                className="text-xs block mb-1 text-gray-300"
+                className="text-xs block mb-1 text-text-secondary"
               >
                 Function
               </label>
               {abiFunctions.length > 0 ? (
                 <select
                   id="function-select"
-                  className="border rounded px-2 py-1 w-full text-black"
+                  className="border border-accent/20 rounded px-2 py-1 w-full bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   value={fnName}
                   onChange={(e) => setFnName(e.target.value)}
                 >
@@ -417,10 +430,9 @@ export default function TxPage() {
                   ))}
                 </select>
               ) : (
-                <input
+                <Input
                   id="function-select"
                   aria-label="Function name"
-                  className="border rounded px-2 py-1 w-full text-black"
                   value={fnName}
                   onChange={(e) => setFnName(e.target.value)}
                   placeholder={abiLoading ? "Loading ABI..." : "Function name"}
@@ -431,14 +443,13 @@ export default function TxPage() {
           <div>
             <label
               htmlFor="network"
-              className="text-xs block mb-1 text-gray-300"
+              className="text-xs block mb-1 text-text-secondary"
             >
               Network
             </label>
-            <input
+            <Input
               id="network"
               aria-label="Network"
-              className="border rounded px-2 py-1 w-full text-black bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               value={AppConfig.network}
               readOnly
             />
@@ -449,7 +460,7 @@ export default function TxPage() {
           <div>
             <label
               htmlFor="template-select"
-              className="text-xs block mb-1 text-gray-300"
+              className="text-xs block mb-1 text-text-secondary"
             >
               Template
             </label>
@@ -457,7 +468,7 @@ export default function TxPage() {
               id="template-select"
               aria-label="Template"
               aria-describedby="template-help"
-              className="border rounded px-2 py-1 w-full text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              className="border border-accent/20 rounded px-2 py-1 w-full bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               onChange={(e) => applyTemplate(e.target.value)}
               defaultValue=""
             >
@@ -472,7 +483,7 @@ export default function TxPage() {
               <option value="pool-swap-exact-in">Pool swap-exact-in</option>
               <option value="pool-swap-exact-out">Pool swap-exact-out</option>
             </select>
-            <div id="template-help" className="text-xs text-gray-400 mt-1">
+            <div id="template-help" className="text-xs text-text-secondary mt-1">
               Choose a template to prefill common arguments. Advanced editor is
               available below.
             </div>
@@ -487,7 +498,7 @@ export default function TxPage() {
           />
         ) : (
           <details>
-            <summary className="text-xs cursor-pointer text-blue-400 hover:text-blue-300">
+            <summary className="text-xs cursor-pointer text-accent hover:text-accent/80">
               Show advanced argument editor
             </summary>
             <div className="mt-2">
@@ -501,18 +512,18 @@ export default function TxPage() {
         )}
 
         {/* Transaction preview */}
-        <div className="rounded-md border border-gray-700 bg-gray-800 p-3 space-y-2">
-          <h3 className="text-sm font-medium text-gray-300">Preview</h3>
-          <div className="text-xs text-gray-400">
-            Contract: <code className="text-gray-300">{selected}</code>
+        <div className="rounded-md border border-accent/20 bg-background-light p-3 space-y-2">
+          <h3 className="text-sm font-medium text-text">Preview</h3>
+          <div className="text-xs text-text-secondary">
+            Contract: <code className="text-text">{selected}</code>
           </div>
-          <div className="text-xs text-gray-400">
-            Function: <code className="text-gray-300">{fnName || "-"}</code>
+          <div className="text-xs text-text-secondary">
+            Function: <code className="text-text">{fnName || "-"}</code>
           </div>
-          <div className="text-xs text-gray-400">
+          <div className="text-xs text-text-secondary">
             Args (hex):{" "}
             {args.hex.length > 0 ? (
-              <span className="break-all text-gray-300">
+              <span className="break-all text-text">
                 [
                 {args.hex.map((h, i) => (
                   <span key={i} className="inline-block mr-1">
@@ -527,9 +538,10 @@ export default function TxPage() {
             )}
           </div>
           <div>
-            <button
+            <Button
               type="button"
-              className="text-xs px-2 py-1 rounded border border-gray-600 text-gray-300 hover:bg-gray-700 disabled:opacity-50"
+              size="sm"
+              variant="outline"
               onClick={async () => {
                 try {
                   await navigator.clipboard.writeText(JSON.stringify(args.hex));
@@ -540,24 +552,23 @@ export default function TxPage() {
               disabled={args.hex.length === 0}
             >
               Copy Args (hex)
-            </button>
+            </Button>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <button
+          <Button
             type="submit"
             disabled={sending || !fnName}
             aria-busy={sending}
-            className="text-sm px-3 py-1.5 rounded-md border border-gray-600 text-gray-300 hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-60"
           >
             {sending ? "Sending..." : "Open Wallet"}
-          </button>
+          </Button>
           {status && (
             <div
               role="status"
               aria-live="polite"
-              className="text-xs text-gray-400"
+              className="text-xs text-text-secondary"
             >
               {status}
             </div>

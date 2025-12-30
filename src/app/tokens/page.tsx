@@ -10,6 +10,7 @@ import {
   FungibleTokenBalance,
 } from "@/lib/coreApi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 export default function TokensPage() {
   const [address, setAddress] = React.useState<string>("");
@@ -47,7 +48,7 @@ export default function TokensPage() {
   return (
     <div className="min-h-screen w-full p-6 sm:p-10 space-y-8">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-neutral-light">Tokens</h1>
+        <h1 className="text-2xl font-semibold text-text">Tokens</h1>
         <div className="lg:hidden">
           <ConnectWallet />
         </div>
@@ -56,7 +57,7 @@ export default function TokensPage() {
       {!address && (
         <Card>
           <CardContent className="pt-6">
-            <p className="text-center text-gray-400">
+            <p className="text-center text-text-secondary">
               Connect your wallet to view balances.
             </p>
           </CardContent>
@@ -71,7 +72,7 @@ export default function TokensPage() {
                 <CardTitle>STX Balance</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-neutral-light">
+                <div className="text-2xl font-bold text-text">
                   {stx?.balance ? `${stx.balance} STX` : "—"}
                 </div>
               </CardContent>
@@ -82,7 +83,7 @@ export default function TokensPage() {
               </CardHeader>
               <CardContent>
                 {/* This will be implemented in a future step */}
-                <div className="text-2xl font-bold text-neutral-light">
+                <div className="text-2xl font-bold text-text">
                   Coming Soon
                 </div>
               </CardContent>
@@ -93,29 +94,30 @@ export default function TokensPage() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Fungible Tokens</CardTitle>
-                <button
+                <Button
                   onClick={refresh}
                   disabled={loading}
-                  className="text-sm px-3 py-1.5 rounded-md border border-gray-600 text-gray-300 hover:bg-gray-800"
+                  variant="outline"
+                  size="sm"
                 >
                   {loading ? "Refreshing..." : "Refresh"}
-                </button>
+                </Button>
               </div>
             </CardHeader>
             <CardContent>
               <div className="overflow-auto">
                 <table className="w-full text-sm text-left">
                   <thead>
-                    <tr className="border-b border-gray-700 text-gray-300">
+                    <tr className="border-b border-accent/20 text-text-secondary">
                       <th className="py-2 pr-4">Asset</th>
                       <th className="py-2 pr-4">Balance</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-400">
+                  <tbody className="text-text-secondary">
                     {fts.map((t: FungibleTokenBalance) => (
                       <tr
                         key={t.asset_identifier}
-                        className="border-b border-gray-800 hover:bg-gray-800"
+                        className="border-b border-accent/20 hover:bg-accent/10"
                       >
                         <td className="py-2 pr-4 break-all">
                           {t.asset_identifier}

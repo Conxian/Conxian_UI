@@ -105,7 +105,10 @@ export default function Shielded() {
       {wallets.length > 0 ? (
         <ul className="space-y-4">
           {wallets.map((wallet) => (
-            <li key={wallet.id} className="p-4 bg-paper rounded-md">
+            <li
+              key={wallet.id}
+              className="p-4 rounded-md border border-accent/20 bg-background-light"
+            >
               <p className="font-medium text-text">{wallet.id}</p>
               <p className="text-sm text-text/80">Balance: {wallet.balance}</p>
               <div className="mt-4 space-y-2">

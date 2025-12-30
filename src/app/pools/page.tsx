@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 export default function PoolsPage() {
   const dexPools = CoreContracts.filter((c) => c.kind === "dex");
@@ -89,8 +90,8 @@ export default function PoolsPage() {
   return (
     <div className="min-h-screen w-full p-6 sm:p-10 space-y-8">
       <header className="flex items-center justify-between mb-10">
-        <h1 className="text-3xl font-bold text-neutral-light">Pools</h1>
-        <div className="text-sm text-neutral-medium">
+        <h1 className="text-3xl font-bold text-text">Pools</h1>
+        <div className="text-sm text-text-secondary">
           Network: {AppConfig.network}
         </div>
       </header>
@@ -105,7 +106,7 @@ export default function PoolsPage() {
               <label className="text-xs block mb-1">Pool Contract</label>
               <select
                 aria-label="Pool contract"
-                className="border rounded px-2 py-1 w-full text-black"
+                className="border border-accent/20 rounded px-2 py-1 w-full bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 value={selected}
                 onChange={(e) => setSelected(e.target.value)}
               >
@@ -117,13 +118,14 @@ export default function PoolsPage() {
               </select>
             </div>
             <div className="flex items-end">
-              <button
+              <Button
                 onClick={refresh}
                 disabled={loading || !selected}
-                className="text-sm px-3 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-800"
+                variant="outline"
+                size="sm"
               >
                 {loading ? "Refreshing..." : "Refresh"}
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -133,7 +135,7 @@ export default function PoolsPage() {
                 <CardTitle className="text-base">Reserves</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="text-xs overflow-auto text-gray-300">
+                <pre className="text-xs overflow-auto text-text-secondary">
                   {reserves ? JSON.stringify(reserves, null, 2) : "—"}
                 </pre>
               </CardContent>
@@ -143,7 +145,7 @@ export default function PoolsPage() {
                 <CardTitle className="text-base">Total Supply</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="text-xs overflow-auto text-gray-300">
+                <pre className="text-xs overflow-auto text-text-secondary">
                   {totalSupply ? JSON.stringify(totalSupply, null, 2) : "—"}
                 </pre>
               </CardContent>
@@ -153,7 +155,7 @@ export default function PoolsPage() {
                 <CardTitle className="text-base">Price</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="text-xs overflow-auto text-gray-300">
+                <pre className="text-xs overflow-auto text-text-secondary">
                   {price ? JSON.stringify(price, null, 2) : "—"}
                 </pre>
               </CardContent>
@@ -166,7 +168,7 @@ export default function PoolsPage() {
                 <CardTitle className="text-base">Fee Info</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="text-xs overflow-auto text-gray-300">
+                <pre className="text-xs overflow-auto text-text-secondary">
                   {feeInfo ? JSON.stringify(feeInfo, null, 2) : "—"}
                 </pre>
               </CardContent>
@@ -237,41 +239,41 @@ function DerivedKPIs({
       : null;
 
   return (
-    <div className="text-xs space-y-1 text-gray-300">
+    <div className="text-xs space-y-1 text-text-secondary">
       <div>
-        <span className="font-medium text-gray-400">LP Fee (bps):</span>{" "}
+        <span className="font-medium text-text">LP Fee (bps):</span>{" "}
         {lpFeeBps ?? "—"}
       </div>
       <div>
-        <span className="font-medium text-gray-400">Protocol Fee (bps):</span>{" "}
+        <span className="font-medium text-text">Protocol Fee (bps):</span>{" "}
         {protocolFeeBps ?? "—"}
       </div>
       <div>
-        <span className="font-medium text-gray-400">Total Fee (bps):</span>{" "}
+        <span className="font-medium text-text">Total Fee (bps):</span>{" "}
         {Number.isFinite(totalFeeBps) ? totalFeeBps : "—"}
       </div>
       <div>
-        <span className="font-medium text-gray-400">Price X/Y:</span>{" "}
+        <span className="font-medium text-text">Price X/Y:</span>{" "}
         {priceXYU !== null ? Number(priceXYU) : "—"}
       </div>
       <div>
-        <span className="font-medium text-gray-400">Price Y/X:</span>{" "}
+        <span className="font-medium text-text">Price Y/X:</span>{" "}
         {priceYXU !== null ? Number(priceYXU) : "—"}
       </div>
       <div>
-        <span className="font-medium text-gray-400">Inventory Skew (A/B):</span>{" "}
+        <span className="font-medium text-text">Inventory Skew (A/B):</span>{" "}
         {inventorySkew !== null ? inventorySkew.toFixed(4) : "—"}
       </div>
       <div>
-        <span className="font-medium text-gray-400">Volume (24h):</span>{" "}
+        <span className="font-medium text-text">Volume (24h):</span>{" "}
         {vol24hU !== null ? Number(vol24hU) : "—"}
       </div>
       <div>
-        <span className="font-medium text-gray-400">Fees (24h):</span>{" "}
+        <span className="font-medium text-text">Fees (24h):</span>{" "}
         {fees24hU !== null ? Number(fees24hU) : "—"}
       </div>
       <div>
-        <span className="font-medium text-gray-400">TVL (A units):</span>{" "}
+        <span className="font-medium text-text">TVL (A units):</span>{" "}
         {tvlAUnits !== null ? tvlAUnits.toFixed(2) : "—"}
       </div>
     </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useWallet } from '@/lib/wallet';
 import { useApi } from '@/lib/api-client';
 import ConnectWallet from '@/components/ConnectWallet';
@@ -20,6 +21,17 @@ export default function PositionsPage() {
   const [status, setStatus] = React.useState('');
   const { stxAddress } = useWallet();
   const api = useApi();
+  const router = useRouter();
+
+  const handleAdd = (pair: string) => {
+    const params = new URLSearchParams({ pair });
+    router.push(`/add-liquidity?${params.toString()}`);
+  };
+
+  const handleRemove = (pair: string) => {
+    const params = new URLSearchParams({ template: 'pool-remove-liquidity', pair });
+    router.push(`/tx?${params.toString()}`);
+  };
 
   React.useEffect(() => {
     if (stxAddress) {
@@ -45,7 +57,7 @@ export default function PositionsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {positions.length > 0 ? (
             positions.map((pos, index) => (
-              <Card key={index} className="bg-paper">
+              <Card key={index}>
                 <CardHeader>
                   <CardTitle className="text-text">{pos.pair}</CardTitle>
                 </CardHeader>
@@ -59,8 +71,20 @@ export default function PositionsPage() {
                     <p className="text-lg font-semibold text-text">${pos.balance.toLocaleString()}</p>
                   </div>
                   <div className="flex gap-4 pt-4">
-                    <Button variant="outline" className="w-full">Add</Button>
-                    <Button variant="outline" className="w-full">Remove</Button>
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => handleAdd(pos.pair)}
+                    >
+                      Add
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => handleRemove(pos.pair)}
+                    >
+                      Remove
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
