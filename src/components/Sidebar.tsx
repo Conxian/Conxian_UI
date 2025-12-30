@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -24,7 +25,19 @@ export default function Sidebar() {
   return (
     <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:z-50 bg-primary border-r border-accent/20">
       <div className="flex items-center h-16 px-6 bg-primary border-b border-accent/20">
-        <h1 className="text-2xl font-bold text-light">Conxian</h1>
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/conxian-mark-b.svg"
+            alt="Conxian"
+            width={28}
+            height={28}
+            className="h-7 w-7"
+            priority
+          />
+          <span className="text-lg font-semibold tracking-wide text-primary-foreground">
+            CONXIAN
+          </span>
+        </Link>
       </div>
       <div className="flex flex-col flex-1 overflow-y-auto">
         <nav className="flex-1 px-4 py-4 space-y-1">
@@ -35,16 +48,16 @@ export default function Sidebar() {
               className={cn(
                 "group flex items-center px-3 py-2 text-sm font-medium rounded-md",
                 pathname === item.href
-                  ? "bg-accent/20 text-light"
-                  : "text-light/70 hover:text-light hover:bg-accent/20"
+                  ? "bg-accent/20 text-primary-foreground"
+                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-accent/20"
               )}
             >
               <item.icon
                 className={cn(
                   "mr-3 flex-shrink-0 h-6 w-6",
                   pathname === item.href
-                    ? "text-light"
-                    : "text-light/50 group-hover:text-light"
+                    ? "text-primary-foreground"
+                    : "text-primary-foreground/60 group-hover:text-primary-foreground"
                 )}
                 aria-hidden="true"
               />

@@ -14,8 +14,8 @@ export const StatCard = ({ title, value, icon, subtext }: StatCardProps) => (
       {icon}
     </CardHeader>
     <CardContent>
-      <div className="text-2xl font-bold text-white">{value}</div>
-      {subtext && <p className="text-xs text-gray-500">{subtext}</p>}
+      <div className="text-2xl font-bold text-text">{value}</div>
+      {subtext && <p className="text-xs text-text-secondary">{subtext}</p>}
     </CardContent>
   </Card>
 );

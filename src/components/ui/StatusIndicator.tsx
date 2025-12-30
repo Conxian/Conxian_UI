@@ -13,7 +13,9 @@ export default function StatusIndicator({ status }: { status: Status }) {
   return (
     <div className="flex items-center">
       <div className={cn("w-3 h-3 rounded-full", statusStyles[status])} />
-      <span className="ml-2 text-sm text-gray-400 capitalize">{status}</span>
+      <span className="ml-2 text-sm text-text-secondary capitalize">
+        {status}
+      </span>
     </div>
   );
 }

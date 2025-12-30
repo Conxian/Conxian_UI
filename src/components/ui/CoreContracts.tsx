@@ -15,7 +15,7 @@ export default function CoreContracts() {
         <CardTitle>Core Contracts</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-text-secondary">
           Backend integration for contract status is pending.
         </p>
       </CardContent>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useWallet } from "@/lib/wallet";
+import { Button } from "@/components/ui/Button";
 
 declare global {
   interface Window {
@@ -33,21 +34,24 @@ export default function ConnectWallet() {
     }
   };
 
+  const label = !isStacksAvailable
+    ? "Install Wallet"
+    : stxAddress
+      ? `Disconnect ${stxAddress.substring(0, 4)}...${stxAddress.substring(
+          stxAddress.length - 4
+        )}`
+      : "Connect Wallet";
+
   return (
-    <button
+    <Button
       onClick={handleWalletAction}
-      className="text-sm px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors font-medium"
+      variant={stxAddress ? "outline" : "default"}
+      className="whitespace-nowrap"
       aria-pressed={stxAddress ? "true" : "false"}
       data-testid="connect-wallet-button"
-      disabled={!isStacksAvailable}
+      type="button"
     >
-      {!isStacksAvailable
-        ? "Install Wallet"
-        : stxAddress
-        ? `Disconnect ${stxAddress.substring(0, 4)}...${stxAddress.substring(
-            stxAddress.length - 4
-          )}`
-        : "Connect Wallet"}
-    </button>
+      {label}
+    </Button>
   );
 }

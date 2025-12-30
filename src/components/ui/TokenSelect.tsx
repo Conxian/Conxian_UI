@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Tokens } from '@/lib/contracts';
 import { FungibleTokenBalance } from '@/lib/coreApi';
 import TokenIcon from './TokenIcon'; // Assuming TokenIcon is in the same directory
-import { formatAmount } from '@/lib/utils';
+import { cn, formatAmount } from '@/lib/utils';
 
 interface TokenSelectProps {
   tokens: typeof Tokens;
@@ -44,10 +44,11 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
   };
 
   return (
-    <div className={`relative ${className}`} ref={ref}>
+    <div className={cn('relative', className)} ref={ref}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full px-4 py-2 text-white bg-background-paper rounded-md"
+        type="button"
+        className="flex items-center justify-between w-full px-4 py-2 rounded-md border border-accent/20 bg-background-light text-text hover:bg-accent/10 transition-colors"
       >
         <div className="flex items-center">
           {selectedTokenInfo && <TokenIcon token={selectedTokenInfo.label} className="w-6 h-6 mr-3" />}
@@ -57,19 +58,19 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-background-paper rounded-md shadow-lg">
+        <div className="absolute z-10 w-full mt-1 bg-background-light border border-accent/20 rounded-md shadow-lg">
           <ul className="py-1">
             {tokens.map(token => (
               <li
                 key={token.id}
                 onClick={() => handleSelect(token.id)}
-                className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-700"
+                className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-accent/10 text-text"
               >
                 <div className="flex items-center">
                   <TokenIcon token={token.label} className="w-6 h-6 mr-3" />
                   <span>{token.label}</span>
                 </div>
-                <span>{formatBalance(token.id)}</span>
+                <span className="text-text-secondary">{formatBalance(token.id)}</span>
               </li>
             ))}
           </ul>

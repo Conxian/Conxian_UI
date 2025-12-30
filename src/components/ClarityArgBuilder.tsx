@@ -181,18 +181,26 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
     <fieldset className="space-y-3" aria-describedby="args-help">
       <legend className="font-medium">Function Arguments</legend>
       <div className="flex items-center justify-end">
-        <button type="button" onClick={addRow} className="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-600">
+        <button
+          type="button"
+          onClick={addRow}
+          className="text-xs px-2 py-1 rounded border border-accent/20 bg-background-light text-text hover:bg-accent/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
           Add Arg
         </button>
       </div>
-      {rows.length === 0 && <div id="args-help" className="text-xs text-gray-500">No args. Click Add Arg.</div>}
+      {rows.length === 0 && (
+        <div id="args-help" className="text-xs text-text-secondary">
+          No args. Click Add Arg.
+        </div>
+      )}
       <div className="space-y-2">
         {rows.map((row, idx) => (
           <div key={row.id} className="grid gap-2 md:grid-cols-6 items-center">
             <label htmlFor={`arg-type-${row.id}`} className="text-xs col-span-1">Type</label>
             <select
               id={`arg-type-${row.id}`}
-              className="border rounded px-2 py-1 col-span-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               value={row.type}
               onChange={(e) => updateRow(row.id, { type: e.target.value as ArgType })}
             >
@@ -214,7 +222,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
             </select>
             <div className="col-span-3 flex items-center gap-2">
               <label htmlFor={`arg-optional-toggle-${row.id}`} className="text-xs">Optional</label>
-              <input id={`arg-optional-toggle-${row.id}`} type="checkbox" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" checked={Boolean(row.opt) || isOptionalType(row.type)} onChange={(e) => {
+              <input id={`arg-optional-toggle-${row.id}`} type="checkbox" className="accent-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background" checked={Boolean(row.opt) || isOptionalType(row.type)} onChange={(e) => {
                 const enabled = e.target.checked;
                 if (!enabled) {
                   // turn off optional wrapper
@@ -227,7 +235,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
                 }
               }} />
               {(Boolean(row.opt) || isOptionalType(row.type)) && (
-                <select id={`arg-optional-kind-${row.id}`} aria-label="Optional kind" className="border rounded px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" value={row.opt ?? inferOptionalMode(row.type) ?? 'some'} onChange={(e) => {
+                <select id={`arg-optional-kind-${row.id}`} aria-label="Optional kind" className="border border-accent/20 rounded px-2 py-1 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background" value={row.opt ?? inferOptionalMode(row.type) ?? 'some'} onChange={(e) => {
                   const mode = e.target.value as Row['opt'];
                   const base = baseFromOptional(row.type);
                   updateRow(row.id, { type: toOptional(base, mode), opt: mode });
@@ -249,7 +257,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
                 return (
                   <>
                     <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
-                    <input id={`arg-value-${row.id}`} className="border rounded px-2 py-1 col-span-2 opacity-50" disabled aria-disabled="true" value="" readOnly />
+                    <input id={`arg-value-${row.id}`} className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text opacity-50" disabled aria-disabled="true" value="" readOnly />
                   </>
                 );
               }
@@ -261,7 +269,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
                     <input
                       id={`arg-value-${row.id}`}
                       type="checkbox"
-                      className="col-span-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="col-span-2 accent-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                       checked={checked}
                       onChange={(e) => updateRow(row.id, { value: e.target.checked ? 'true' : 'false' })}
                     />
@@ -278,7 +286,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
                       inputMode="numeric"
                       step="1"
                       {...(base === 'uint' ? { min: 0 } : {})}
-                      className="border rounded px-2 py-1 col-span-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                       value={row.value}
                       onChange={(e) => updateRow(row.id, { value: e.target.value })}
                     />
@@ -291,7 +299,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
                     <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
                     <input
                       id={`arg-value-${row.id}`}
-                      className="border rounded px-2 py-1 col-span-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                       value={row.value}
                       onChange={(e) => updateRow(row.id, { value: e.target.value })}
                       placeholder="0x..."
@@ -307,7 +315,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
                   <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
                   <input
                     id={`arg-value-${row.id}`}
-                    className="border rounded px-2 py-1 col-span-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     value={row.value}
                     onChange={(e) => updateRow(row.id, { value: e.target.value })}
                     placeholder={base === 'principal' ? 'ST...' : ''}
@@ -316,7 +324,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
               );
             })()}
             <div className="text-right">
-              <button type="button" onClick={() => removeRow(row.id)} className="text-xs px-2 py-1 rounded border border-gray-300 dark:border-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+              <button type="button" onClick={() => removeRow(row.id)} className="text-xs px-2 py-1 rounded border border-accent/20 bg-background-light text-text hover:bg-accent/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background">
                 Remove
               </button>
             </div>

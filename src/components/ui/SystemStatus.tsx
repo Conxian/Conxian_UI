@@ -27,26 +27,26 @@ export default function SystemStatus() {
       </CardHeader>
       <CardContent className="grid gap-6 md:grid-cols-3">
         <div className="flex items-center">
-          <CurrencyDollarIcon className="w-8 h-8 text-gray-400" />
+          <CurrencyDollarIcon className="w-8 h-8 text-text/80" />
           <div className="ml-4">
-            <div className="text-sm text-gray-500">TVL</div>
-            <div className="text-2xl font-bold text-white">${data.tvl}</div>
+            <div className="text-sm text-text-secondary">TVL</div>
+            <div className="text-2xl font-bold text-text">${data.tvl}</div>
           </div>
         </div>
         <div className="flex items-center">
-          <ShieldCheckIcon className="w-8 h-8 text-gray-400" />
+          <ShieldCheckIcon className="w-8 h-8 text-text/80" />
           <div className="ml-4">
-            <div className="text-sm text-gray-500">Active Vaults</div>
-            <div className="text-2xl font-bold text-white">
+            <div className="text-sm text-text-secondary">Active Vaults</div>
+            <div className="text-2xl font-bold text-text">
               {data.activeVaults}
             </div>
           </div>
         </div>
         <div className="flex items-center">
-          <ArrowTrendingUpIcon className="w-8 h-8 text-gray-400" />
+          <ArrowTrendingUpIcon className="w-8 h-8 text-text/80" />
           <div className="ml-4">
-            <div className="text-sm text-gray-500">APY (Median)</div>
-            <div className="text-2xl font-bold text-white">{data.apy}%</div>
+            <div className="text-sm text-text-secondary">APY (Median)</div>
+            <div className="text-2xl font-bold text-text">{data.apy}%</div>
           </div>
         </div>
       </CardContent>
