@@ -18,10 +18,7 @@ export const useToasts = () => {
   const addToast = useCallback((message: string, type: ToastType) => {
     const id = Date.now();
     setToasts((prevToasts) => [...prevToasts, { id, message, type }]);
-    setTimeout(() => {
-      removeToast(id);
-    }, 5000);
-  }, [removeToast]);
+  }, []);
 
   const ToastContainer = () => (
     <div className="fixed top-5 right-5 z-50">
