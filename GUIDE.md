@@ -1,12 +1,12 @@
-# Welcome to the Conxian UI!
+# Conxian UI User Guide
 
-This guide is your one-stop shop for mastering the Conxian UI. Whether you're a casual user or a seasoned pro, we've got you covered.
+This guide provides a comprehensive overview of the Conxian UI, from getting started to mastering its most advanced features.
 
-## For Our Users: Navigating the Conxian Ecosystem
+## Getting Started
 
-Our UI is designed for a simple and intuitive user experience, providing access to various DeFi functionalities.
+Getting up and running with the Conxian UI is easy. Just follow these simple steps:
 
-### Step 1: Connect Your Wallet
+### 1. Connect Your Wallet
 
 Start by connecting your Stacks wallet. Click the "Connect Wallet" button in the top-right corner and approve the connection in your wallet extension. You'll receive a **toast notification** confirming your connection status.
 
