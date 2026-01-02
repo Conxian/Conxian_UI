@@ -85,24 +85,39 @@ export class ContractInteractions {
     this.executeReadOnly("liquidity-pool", "get-lp-share", [
       standardPrincipalCV(address),
     ]);
-  static getRoute = (tokenA: string, tokenB: string) =>
-    this.executeReadOnly("router", "get-route", [
-      standardPrincipalCV(tokenA),
-      standardPrincipalCV(tokenB),
-    ]);
+  /**
+   * Deposits a specified amount of a token into the vault.
+   * @param token - The contract identifier of the token to deposit.
+   * @param amount - The amount of the token to deposit.
+   * @returns A promise that resolves with the result of the read-only call.
+   */
   static deposit = (token: string, amount: number) =>
     this.executeReadOnly("vault", "deposit", [
       standardPrincipalCV(token),
       uintCV(amount),
     ]);
 
-  // --- Oracle ---
+  /**
+   * Gets the price of a token from the oracle.
+   * @param token - The contract identifier of the token.
+   * @returns A promise that resolves with the price of the token.
+   */
   static getPrice = (token: string) =>
     this.executeReadOnly("oracle", "get-price", [standardPrincipalCV(token)]);
 
-  // --- Token ---
+  /**
+   * Gets the balance of a token for a specific address.
+   * @param token - The contract identifier of the token.
+   * @param address - The address to check the balance of.
+   * @returns A promise that resolves with the balance of the token.
+   */
   static getTokenBalance = (token: string, address: string) =>
     this.executeReadOnly(token, "get-balance", [standardPrincipalCV(address)]);
+  /**
+   * Gets the total supply of a token.
+   * @param token - The contract identifier of the token.
+   * @returns A promise that resolves with the total supply of the token.
+   */
   static getTokenTotalSupply = (token: string) =>
     this.executeReadOnly(token, "get-total-supply");
   static getDecimals = (tokenId: string) =>

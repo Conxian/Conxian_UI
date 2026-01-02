@@ -8,16 +8,31 @@ This document provides an overview of the Conxian UI's architecture, outlining h
 
 The Conxian UI is a Next.js application that empowers users to interact with Conxian smart contracts. Unlike traditional web apps, it doesn't have a central backend server. Instead, it communicates directly with the Stacks blockchain, making it a true dApp.
 
-## 3. How We Talk to the Blockchain
+## 3. Smart Contract Architecture
 
-The "backend" of our application is the suite of Conxian smart contracts on the Stacks blockchain. We use the Hiro API to facilitate communication between the frontend and the blockchain.
+The Conxian protocol is a sophisticated system of interconnected smart contracts that work together to provide a seamless DeFi experience. The following is a high-level overview of the core components of our on-chain architecture.
+
+### Core Components
+
+*   **DEX Factory (`dex-factory-v2`)**: This contract serves as the registry for all liquidity pools. It is responsible for creating new pools and maintaining a canonical list of all pools in the ecosystem.
+*   **Liquidity Pools**: Each liquidity pool is a separate smart contract that holds reserves of two tokens. These contracts implement the core logic for automated market making (AMM), including functions for adding and removing liquidity, and executing swaps.
+*   **DEX Router (`dex-router`)**: The router is the primary entry point for all swap transactions. It is responsible for finding the most efficient path for a given trade, which may involve routing the trade through multiple liquidity pools. This multi-hop capability ensures that users always get the best possible price for their trades.
+*   **Vault (`vault`)**: The vault is a central repository for all liquidity in the Conxian ecosystem. It provides an extra layer of security and abstraction, allowing for more complex liquidity management strategies and easier integration with other protocols.
+
+### Auxiliary Components
+
+*   **Oracle Aggregator (`oracle-aggregator`)**: This contract provides a reliable and tamper-resistant price feed for all assets in the Conxian ecosystem. It aggregates data from multiple sources to provide accurate and up-to-date pricing information.
+*   **Circuit Breaker (`circuit-breaker`)**: A critical security feature that can temporarily pause trading in the event of a major security vulnerability or market anomaly, protecting user funds.
+
+## 4. Frontend-to-Backend Communication
+
+The Conxian UI communicates with the Stacks blockchain via the Hiro API. We use a combination of read-only calls and public function calls to interact with our smart contracts.
 
 ### Our Toolkit for Blockchain Interaction:
 
-*   **`src/lib/contracts.ts`**: Think of this as our address book. It stores the locations and details of all our smart contracts, from tokens to DEX components.
-*   **`src/lib/coreApi.ts`**: This is our low-level communication toolkit. It handles the nitty-gritty of making API calls to the Stacks blockchain, such as fetching balances or making read-only contract calls.
-*   **`src/lib/contract-interactions.ts`**: This is where the magic happens. We use the `@stacks/transactions` and `@stacks/connect` libraries to build and send transactions, making it easy to interact with our smart contracts.
-*   **`src/lib/contracts/self-launch.ts`**: Dedicated handler for the Community Self-Launch system, managing phases, funding, and stats.
+*   **`src/lib/contracts.ts`**: This file contains a list of all our smart contract identifiers. It serves as a central registry for all on-chain endpoints.
+*   **`src/lib/coreApi.ts`**: This file contains our low-level functions for making API calls to the Stacks blockchain. It includes functions for fetching balances, making read-only contract calls, and broadcasting transactions.
+*   **`src/lib/contract-interactions.ts`**: This file contains our high-level functions for interacting with our smart contracts. It uses the `@stacks/transactions` and `@stacks/connect` libraries to build and send transactions.
 
 ## 4. The User Interface
 
