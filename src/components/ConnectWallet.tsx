@@ -40,6 +40,11 @@ export default function ConnectWallet() {
       aria-pressed={stxAddress ? "true" : "false"}
       data-testid="connect-wallet-button"
       disabled={!isStacksAvailable}
+      title={
+        !isStacksAvailable
+          ? "Please install a Stacks-compatible wallet extension to connect."
+          : ""
+      }
     >
       {!isStacksAvailable
         ? "Install Wallet"
