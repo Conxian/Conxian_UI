@@ -30,7 +30,12 @@ export default function EnvStatus() {
     <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 w-full max-w-xl">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold">Environment</h2>
-        <span className={`inline-block h-2 w-2 rounded-full ${indicator}`} />
+        <span
+          role="status"
+          aria-label={status?.ok ? "Operational" : "Error"}
+          title={status?.ok ? "Operational" : "Error"}
+          className={`inline-block h-2 w-2 rounded-full ${indicator}`}
+        />
       </div>
       <div className="text-sm text-gray-400 space-y-1">
         <div>
