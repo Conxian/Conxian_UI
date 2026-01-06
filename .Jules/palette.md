@@ -1,3 +1,3 @@
-# 🎨 Palette's Journal
+# Palette's Journal 🎨
 
-This journal is for CRITICAL UX/accessibility learnings only.
+This journal is for capturing critical learnings about UX and accessibility to improve future enhancements.
