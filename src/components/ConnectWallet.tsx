@@ -66,6 +66,9 @@ export default function ConnectWallet() {
           ) : (
             <ClipboardDocumentIcon className="h-5 w-5" />
           )}
+          <span className="sr-only" aria-live="polite">
+            {copied && "Copied to clipboard"}
+          </span>
         </button>
       </div>
     );
