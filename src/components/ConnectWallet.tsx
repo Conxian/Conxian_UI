@@ -32,14 +32,15 @@ export default function ConnectWallet() {
 
   if (!isStacksAvailable) {
     return (
-      <button
-        onClick={() => alert("Please install a Stacks wallet to connect.")}
+      <a
+        href="https://wallet.hiro.so/"
+        target="_blank"
+        rel="noopener noreferrer"
         className="text-sm px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors font-medium"
-        disabled={true}
-        title="Please install a Stacks-compatible wallet extension to connect."
+        title="Install the Hiro Wallet extension to connect."
       >
         Install Wallet
-      </button>
+      </a>
     );
   }
 

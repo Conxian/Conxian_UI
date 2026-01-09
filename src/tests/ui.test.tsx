@@ -73,7 +73,7 @@ describe('UI Components', () => {
   describe('ConnectWallet', () => {
     it('should render "Install Wallet" when Stacks provider is not available', () => {
       render(<WalletProvider><ConnectWallet /></WalletProvider>);
-      expect(screen.getByRole('button', { name: /install wallet/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /install wallet/i })).toBeInTheDocument();
     });
 
     it('should render "Connect Wallet" when provider is available and user is not connected', () => {
