@@ -15,6 +15,7 @@ export default function ConnectWallet() {
   const { stxAddress, connectWallet, signOut } = useWallet();
   const [isStacksAvailable, setIsStacksAvailable] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [tooltipMessage, setTooltipMessage] = useState("Copy wallet address");
 
   useEffect(() => {
     if (window.StacksProvider) {
@@ -26,7 +27,11 @@ export default function ConnectWallet() {
     if (stxAddress) {
       navigator.clipboard.writeText(stxAddress);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTooltipMessage("Copied!");
+      setTimeout(() => {
+        setCopied(false);
+        setTooltipMessage("Copy wallet address");
+      }, 2000);
     }
   };
 
@@ -60,7 +65,7 @@ export default function ConnectWallet() {
           onClick={handleCopy}
           className="p-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors"
           aria-label="Copy wallet address"
-          title="Copy wallet address"
+          title={tooltipMessage}
         >
           {copied ? (
             <CheckIcon className="h-5 w-5 text-green-500" />
