@@ -3,6 +3,7 @@ import { render, screen, act, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import ConnectWallet from '@/components/ConnectWallet';
+import EnvStatus from '@/components/EnvStatus';
 import LaunchPage from '@/app/launch/page';
 import { WalletProvider, useWallet } from '@/lib/wallet';
 import { ApiService } from '@/lib/api-services';
@@ -14,6 +15,10 @@ vi.mock('@/lib/api-services', () => ({
       systemHealth: { success: true, result: 'OK' },
     }),
   },
+}));
+
+vi.mock('@/lib/coreApi', () => ({
+  getStatus: vi.fn().mockResolvedValue({ ok: true }),
 }));
 
 // Mock the useWallet hook
@@ -73,7 +78,7 @@ describe('UI Components', () => {
   describe('ConnectWallet', () => {
     it('should render "Install Wallet" when Stacks provider is not available', () => {
       render(<WalletProvider><ConnectWallet /></WalletProvider>);
-      expect(screen.getByRole('button', { name: /install wallet/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /install wallet/i })).toBeInTheDocument();
     });
 
     it('should render "Connect Wallet" when provider is available and user is not connected', () => {
@@ -155,5 +160,12 @@ describe('UI Components', () => {
       await userEvent.click(screen.getByText('Refresh Metrics'));
     });
     expect(ApiService.getDashboardMetrics).toHaveBeenCalled();
+  });
+
+  describe('EnvStatus', () => {
+    it('should render the status with a tooltip', async () => {
+      render(<EnvStatus />);
+      expect(await screen.findByRole('status')).toHaveAttribute('title', 'Operational');
+    });
   });
 });
