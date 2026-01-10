@@ -55,7 +55,7 @@ export default function ConnectWallet() {
         <button
           onClick={signOut}
           className="text-sm px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors font-medium"
-          title={stxAddress}
+          title={`Disconnect wallet: ${stxAddress}`}
         >
           {`Disconnect ${stxAddress.substring(0, 4)}...${stxAddress.substring(
             stxAddress.length - 4
