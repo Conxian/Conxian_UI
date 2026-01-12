@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useWallet } from "@/lib/wallet";
 import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { Button, buttonVariants } from "@/components/ui/Button";
 
 declare global {
   interface Window {
@@ -41,7 +42,7 @@ export default function ConnectWallet() {
         href="https://wallet.hiro.so/"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors font-medium"
+        className={buttonVariants({ variant: "outline", size: "sm" })}
         title="Install the Hiro Wallet extension to connect."
       >
         Install Wallet
@@ -52,18 +53,20 @@ export default function ConnectWallet() {
   if (stxAddress) {
     return (
       <div className="flex items-center gap-x-2">
-        <button
+        <Button
           onClick={signOut}
-          className="text-sm px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors font-medium"
+          variant="outline"
+          size="sm"
           title={`Disconnect wallet: ${stxAddress}`}
         >
           {`Disconnect ${stxAddress.substring(0, 4)}...${stxAddress.substring(
             stxAddress.length - 4
           )}`}
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={handleCopy}
-          className="p-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors"
+          variant="outline"
+          size="icon"
           aria-label="Copy wallet address"
           title={tooltipMessage}
         >
@@ -75,17 +78,14 @@ export default function ConnectWallet() {
           <span className="sr-only" aria-live="polite">
             {copied && "Copied to clipboard"}
           </span>
-        </button>
+        </Button>
       </div>
     );
   }
 
   return (
-    <button
-      onClick={connectWallet}
-      className="text-sm px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors font-medium"
-    >
+    <Button onClick={connectWallet} variant="outline" size="sm">
       Connect Wallet
-    </button>
+    </Button>
   );
 }
