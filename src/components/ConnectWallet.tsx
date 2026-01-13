@@ -45,7 +45,7 @@ export default function ConnectWallet() {
         className={buttonVariants({ variant: "outline", size: "sm" })}
         title="Install the Hiro Wallet extension to connect."
       >
-        Install Wallet
+        Install Wallet <span className="sr-only">(opens in a new tab)</span>
       </a>
     );
   }
