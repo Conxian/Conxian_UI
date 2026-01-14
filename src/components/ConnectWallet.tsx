@@ -75,8 +75,8 @@ export default function ConnectWallet() {
           ) : (
             <ClipboardDocumentIcon className="h-5 w-5" />
           )}
-          <span className="sr-only" aria-live="polite">
-            {copied && "Copied to clipboard"}
+          <span aria-live="polite" className="sr-only">
+            {copied ? "Copied to clipboard" : "Copy wallet address"}
           </span>
         </Button>
       </div>
