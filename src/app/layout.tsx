@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full bg-background">
       <head>
-        <link rel="icon" href="/logo.jpg" />
+        <link rel="icon" href="/conxian-mark-a.svg" />
       </head>
       <body
         className={`${inter.variable} font-sans h-full antialiased text-text`}
