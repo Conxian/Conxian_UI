@@ -3,6 +3,7 @@
 import React from "react";
 import { AppConfig } from "@/lib/config";
 import { getStatus } from "@/lib/coreApi";
+import { Button } from "@/components/ui/Button";
 
 export default function EnvStatus() {
   const [status, setStatus] = React.useState<{
@@ -54,13 +55,9 @@ export default function EnvStatus() {
         )}
       </div>
       <div className="mt-4">
-        <button
-          onClick={refresh}
-          disabled={loading}
-          className="text-sm px-3 py-1.5 rounded-md border border-gray-700 hover:bg-gray-800 transition-colors"
-        >
+        <Button onClick={refresh} disabled={loading} variant="outline" size="sm">
           {loading ? "Refreshing..." : "Refresh"}
-        </button>
+        </Button>
       </div>
     </div>
   );
