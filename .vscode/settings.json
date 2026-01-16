@@ -1,5 +1,7 @@
 {
     "vitest.disableWorkspaceWarning": true,
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "fill-labs.dependi",
+    "files.eol": "\n"
 }

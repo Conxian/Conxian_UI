@@ -1,10 +1,10 @@
 
 import { render, screen, act, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import ConnectWallet from '@/components/ConnectWallet';
 import LaunchPage from '@/app/launch/page';
-import { WalletProvider } from '@/lib/wallet';
+import { WalletProvider, useWallet } from '@/lib/wallet';
 import { ApiService } from '@/lib/api-services';
 
 // Mock the ApiService
@@ -22,14 +22,11 @@ vi.mock('@/lib/wallet', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/lib/wallet')>();
   return {
     ...actual,
-    useWallet: vi.fn().mockReturnValue({
-      stxAddress: null,
-      connectWallet: vi.fn(),
-      addToast: mockAddToast,
-      hasConfirmedAddress: true, // Simulate wallet is installed
-    }),
+    useWallet: vi.fn(),
   };
 });
+
+const mockedUseWallet = useWallet as vi.Mock;
 
 // Mock the useSelfLaunch hook
 vi.mock('@/lib/hooks/use-self-launch', () => ({
@@ -59,13 +56,65 @@ vi.mock('@/lib/hooks/use-self-launch', () => ({
 }));
 
 describe('UI Components', () => {
-  it('should render the ConnectWallet button', () => {
-    render(
-      <WalletProvider>
-        <ConnectWallet />
-      </WalletProvider>
-    );
-    expect(screen.getByTestId('connect-wallet-button')).toBeInTheDocument();
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockedUseWallet.mockReturnValue({
+      stxAddress: null,
+      connectWallet: vi.fn(),
+      signOut: vi.fn(),
+      addToast: mockAddToast,
+    });
+    // Ensure window.StacksProvider is not set by default
+    if ((window as any).StacksProvider) {
+      delete (window as any).StacksProvider;
+    }
+  });
+
+  describe('ConnectWallet', () => {
+    it('should render "Install Wallet" when Stacks provider is not available', () => {
+      render(<WalletProvider><ConnectWallet /></WalletProvider>);
+      expect(screen.getByRole('button', { name: /install wallet/i })).toBeInTheDocument();
+    });
+
+    it('should render "Connect Wallet" when provider is available and user is not connected', () => {
+      (window as any).StacksProvider = {};
+      render(<WalletProvider><ConnectWallet /></WalletProvider>);
+      expect(screen.getByRole('button', { name: /connect wallet/i })).toBeInTheDocument();
+    });
+
+    it('should render disconnect and copy buttons when user is connected', () => {
+      (window as any).StacksProvider = {};
+      mockedUseWallet.mockReturnValue({
+        stxAddress: 'SP2Z0Y4F6T8B7E6V5A0D3C1X9R5G4H3J2K1N0P8Q',
+      });
+
+      render(<WalletProvider><ConnectWallet /></WalletProvider>);
+
+      expect(screen.getByRole('button', { name: /disconnect SP2Z...0P8Q/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /copy wallet address/i })).toBeInTheDocument();
+    });
+
+    it('should copy address to clipboard when copy button is clicked', async () => {
+      (window as any).StacksProvider = {};
+      const user = userEvent.setup();
+      const address = 'SP2Z0Y4F6T8B7E6V5A0D3C1X9R5G4H3J2K1N0P8Q';
+      mockedUseWallet.mockReturnValue({ stxAddress: address });
+
+      // Spy on writeText after userEvent.setup()
+      const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText');
+      writeTextSpy.mockImplementation(async () => Promise.resolve());
+
+
+      render(<WalletProvider><ConnectWallet /></WalletProvider>);
+
+      const copyButton = screen.getByRole('button', { name: /copy wallet address/i });
+      await user.click(copyButton);
+
+      expect(writeTextSpy).toHaveBeenCalledWith(address);
+
+      // Restore original implementation
+      writeTextSpy.mockRestore();
+    });
   });
 
   it('should render the LaunchPage and show a toast when contributing without a wallet', async () => {
@@ -75,23 +124,17 @@ describe('UI Components', () => {
       </WalletProvider>
     );
 
-    // Find the "Contribute" tab
     const contributeTab = screen.getByRole('tab', { name: /contribute/i });
-    
     await act(async () => {
       await userEvent.click(contributeTab);
     });
 
-    // Find the tab panel. There should be only one visible at a time.
     const tabPanel = screen.getByRole('tabpanel');
-
-    // Within the tab panel, find and click the "Contribute" button
     const contributeButton = within(tabPanel).getByRole('button', { name: /contribute/i });
     await act(async () => {
       await userEvent.click(contributeButton);
     });
 
-    // Check for the toast message
     await waitFor(() => {
       expect(mockAddToast).toHaveBeenCalledWith(
         expect.stringContaining('Please connect your wallet to contribute'),
