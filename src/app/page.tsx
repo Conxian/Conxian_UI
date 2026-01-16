@@ -34,18 +34,21 @@ export default function Home() {
             value="$0"
             icon={<CurrencyDollarIcon className="w-5 h-5 text-text/80" />}
             subtext="Across Conxian protocols"
+            tooltipText="Total Value Locked: The total value of assets currently held across all Conxian smart contracts."
           />
           <StatCard
             title="Active Vaults"
             value="0"
             icon={<ShieldCheckIcon className="w-5 h-5 text-text/80" />}
             subtext="Configured & healthy"
+            tooltipText="The number of vaults that are currently active and operating within normal parameters."
           />
           <StatCard
             title="APY (Median)"
             value="0%"
             icon={<ArrowTrendingUpIcon className="w-5 h-5 text-text/80" />}
             subtext="Benchmarks pending"
+            tooltipText="Annual Percentage Yield: The median return on investment across all staking and liquidity pools."
           />
         </section>
 
