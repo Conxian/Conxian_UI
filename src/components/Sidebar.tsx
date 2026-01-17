@@ -12,6 +12,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+// ⚡ Bolt: Define navigation data outside the component.
+// This prevents the array from being recreated on every render, which is more memory-efficient.
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
   { name: "Invest", href: "/invest", icon: CurrencyDollarIcon },
