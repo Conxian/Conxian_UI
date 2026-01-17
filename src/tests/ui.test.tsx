@@ -78,7 +78,7 @@ describe('UI Components', () => {
   describe('ConnectWallet', () => {
     it('should render "Install Wallet" when Stacks provider is not available', () => {
       render(<WalletProvider><ConnectWallet /></WalletProvider>);
-      expect(screen.getByRole('link', { name: /install wallet/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /install wallet/i })).toBeInTheDocument();
     });
 
     it('should render "Connect Wallet" when provider is available and user is not connected', () => {
@@ -95,8 +95,8 @@ describe('UI Components', () => {
 
       render(<WalletProvider><ConnectWallet /></WalletProvider>);
 
-      expect(screen.getByRole('button', { name: /disconnect SP2Z...0P8Q/i })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /copy wallet address/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /disconnect wallet/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /copy address to clipboard/i })).toBeInTheDocument();
     });
 
     it('should copy address to clipboard when copy button is clicked', async () => {
@@ -112,7 +112,7 @@ describe('UI Components', () => {
 
       render(<WalletProvider><ConnectWallet /></WalletProvider>);
 
-      const copyButton = screen.getByRole('button', { name: /copy wallet address/i });
+      const copyButton = screen.getByRole('button', { name: /copy address to clipboard/i });
       await user.click(copyButton);
 
       expect(writeTextSpy).toHaveBeenCalledWith(address);
