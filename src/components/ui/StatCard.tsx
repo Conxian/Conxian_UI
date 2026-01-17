@@ -5,13 +5,20 @@ interface StatCardProps {
   value: string;
   icon: React.ReactNode;
   subtext?: string;
+  tooltipText?: string;
 }
 
-export const StatCard = ({ title, value, icon, subtext }: StatCardProps) => (
+export const StatCard = ({
+  title,
+  value,
+  icon,
+  subtext,
+  tooltipText,
+}: StatCardProps) => (
   <Card>
     <CardHeader className="flex flex-row items-center justify-between pb-2">
       <CardTitle className="text-sm font-medium">{title}</CardTitle>
-      {icon}
+      <div title={tooltipText}>{icon}</div>
     </CardHeader>
     <CardContent>
       <div className="text-2xl font-bold text-text">{value}</div>
