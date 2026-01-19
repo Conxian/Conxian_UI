@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useWallet } from "@/lib/wallet";
 import { Button } from "@/components/ui/Button";
 
@@ -30,7 +30,9 @@ export default function ConnectWallet() {
     }
   };
 
-  const handleWalletAction = () => {
+  // ⚡ Bolt: Memoize the wallet action handler.
+  // This prevents the function from being recreated on every render, which is more memory-efficient.
+  const handleWalletAction = useCallback(() => {
     if (stxAddress) {
       signOut();
     } else if (isStacksAvailable) {
@@ -38,7 +40,7 @@ export default function ConnectWallet() {
     } else {
       window.open("https://wallet.hiro.so/", "_blank");
     }
-  };
+  }, [stxAddress, isStacksAvailable, connectWallet, signOut]);
 
   const label = !isStacksAvailable
     ? "Install Wallet"
