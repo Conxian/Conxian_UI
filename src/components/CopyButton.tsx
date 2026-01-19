@@ -33,6 +33,7 @@ export default function CopyButton({
         variant="ghost"
         className={`p-2 h-auto ${className}`}
         aria-label="Copy to clipboard"
+        title="Copy to clipboard"
         type="button"
       >
         {copied ? (
