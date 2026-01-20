@@ -1,14 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useWallet } from '@/lib/wallet';
 import { useApi } from '@/lib/api-client';
 import ConnectWallet from '@/components/ConnectWallet';
-
-// Re-styled components
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import PositionCard from '@/components/PositionCard';
 
 interface Position {
   pair: string;
@@ -23,15 +20,18 @@ export default function PositionsPage() {
   const api = useApi();
   const router = useRouter();
 
-  const handleAdd = (pair: string) => {
+  // ⚡ Bolt: Memoize action handlers to prevent them from being recreated on every render.
+  // This is a key optimization for components that render lists, as it ensures
+  // that child components (like the Buttons here) receive stable function props.
+  const handleAdd = useCallback((pair: string) => {
     const params = new URLSearchParams({ pair });
     router.push(`/add-liquidity?${params.toString()}`);
-  };
+  }, [router]);
 
-  const handleRemove = (pair: string) => {
+  const handleRemove = useCallback((pair: string) => {
     const params = new URLSearchParams({ template: 'pool-remove-liquidity', pair });
     router.push(`/tx?${params.toString()}`);
-  };
+  }, [router]);
 
   React.useEffect(() => {
     if (stxAddress) {
@@ -56,38 +56,15 @@ export default function PositionsPage() {
       {stxAddress ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {positions.length > 0 ? (
-            positions.map((pos, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle className="text-text">{pos.pair}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <p className="text-sm text-text/80">Liquidity</p>
-                    <p className="text-lg font-semibold text-text">${pos.liquidity.toLocaleString()}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-text/80">My Balance</p>
-                    <p className="text-lg font-semibold text-text">${pos.balance.toLocaleString()}</p>
-                  </div>
-                  <div className="flex gap-4 pt-4">
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={() => handleAdd(pos.pair)}
-                    >
-                      Add
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={() => handleRemove(pos.pair)}
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+            positions.map((pos) => (
+              <PositionCard
+                key={pos.pair}
+                pair={pos.pair}
+                liquidity={pos.liquidity}
+                balance={pos.balance}
+                onAdd={handleAdd}
+                onRemove={handleRemove}
+              />
             ))
           ) : (
             <p className="text-text/80">No positions found.</p>

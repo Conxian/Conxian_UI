@@ -1,3 +1,9 @@
-## 2024-07-16 - Memoize List Items to Prevent Unnecessary Re-renders
-**Learning:** When rendering a list of interactive components (like form inputs), any change to one item can cause the entire list to re-render, leading to significant performance degradation, especially in long lists. The correct pattern to solve this is to extract the list item into its own component and wrap it with `React.memo`. Crucially, any callback functions passed as props to this memoized component (e.g., `onUpdate`, `onRemove`) must be memoized in the parent component using `React.useCallback`. Without `useCallback`, the props would be seen as new on every render, defeating the purpose of `React.memo`.
-**Action:** In the future, whenever I encounter a dynamic list where items can be updated, I will immediately check if the list items are memoized. This is a high-impact, low-risk optimization that I should prioritize.
+# Bolt's Journal ⚡
+
+This journal is for CRITICAL learnings only. See my persona for what to include.
+
+## 2024-05-20 - `useCallback` is only half the story
+
+**Learning:** `useCallback` is only effective when the child components receiving the memoized functions are themselves memoized with `React.memo`. Applying `useCallback` to functions passed to unmemoized child components is a premature micro-optimization that provides no performance benefit.
+
+**Action:** When optimizing list-based components, always ensure that both the event handlers in the parent component are wrapped in `useCallback` *and* the child list item component is wrapped in `React.memo`. This creates a complete and effective optimization.
