@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useWallet } from "@/lib/wallet";
 import { Button } from "@/components/ui/Button";
+import CopyButton from "./CopyButton";
 
 declare global {
   interface Window {
@@ -14,21 +15,12 @@ declare global {
 export default function ConnectWallet() {
   const { stxAddress, connectWallet, signOut } = useWallet();
   const [isStacksAvailable, setIsStacksAvailable] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (window.StacksProvider) {
       setIsStacksAvailable(true);
     }
   }, []);
-
-  const handleCopy = () => {
-    if (stxAddress) {
-      navigator.clipboard.writeText(stxAddress);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   // ⚡ Bolt: Memoize the wallet action handler.
   // This prevents the function from being recreated on every render, which is more memory-efficient.
@@ -42,24 +34,37 @@ export default function ConnectWallet() {
     }
   }, [stxAddress, isStacksAvailable, connectWallet, signOut]);
 
-  const label = !isStacksAvailable
-    ? "Install Wallet"
-    : stxAddress
-      ? `Disconnect ${stxAddress.substring(0, 4)}...${stxAddress.substring(
-          stxAddress.length - 4
-        )}`
-      : "Connect Wallet";
+  if (stxAddress) {
+    return (
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 rounded-md border border-input bg-background p-2">
+          <span className="text-sm font-mono text-muted-foreground">
+            {stxAddress.substring(0, 4)}...{stxAddress.substring(stxAddress.length - 4)}
+          </span>
+          <CopyButton textToCopy={stxAddress} />
+        </div>
+        <Button
+          onClick={handleWalletAction}
+          variant="outline"
+          className="whitespace-nowrap"
+          data-testid="disconnect-wallet-button"
+          type="button"
+        >
+          Disconnect
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <Button
       onClick={handleWalletAction}
-      variant={stxAddress ? "outline" : "default"}
+      variant="default"
       className="whitespace-nowrap"
-      aria-pressed={stxAddress ? "true" : "false"}
       data-testid="connect-wallet-button"
       type="button"
     >
-      {label}
+      {!isStacksAvailable ? "Install Wallet" : "Connect Wallet"}
     </Button>
   );
 }
