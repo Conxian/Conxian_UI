@@ -5,6 +5,7 @@ import { AppConfig } from "@/lib/config";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 
 function titleFromPathname(pathname: string): string {
   if (!pathname || pathname === "/") return "Dashboard";
@@ -25,7 +26,10 @@ function titleFromPathname(pathname: string): string {
 
 export default function Header() {
   const pathname = usePathname();
-  const title = titleFromPathname(pathname);
+  // ⚡ Bolt: Memoize the title calculation.
+  // This prevents the title from being recalculated on every render,
+  // only when the pathname changes.
+  const title = useMemo(() => titleFromPathname(pathname), [pathname]);
 
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-accent/20 bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
