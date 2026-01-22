@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { ClipboardIcon, CheckIcon } from "@heroicons/react/24/outline";
+import {
+  ClipboardIcon,
+  CheckIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/Button";
 
 interface CopyButtonProps {
@@ -14,16 +18,25 @@ export default function CopyButton({
   className,
 }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(textToCopy);
-    setCopied(true);
-    setStatusMessage("Copied to clipboard!");
-    setTimeout(() => {
-      setCopied(false);
-      setStatusMessage("");
-    }, 2000);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setStatusMessage("Copied to clipboard!");
+    } catch (err) {
+      setError(true);
+      setStatusMessage("Failed to copy");
+      console.error("Failed to copy text: ", err);
+    } finally {
+      setTimeout(() => {
+        setCopied(false);
+        setError(false);
+        setStatusMessage("");
+      }, 2000);
+    }
   };
 
   return (
@@ -38,6 +51,8 @@ export default function CopyButton({
       >
         {copied ? (
           <CheckIcon className="w-5 h-5 text-green-500" />
+        ) : error ? (
+          <XMarkIcon className="w-5 h-5 text-red-500" />
         ) : (
           <ClipboardIcon className="w-5 h-5" />
         )}
