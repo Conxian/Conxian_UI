@@ -32,7 +32,7 @@ export default function Header() {
   const title = useMemo(() => titleFromPathname(pathname), [pathname]);
 
   return (
-    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-accent/20 bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-accent/20 bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
       <div className="flex flex-1 items-center justify-between gap-x-4 self-stretch lg:gap-x-6">
         <div className="flex items-center gap-3">
           <Link href="/" className="lg:hidden">
@@ -57,6 +57,6 @@ export default function Header() {
           <ConnectWallet />
         </div>
       </div>
-    </div>
+    </header>
   );
 }
