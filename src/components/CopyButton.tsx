@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import {
   ClipboardIcon,
   CheckIcon,
@@ -13,10 +13,7 @@ interface CopyButtonProps {
   className?: string;
 }
 
-export default function CopyButton({
-  textToCopy,
-  className,
-}: CopyButtonProps) {
+const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
@@ -63,4 +60,6 @@ export default function CopyButton({
       </div>
     </>
   );
-}
+};
+
+export default memo(CopyButton);
