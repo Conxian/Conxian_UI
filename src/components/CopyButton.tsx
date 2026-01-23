@@ -17,21 +17,25 @@ const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
+  const [title, setTitle] = useState("Copy to clipboard");
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
       setStatusMessage("Copied to clipboard!");
+      setTitle("Copied!");
     } catch (err) {
       setError(true);
       setStatusMessage("Failed to copy");
+      setTitle("Failed to copy");
       console.error("Failed to copy text: ", err);
     } finally {
       setTimeout(() => {
         setCopied(false);
         setError(false);
         setStatusMessage("");
+        setTitle("Copy to clipboard");
       }, 2000);
     }
   };
@@ -43,7 +47,7 @@ const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
         variant="ghost"
         className={`p-2 h-auto ${className}`}
         aria-label="Copy to clipboard"
-        title="Copy to clipboard"
+        title={title}
         type="button"
       >
         {copied ? (
