@@ -38,8 +38,12 @@ export default function ConnectWallet() {
     return (
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-2 rounded-md border border-input bg-background p-2">
-          <span className="text-sm font-mono text-muted-foreground">
-            {stxAddress.substring(0, 4)}...{stxAddress.substring(stxAddress.length - 4)}
+          <span
+            className="text-sm font-mono text-muted-foreground"
+            title={stxAddress}
+          >
+            {stxAddress.substring(0, 4)}...
+            {stxAddress.substring(stxAddress.length - 4)}
           </span>
           <CopyButton textToCopy={stxAddress} />
         </div>
