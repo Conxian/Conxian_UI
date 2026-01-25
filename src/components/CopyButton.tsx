@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, memo } from "react";
+import React, { useState, memo, useCallback } from "react";
 import {
   ClipboardIcon,
   CheckIcon,
@@ -19,7 +19,11 @@ const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
   const [statusMessage, setStatusMessage] = useState("");
   const [title, setTitle] = useState("Copy to clipboard");
 
-  const handleCopy = async () => {
+  // ⚡ Bolt: Memoize the copy handler with useCallback.
+  // This prevents the function from being recreated on every render,
+  // making the component more memory-efficient and preventing unnecessary
+  // re-renders of the child Button component.
+  const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
@@ -38,7 +42,7 @@ const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
         setTitle("Copy to clipboard");
       }, 2000);
     }
-  };
+  }, [textToCopy]);
 
   return (
     <>
