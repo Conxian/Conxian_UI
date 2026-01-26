@@ -96,7 +96,7 @@ describe('UI Components', () => {
       render(<WalletProvider><ConnectWallet /></WalletProvider>);
 
       expect(screen.getByRole('button', { name: /disconnect/i })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /copy to clipboard/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /copy address/i })).toBeInTheDocument();
     });
 
     it('should copy address to clipboard when copy button is clicked', async () => {
@@ -112,7 +112,7 @@ describe('UI Components', () => {
 
       render(<WalletProvider><ConnectWallet /></WalletProvider>);
 
-      const copyButton = screen.getByRole('button', { name: /copy to clipboard/i });
+      const copyButton = screen.getByRole('button', { name: /copy address/i });
       await user.click(copyButton);
 
       expect(writeTextSpy).toHaveBeenCalledWith(address);
