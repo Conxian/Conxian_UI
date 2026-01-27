@@ -50,7 +50,7 @@ const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
         onClick={handleCopy}
         variant="ghost"
         className={`p-2 h-auto ${className}`}
-        aria-label={title}
+        aria-label="Copy address"
         title={title}
         type="button"
       >
@@ -63,9 +63,9 @@ const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
         )}
       </Button>
       {/* Visually hidden container for screen reader announcements */}
-      <div className="sr-only" aria-live="polite">
+      <span className="sr-only" aria-live="polite">
         {statusMessage}
-      </div>
+      </span>
     </>
   );
 };
