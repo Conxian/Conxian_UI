@@ -10,14 +10,15 @@ import { Button } from "@/components/ui/Button";
 
 interface CopyButtonProps {
   textToCopy: string;
+  ariaLabel: string;
   className?: string;
 }
 
-const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
+const CopyButton = ({ textToCopy, ariaLabel, className }: CopyButtonProps) => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
-  const [title, setTitle] = useState("Copy to clipboard");
+  const [title, setTitle] = useState(`Copy ${ariaLabel} to clipboard`);
 
   // ⚡ Bolt: Memoize the copy handler with useCallback.
   // This prevents the function from being recreated on every render,
@@ -27,22 +28,22 @@ const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
-      setStatusMessage("Copied to clipboard!");
-      setTitle("Copied!");
+      setStatusMessage(`${ariaLabel} copied to clipboard!`);
+      setTitle(`${ariaLabel} copied!`);
     } catch (err) {
       setError(true);
-      setStatusMessage("Failed to copy");
-      setTitle("Failed to copy");
+      setStatusMessage(`Failed to copy ${ariaLabel}`);
+      setTitle(`Failed to copy ${ariaLabel}`);
       console.error("Failed to copy text: ", err);
     } finally {
       setTimeout(() => {
         setCopied(false);
         setError(false);
         setStatusMessage("");
-        setTitle("Copy to clipboard");
+        setTitle(`Copy ${ariaLabel} to clipboard`);
       }, 2000);
     }
-  }, [textToCopy]);
+  }, [textToCopy, ariaLabel]);
 
   return (
     <>
@@ -50,7 +51,7 @@ const CopyButton = ({ textToCopy, className }: CopyButtonProps) => {
         onClick={handleCopy}
         variant="ghost"
         className={`p-2 h-auto ${className}`}
-        aria-label="Copy address"
+        aria-label={title}
         title={title}
         type="button"
       >

@@ -45,7 +45,7 @@ export default function ConnectWallet() {
             {stxAddress.substring(0, 4)}...
             {stxAddress.substring(stxAddress.length - 4)}
           </span>
-          <CopyButton textToCopy={stxAddress} />
+          <CopyButton textToCopy={stxAddress} ariaLabel="address" />
         </div>
         <Button
           onClick={handleWalletAction}
