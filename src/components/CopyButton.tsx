@@ -51,7 +51,11 @@ const CopyButton = ({ textToCopy, ariaLabel, className }: CopyButtonProps) => {
         onClick={handleCopy}
         variant="ghost"
         className={`p-2 h-auto ${className}`}
-        aria-label={title}
+        aria-label={
+          copied
+            ? `${ariaLabel} copied to clipboard!`
+            : `Copy ${ariaLabel} to clipboard`
+        }
         title={title}
         type="button"
       >
