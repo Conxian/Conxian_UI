@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { useWallet } from "@/lib/wallet";
 import { Button } from "@/components/ui/Button";
 import CopyButton from "./CopyButton";
@@ -68,7 +69,15 @@ export default function ConnectWallet() {
       data-testid="connect-wallet-button"
       type="button"
     >
-      {!isStacksAvailable ? "Install Wallet" : "Connect Wallet"}
+      {!isStacksAvailable ? (
+        <>
+          Install Wallet
+          <ArrowTopRightOnSquareIcon className="ml-2 h-4 w-4" />
+          <span className="sr-only">(opens in a new tab)</span>
+        </>
+      ) : (
+        "Connect Wallet"
+      )}
     </Button>
   );
 }
