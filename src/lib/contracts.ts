@@ -1,116 +1,311 @@
+/**
+ * CoreContracts - Aligned with Conxian Backend (Clarinet.toml)
+ * Last synced: January 2026
+ * 
+ * These contract IDs match the actual deployed contracts in the Conxian repo.
+<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
+<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
+ * The base principal should be updated per environment (devnet/testnet/mainnet).
+ */
+
+// Base principal - update per environment
+export const BASE_PRINCIPAL = "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ";
+=======
+=======
+>>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
+ * The base principal is configured per environment via NEXT_PUBLIC_CONTRACT_DEPLOYER.
+ */
+
+// Environment-specific deployer principals
+const DEPLOYER_PRINCIPALS = {
+  devnet: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+  testnet: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ",
+  mainnet: "SP2ZNGJ85ENDY6QRHQ5P2D4FXKGZWCKTB2T0Z55KS", // TODO: Update with actual mainnet deployer
+} as const;
+
+type NetworkType = keyof typeof DEPLOYER_PRINCIPALS;
+
+// Determine current network from environment
+const getNetwork = (): NetworkType => {
+  const env = process.env.NEXT_PUBLIC_NETWORK || process.env.NODE_ENV;
+  if (env === "production") return "mainnet";
+  if (env === "testnet" || env === "test") return "testnet";
+  return "devnet";
+};
+
+// Base principal - automatically configured per environment
+export const NETWORK = getNetwork();
+export const BASE_PRINCIPAL = 
+  process.env.NEXT_PUBLIC_CONTRACT_DEPLOYER || DEPLOYER_PRINCIPALS[NETWORK];
+<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
+>>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
+=======
+>>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
+
 export const CoreContracts = [
-  // Monitoring & Security
+  // ============================================
+  // SECURITY & MONITORING
+  // ============================================
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.health-check",
-    kind: "monitoring",
-    label: "Health Check",
-  },
-  {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.oracle-aggregator-v2",
-    kind: "oracle",
-    label: "Oracle V2",
-  },
-  {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.circuit-breaker",
+    id: `${BASE_PRINCIPAL}.circuit-breaker`,
     kind: "security",
     label: "Circuit Breaker",
   },
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.audit-registry",
+    id: `${BASE_PRINCIPAL}.mev-protector`,
     kind: "security",
-    label: "Auditor",
+    label: "MEV Protector",
   },
 
+  // ============================================
+  // ORACLE
+  // ============================================
+  {
+    id: `${BASE_PRINCIPAL}.oracle-aggregator`,
+    kind: "oracle",
+    label: "Oracle Aggregator",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.points-oracle`,
+    kind: "oracle",
+    label: "Points Oracle",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.economic-policy-engine`,
+    kind: "oracle",
+    label: "Economic Policy Engine",
+  },
+
+  // ============================================
   // DEX & AMM
+  // ============================================
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.dex-factory-v2",
-    kind: "dex",
-    label: "DEX Factory",
-  },
-  {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.liquidity-pool",
-    kind: "dex",
-    label: "Liquidity Pool",
-  }, // Placeholder or generic interface
-  {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.multi-hop-router-v3",
-    kind: "dex",
-    label: "Router",
-  },
-  {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.on-chain-router-helper",
-    kind: "dex",
-    label: "Router Helper",
-  },
-  {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.swap-manager",
+    id: `${BASE_PRINCIPAL}.swap-manager`,
     kind: "dex",
     label: "Swap Manager",
   },
-
-  // Tokens & Vault
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.cxd-token",
-    kind: "token",
-    label: "CXD Token",
-    decimals: 6,
+    id: `${BASE_PRINCIPAL}.swap-router`,
+    kind: "dex",
+    label: "Swap Router",
   },
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.cxlp-token",
-    kind: "token",
-    label: "CXLP Token",
-    decimals: 6,
+    id: `${BASE_PRINCIPAL}.liquidity-provider`,
+    kind: "dex",
+    label: "Liquidity Provider",
   },
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.sbtc-token",
-    kind: "token",
-    label: "sBTC",
-    decimals: 8,
+    id: `${BASE_PRINCIPAL}.pool-template`,
+    kind: "dex",
+    label: "Pool Template",
   },
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.vault",
+    id: `${BASE_PRINCIPAL}.vault`,
     kind: "vault",
     label: "Vault",
   },
 
-  // Staking & Governance
+  // ============================================
+  // TOKENS (SIP-010)
+  // ============================================
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.cxd-staking",
-    kind: "governance",
-    label: "Staking",
+    id: `${BASE_PRINCIPAL}.cxd-token`,
+    kind: "token",
+    label: "CXD Token",
+    decimals: 6,
+    symbol: "CXD",
   },
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.governance-token",
-    kind: "governance",
-    label: "Governance Token",
+    id: `${BASE_PRINCIPAL}.cxlp-token`,
+    kind: "token",
+    label: "CXLP Token",
     decimals: 6,
+    symbol: "CXLP",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.cxvg-token`,
+    kind: "token",
+    label: "CXVG Governance Token",
+    decimals: 6,
+    symbol: "CXVG",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.cxs-token`,
+    kind: "token",
+    label: "CXS Staking Token",
+    decimals: 6,
+    symbol: "CXS",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.cxtr-token`,
+    kind: "token",
+    label: "CXTR Treasury Token",
+    decimals: 6,
+    symbol: "CXTR",
   },
 
-  // Others
+  // ============================================
+  // GOVERNANCE
+  // ============================================
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.bond-factory",
-    kind: "vault",
-    label: "Bond Factory",
-  },
-  {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.self-launch-coordinator",
+    id: `${BASE_PRINCIPAL}.cxd-staking`,
     kind: "governance",
-    label: "Self Launch Coordinator",
+    label: "CXD Staking",
   },
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.performance-recommender",
-    kind: "monitoring",
-    label: "Performance Recommender",
+    id: `${BASE_PRINCIPAL}.proposal-engine`,
+    kind: "governance",
+    label: "Proposal Engine",
   },
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.analytics-aggregator",
-    kind: "monitoring",
-    label: "Metrics Aggregator",
+    id: `${BASE_PRINCIPAL}.proposal-registry`,
+    kind: "governance",
+    label: "Proposal Registry",
+<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
+<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
   },
   {
-    id: "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.finance-metrics",
-    kind: "monitoring",
-    label: "Financial Metrics",
+    id: `${BASE_PRINCIPAL}.voting`,
+    kind: "governance",
+    label: "Voting",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.community-voting-engine`,
+    kind: "governance",
+    label: "Community Voting Engine",
+  },
+  {
+=======
+  },
+  {
+    id: `${BASE_PRINCIPAL}.voting`,
+    kind: "governance",
+    label: "Voting",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.community-voting-engine`,
+    kind: "governance",
+    label: "Community Voting Engine",
+  },
+  {
+>>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
+=======
+  },
+  {
+    id: `${BASE_PRINCIPAL}.voting`,
+    kind: "governance",
+    label: "Voting",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.community-voting-engine`,
+    kind: "governance",
+    label: "Community Voting Engine",
+  },
+  {
+>>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
+    id: `${BASE_PRINCIPAL}.dao-treasury`,
+    kind: "governance",
+    label: "DAO Treasury",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.reputation-engine`,
+    kind: "governance",
+    label: "Reputation Engine",
+  },
+
+  // ============================================
+  // CORE PROTOCOL
+  // ============================================
+  {
+    id: `${BASE_PRINCIPAL}.conxian-protocol`,
+    kind: "core",
+    label: "Conxian Protocol",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.conxian-access`,
+    kind: "core",
+    label: "Access Control (RBAC)",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.admin-facade`,
+    kind: "core",
+    label: "Admin Facade",
+  },
+
+  // ============================================
+  // TREASURY & REVENUE
+  // ============================================
+  {
+    id: `${BASE_PRINCIPAL}.revenue-distributor`,
+    kind: "treasury",
+    label: "Revenue Distributor (60/20/20)",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.allocation-policy`,
+    kind: "treasury",
+    label: "Allocation Policy",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.operational-treasury`,
+    kind: "treasury",
+    label: "Operational Treasury",
+  },
+
+  // ============================================
+  // DIMENSIONAL / POSITIONS
+  // ============================================
+  {
+    id: `${BASE_PRINCIPAL}.dimensional-core`,
+    kind: "dimensional",
+    label: "Dimensional Core",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.dimensional-engine`,
+    kind: "dimensional",
+    label: "Dimensional Engine",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.position-manager`,
+    kind: "dimensional",
+    label: "Position Manager",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.collateral-manager`,
+    kind: "dimensional",
+    label: "Collateral Manager",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.risk-manager`,
+    kind: "core",
+    label: "Risk Manager",
+  },
+
+  // ============================================
+  // LENDING
+  // ============================================
+  {
+    id: `${BASE_PRINCIPAL}.lending-manager`,
+    kind: "lending",
+    label: "Lending Manager",
+  },
+
+  // ============================================
+  // AUTOMATION (Office Workers)
+  // ============================================
+  {
+    id: `${BASE_PRINCIPAL}.office-manager`,
+    kind: "automation",
+    label: "Office Manager",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.agent-risk`,
+    kind: "automation",
+    label: "Risk Agent",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.agent-treasury`,
+    kind: "automation",
+    label: "Treasury Agent",
   },
 ];
 

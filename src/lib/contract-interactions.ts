@@ -72,17 +72,17 @@ export class ContractInteractions {
 
   // --- DEX ---
   static getPair = (tokenA: string, tokenB: string) =>
-    this.executeReadOnly("dex-factory", "get-pair", [
+    this.executeReadOnly("pool-template", "get-pair", [
       standardPrincipalCV(tokenA),
       standardPrincipalCV(tokenB),
     ]);
   static createPair = (tokenA: string, tokenB: string) =>
-    this.executeReadOnly("dex-factory", "create-pair", [
+    this.executeReadOnly("pool-template", "create-pair", [
       standardPrincipalCV(tokenA),
       standardPrincipalCV(tokenB),
     ]);
   static getLiquidityProviderShare = (address: string) =>
-    this.executeReadOnly("liquidity-pool", "get-lp-share", [
+    this.executeReadOnly("liquidity-provider", "get-lp-share", [
       standardPrincipalCV(address),
     ]);
   /**
@@ -103,7 +103,7 @@ export class ContractInteractions {
    * @returns A promise that resolves with the price of the token.
    */
   static getPrice = (token: string) =>
-    this.executeReadOnly("oracle", "get-price", [standardPrincipalCV(token)]);
+    this.executeReadOnly("oracle-aggregator", "get-price", [standardPrincipalCV(token)]);
 
   /**
    * Gets the balance of a token for a specific address.
@@ -150,8 +150,8 @@ export class ContractInteractions {
   // --- Security ---
   static getCircuitBreakerStatus = () =>
     this.executeReadOnly("circuit-breaker", "get-status");
-  static isAudited = (contractId: string) =>
-    this.executeReadOnly("auditor", "is-audited", [
+  static isContractPaused = (contractId: string) =>
+    this.executeReadOnly("circuit-breaker", "is-contract-paused", [
       standardPrincipalCV(contractId),
     ]);
 
@@ -159,22 +159,22 @@ export class ContractInteractions {
   static verifyGovernanceSignature = (_signature: string) =>
     Promise.resolve({ success: true, verified: true });
   static getStakingInfo = (user: string) =>
-    this.executeReadOnly("staking", "get-user-stake", [
+    this.executeReadOnly("cxd-staking", "get-user-stake", [
       standardPrincipalCV(user),
     ]);
 
   // --- System Health & Metrics ---
   static getSystemHealth = () =>
-    this.executeReadOnly("health-check", "check-health");
+    this.executeReadOnly("conxian-protocol", "get-protocol-status");
   static getAggregatedMetrics = () =>
-    this.executeReadOnly("metrics-aggregator", "get-metrics");
+    this.executeReadOnly("economic-policy-engine", "get-market-parameters");
   static getFinancialMetrics = () =>
-    this.executeReadOnly("financial-metrics", "get-metrics");
+    this.executeReadOnly("economic-policy-engine", "get-current-rates");
 
   // --- Dashboard & Recommendations ---
   static getDashboardData = async () => this.getDashboardMetrics();
   static getPerformanceRecommendations = () =>
-    this.executeReadOnly("performance-recommender", "get-recommendations");
+    this.executeReadOnly("risk-manager", "get-global-collateral-factor");
 
   static async getDashboardMetrics() {
     const [systemHealth, aggregatedMetrics, financialMetrics] =
@@ -198,9 +198,9 @@ export class ContractInteractions {
 
   // --- Enterprise & Yield ---
   static getEnterpriseConfig = () =>
-    this.executeReadOnly("enterprise-config", "get-config");
+    this.executeReadOnly("lending-manager", "get-config");
   static getYieldStrategies = () =>
-    this.executeReadOnly("yield-optimizer", "get-strategies");
+    this.executeReadOnly("cxd-staking", "get-staking-info");
 
   // --- Methods with different implementation patterns ---
   static swap = async (

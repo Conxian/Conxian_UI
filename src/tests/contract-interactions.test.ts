@@ -39,7 +39,8 @@ describe('Contract Interactions', () => {
   });
 
   it('should have all required contracts configured', () => {
-    const requiredContracts = ['health-check', 'oracle-aggregator-v2', 'dex-factory'];
+    // Updated to match actual backend contracts from Clarinet.toml
+    const requiredContracts = ['circuit-breaker', 'oracle-aggregator', 'swap-manager', 'pool-template'];
     requiredContracts.forEach((idPart) => {
       const contract = CoreContracts.find((c) => c.id.includes(idPart));
       expect(contract, `${idPart} not found`).toBeDefined();
@@ -53,7 +54,8 @@ describe('Contract Interactions', () => {
   });
 
   it('should have proper contract kinds', () => {
-    const validKinds = ['dex', 'oracle', 'token', 'vault', 'governance', 'monitoring', 'security', 'rewards'];
+    // Updated to match actual contract kinds from aligned contracts.ts
+    const validKinds = ['dex', 'oracle', 'token', 'vault', 'governance', 'security', 'core', 'treasury', 'dimensional', 'lending', 'automation'];
     CoreContracts.forEach((contract) => {
       expect(validKinds).toContain(contract.kind);
     });
@@ -66,7 +68,7 @@ describe('Contract Interactions', () => {
       const result = await ContractInteractions.getPair('ST123.token-a', 'ST123.token-b');
 
       expect(result.success).toBe(false);
-      expect(result.error).toBe('dex-factory contract not found');
+      expect(result.error).toBe('pool-template contract not found');
 
       spy.mockRestore();
     });

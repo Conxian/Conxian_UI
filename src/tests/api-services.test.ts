@@ -128,7 +128,7 @@ describe("API Service", () => {
     it("should handle missing contracts gracefully", async () => {
       mockGetSystemHealth.mockResolvedValueOnce({
         success: false,
-        error: "health-check contract not found",
+        error: "conxian-protocol contract not found",
       });
 
       const result = await ApiService.getSystemHealth();

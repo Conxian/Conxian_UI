@@ -9,7 +9,6 @@ export const apiClient = {
   createPair: ApiService.createPair,
   getLiquidityProviderShare: ApiService.getLiquidityProviderShare,
   removeLiquidity: ApiService.removeLiquidity,
-  getRoute: ApiService.getRoute,
   deposit: ApiService.deposit,
 
   // --- Oracle ---
@@ -30,7 +29,7 @@ export const apiClient = {
 
   // --- Security ---
   getCircuitBreakerStatus: ApiService.getCircuitBreakerStatus,
-  isAudited: ApiService.isAudited,
+  isContractPaused: ApiService.isContractPaused,
 
   // --- Governance ---
   verifyGovernanceSignature: ApiService.verifyGovernanceSignature,
