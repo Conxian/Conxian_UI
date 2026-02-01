@@ -28,12 +28,18 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-sans h-full antialiased text-text`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+        >
+          Skip to main content
+        </a>
         <Providers>
           <div>
             <Sidebar />
             <div className="lg:pl-64">
               <Header />
-              <main className="py-10">
+              <main id="main-content" className="py-10">
                 <div className="px-4 sm:px-6 lg:px-8">{children}</div>
               </main>
             </div>
