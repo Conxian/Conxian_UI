@@ -8,6 +8,7 @@ import { callReadOnly, getFungibleTokenBalances, FungibleTokenBalance } from "@/
 import { decodeResultHex, getTupleField, getUint } from "@/lib/clarity";
 import { useWallet } from "@/lib/wallet";
 import ConnectWallet from "@/components/ConnectWallet";
+import { formatAmount, parseAmount } from "@/lib/utils";
 // Removed useApi import as we are using direct contract calls
 // import { useApi } from "@/lib/api-client"; 
 
@@ -17,35 +18,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
+import TokenSelect from "@/components/ui/TokenSelect";
 
 
 // --- Helper Functions ---
 // No change in helper functions, keeping them as is.
-
-function formatAmount(amount: string, decimals = 6): string {
-  if (!amount) return "0";
-  try {
-    const padded = amount.padStart(decimals + 1, "0");
-    const integerPart = padded.slice(0, -decimals);
-    const fractionalPart = padded.slice(-decimals);
-    return `${integerPart}.${fractionalPart}`;
-  } catch {
-    return "0";
-  }
-}
-
-function parseAmount(amount: string, decimals = 6): string {
-  if (!amount) return "0";
-  try {
-    const [integerPart, fractionalPart = ""] = amount.split(".");
-    const paddedFractional = fractionalPart
-      .substring(0, decimals)
-      .padEnd(decimals, "0");
-    return BigInt(integerPart + paddedFractional).toString();
-  } catch {
-    return "0";
-  }
-}
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = React.useState<T>(value);
@@ -279,13 +256,13 @@ export default function SwapPage() {
     }
   };
   
-    const handleFromTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFromToken(e.target.value);
+  const handleFromTokenChange = (tokenId: string) => {
+    setFromToken(tokenId);
     setToAmount("");
   };
 
-  const handleToTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setToToken(e.target.value);
+  const handleToTokenChange = (tokenId: string) => {
+    setToToken(tokenId);
     setToAmount("");
   };
 
@@ -335,14 +312,13 @@ export default function SwapPage() {
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <select
-                    id="from-token"
-                    value={fromToken}
-                    onChange={handleFromTokenChange}
-                    className="w-full rounded-md border border-accent/20 bg-background-light text-text py-2 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                  >
-                    {Tokens.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
-                  </select>
+                  <TokenSelect
+                    tokens={Tokens}
+                    selectedToken={fromToken}
+                    onSelect={handleFromTokenChange}
+                    balances={balances}
+                    className="w-full"
+                  />
                   <Input
                     type="text"
                     id="from-amount"
@@ -366,14 +342,13 @@ export default function SwapPage() {
               <div className="space-y-2">
                 <label htmlFor="to-token" className="text-sm text-text-secondary">To</label>
                 <div className="flex items-center gap-2">
-                  <select
-                    id="to-token"
-                    value={toToken}
-                    onChange={handleToTokenChange}
-                    className="w-full rounded-md border border-accent/20 bg-background-light text-text py-2 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                  >
-                    {Tokens.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
-                  </select>
+                  <TokenSelect
+                    tokens={Tokens}
+                    selectedToken={toToken}
+                    onSelect={handleToTokenChange}
+                    balances={balances}
+                    className="w-full"
+                  />
                   <Input
                     type="text"
                     id="to-amount"

@@ -70,8 +70,8 @@ describe('UI Components', () => {
       addToast: mockAddToast,
     });
     // Ensure window.StacksProvider is not set by default
-    if ((window as any).StacksProvider) {
-      delete (window as any).StacksProvider;
+    if (window.StacksProvider) {
+      delete window.StacksProvider;
     }
   });
 
@@ -82,13 +82,13 @@ describe('UI Components', () => {
     });
 
     it('should render "Connect Wallet" when provider is available and user is not connected', () => {
-      (window as any).StacksProvider = {};
+      window.StacksProvider = {};
       render(<WalletProvider><ConnectWallet /></WalletProvider>);
       expect(screen.getByRole('button', { name: /connect wallet/i })).toBeInTheDocument();
     });
 
     it('should render disconnect and copy buttons when user is connected', () => {
-      (window as any).StacksProvider = {};
+      window.StacksProvider = {};
       mockedUseWallet.mockReturnValue({
         stxAddress: 'SP2Z0Y4F6T8B7E6V5A0D3C1X9R5G4H3J2K1N0P8Q',
       });
@@ -100,7 +100,7 @@ describe('UI Components', () => {
     });
 
     it('should copy address to clipboard when copy button is clicked', async () => {
-      (window as any).StacksProvider = {};
+      window.StacksProvider = {};
       const user = userEvent.setup();
       const address = 'SP2Z0Y4F6T8B7E6V5A0D3C1X9R5G4H3J2K1N0P8Q';
       mockedUseWallet.mockReturnValue({ stxAddress: address });

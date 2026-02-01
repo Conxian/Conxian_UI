@@ -31,7 +31,7 @@ function getNetwork(): StacksNetwork {
   return createNetwork(name);
 }
 
-export default function TxPage() {
+function TxContent() {
   const searchParams = useSearchParams();
   const templateParam = searchParams.get("template");
 
@@ -576,5 +576,13 @@ export default function TxPage() {
         </div>
       </form>
     </div>
+  );
+}
+
+export default function TxPage() {
+  return (
+    <React.Suspense fallback={<div className="p-10 text-center">Loading...</div>}>
+      <TxContent />
+    </React.Suspense>
   );
 }

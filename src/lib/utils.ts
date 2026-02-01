@@ -18,3 +18,16 @@ export function formatAmount(amount: string, decimals = 6): string {
     return "0";
   }
 }
+
+export function parseAmount(amount: string, decimals = 6): string {
+  if (!amount) return "0";
+  try {
+    const [integerPart, fractionalPart = ""] = amount.split(".");
+    const paddedFractional = fractionalPart
+      .substring(0, decimals)
+      .padEnd(decimals, "0");
+    return BigInt(integerPart + paddedFractional).toString();
+  } catch {
+    return "0";
+  }
+}

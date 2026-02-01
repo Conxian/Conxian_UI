@@ -3,16 +3,6 @@
  * Last synced: January 2026
  * 
  * These contract IDs match the actual deployed contracts in the Conxian repo.
-<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
-<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
- * The base principal should be updated per environment (devnet/testnet/mainnet).
- */
-
-// Base principal - update per environment
-export const BASE_PRINCIPAL = "STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ";
-=======
-=======
->>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
  * The base principal is configured per environment via NEXT_PUBLIC_CONTRACT_DEPLOYER.
  */
 
@@ -37,10 +27,6 @@ const getNetwork = (): NetworkType => {
 export const NETWORK = getNetwork();
 export const BASE_PRINCIPAL = 
   process.env.NEXT_PUBLIC_CONTRACT_DEPLOYER || DEPLOYER_PRINCIPALS[NETWORK];
-<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
->>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
-=======
->>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
 
 export const CoreContracts = [
   // ============================================
@@ -90,6 +76,11 @@ export const CoreContracts = [
     label: "Swap Router",
   },
   {
+    id: `${BASE_PRINCIPAL}.multi-hop-router-v3`,
+    kind: "dex",
+    label: "Multi-hop Router V3",
+  },
+  {
     id: `${BASE_PRINCIPAL}.liquidity-provider`,
     kind: "dex",
     label: "Liquidity Provider",
@@ -103,6 +94,11 @@ export const CoreContracts = [
     id: `${BASE_PRINCIPAL}.vault`,
     kind: "vault",
     label: "Vault",
+  },
+  {
+    id: `${BASE_PRINCIPAL}.dex-factory-v2`,
+    kind: "dex",
+    label: "DEX Factory V2",
   },
 
   // ============================================
@@ -161,8 +157,6 @@ export const CoreContracts = [
     id: `${BASE_PRINCIPAL}.proposal-registry`,
     kind: "governance",
     label: "Proposal Registry",
-<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
-<<<<<<< C:/Users/bmokoka/Conxian-Labs/Conxian_UI/src/lib/contracts.ts
   },
   {
     id: `${BASE_PRINCIPAL}.voting`,
@@ -175,34 +169,6 @@ export const CoreContracts = [
     label: "Community Voting Engine",
   },
   {
-=======
-  },
-  {
-    id: `${BASE_PRINCIPAL}.voting`,
-    kind: "governance",
-    label: "Voting",
-  },
-  {
-    id: `${BASE_PRINCIPAL}.community-voting-engine`,
-    kind: "governance",
-    label: "Community Voting Engine",
-  },
-  {
->>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
-=======
-  },
-  {
-    id: `${BASE_PRINCIPAL}.voting`,
-    kind: "governance",
-    label: "Voting",
-  },
-  {
-    id: `${BASE_PRINCIPAL}.community-voting-engine`,
-    kind: "governance",
-    label: "Community Voting Engine",
-  },
-  {
->>>>>>> C:/Users/bmokoka/.windsurf/worktrees/Conxian_UI/Conxian_UI-61d05e3f/src/lib/contracts.ts
     id: `${BASE_PRINCIPAL}.dao-treasury`,
     kind: "governance",
     label: "DAO Treasury",

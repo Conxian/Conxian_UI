@@ -10,6 +10,7 @@ const buttonVariants = cva(
         secondary: "bg-accent text-accent-foreground hover:bg-accent/90",
         outline:
           "border border-accent/30 bg-background-light text-text hover:bg-accent/10",
+        ghost: "hover:bg-accent/10 text-text",
       },
       size: {
         default: "h-10 px-4 py-2",
