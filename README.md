@@ -2,14 +2,7 @@
 
 ![Conxian UI Homepage](docs/images/homepage.png)
 
-This is the official UI for interacting with Conxian contracts on the Stacks blockchain. Whether you're a casual user or a seasoned pro, we've got you covered.
-
-## Two Modes, One Seamless Experience
-
-We offer two distinct modes to cater to your needs:
-
-* **Retail Mode**: A simple and intuitive interface for everyday users.
-* **PRO Mode**: A dark-themed, power-packed interface for our more advanced users.
+This is the official UI for interacting with Conxian contracts on the Stacks blockchain. Whether you're a casual user or a seasoned pro, we've got you covered with a single, unified interface.
 
 ## Our Signature Look: The Conxian Color Palette
 

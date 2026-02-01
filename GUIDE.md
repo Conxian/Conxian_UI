@@ -54,16 +54,6 @@ Click on the "Swap" link to access our user-friendly interface for exchanging on
 
 Throughout your interaction with the Conxian UI, you will receive real-time feedback through **toast notifications**. These pop-up messages will inform you about the success or failure of your transactions, wallet connections, and other important actions.
 
-## For Our PRO Users: Unleash the Power of Conxian
-
-Our PRO mode is designed for power users who want to take full advantage of the Conxian ecosystem. With a sleek, dark-themed interface and advanced features, you'll feel right at home.
-
-### The PRO Experience:
-
-*   **A Professional Look and Feel**: Our PRO mode features a dark-themed navbar and a "PRO" label next to the logo, so you know you're in the right place.
-*   **Advanced Features**: Access to advanced features and a more detailed view of the Conxian ecosystem.
-*   **A Seamless Transition**: Switch between retail and PRO modes with ease, so you can choose the experience that's right for you.
-
 ## For Our Developers: A Quick Start Guide
 
 Ready to dive in and start building? Here's how to get up and running in no time:
@@ -86,4 +76,4 @@ And that's it! You're ready to start building.
 
 ## We're Here to Help
 
-Whether you're a retail user, a pro, or a developer, we're here to help you make the most of the Conxian UI. If you have any questions, don't hesitate to reach out to our team. Happy building!
+Whether you're a standard user, a power user, or a developer, we're here to help you make the most of the Conxian UI. If you have any questions, don't hesitate to reach out to our team. Happy building!

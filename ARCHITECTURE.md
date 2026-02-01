@@ -53,12 +53,12 @@ Here's a step-by-step look at how data flows through our app:
 2.  **A Call to Action**: The UI then calls a function from `src/lib/contract-interactions.ts` or specific hooks like `useSelfLaunch`.
 3.  **A Conversation with the Blockchain**:
     *   For read-only operations (like checking a balance), we use `fetchCallReadOnlyFunction` from `@stacks/transactions` to query a Stacks node.
-    *   For transactions (like making a swap), we use `request` from `@stacks/connect` to open a wallet pop-up, allowing the user to approve the transaction securely.
+    * For transactions (like making a swap), we use `@stacks/connect` to open a wallet pop-up, allowing the user to approve the transaction securely.
 4.  **A Fresh Look**: The UI updates to reflect the results of the blockchain interaction, providing a seamless user experience.
 
 ## 6. Staying Ahead of the Curve: Our Tech Stack
 
-We're committed to using the latest and greatest technologies to ensure a stable and secure platform. That's why we've updated our codebase to use the `request` method from `@stacks/connect`, replacing the deprecated `openContractCall`. This ensures we're aligned with the latest standards and best practices.
+We're committed to using the latest and greatest technologies to ensure a stable and secure platform. We use React 19, Next.js 15, and Tailwind CSS v4 to provide a high-performance, modern user experience.
 
 ## 7. Screenshots
 

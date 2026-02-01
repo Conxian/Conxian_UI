@@ -124,7 +124,7 @@ export async function waitForTx(
     const tx = await getTx(txId);
     const status = tx?.tx_status;
 
-    if (status === "success") return tx;
+    if (status === "success" && tx) return tx;
     if (typeof status === "string" && status !== "pending") {
       throw new Error(`tx_status=${status}`);
     }

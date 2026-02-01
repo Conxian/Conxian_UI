@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Tokens } from '@/lib/contracts';
 import { FungibleTokenBalance } from '@/lib/coreApi';
-import TokenIcon from './TokenIcon'; // Assuming TokenIcon is in the same directory
+import TokenIcon from './TokenIcon';
 import { cn, formatAmount } from '@/lib/utils';
 
 interface TokenSelectProps {

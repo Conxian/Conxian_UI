@@ -12,16 +12,18 @@ import {
   PostConditionMode
 } from "@stacks/transactions";
 import { Tokens, CoreContracts } from '@/lib/contracts';
-import { callReadOnly, getContractSource, waitForTx } from "@/lib/coreApi";
+import { callReadOnly, getContractSource, waitForTx, getFungibleTokenBalances, FungibleTokenBalance } from "@/lib/coreApi";
 import { decodeResultHex, getTupleField } from "@/lib/clarity";
 import { useWallet } from '@/lib/wallet';
 import ConnectWallet from '@/components/ConnectWallet';
+import { parseAmount } from "@/lib/utils";
 // import { IntentManager } from '@/lib/intent-manager'; // Unused
 
 // Re-styled components
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import TokenSelect from '@/components/ui/TokenSelect';
 
 // const intentManager = new IntentManager(); // Unused
 
@@ -46,7 +48,7 @@ function findTokenIdFromSymbol(symbol: string): string | undefined {
   return tok?.id;
 }
 
-export default function AddLiquidityPage() {
+function AddLiquidityContent() {
   const searchParams = useSearchParams();
   const pairParam = searchParams.get("pair");
   const tokenAParam = searchParams.get("tokenA");
@@ -56,9 +58,16 @@ export default function AddLiquidityPage() {
   const [tokenB, setTokenB] = React.useState(Tokens[1].id);
   const [amountA, setAmountA] = React.useState('100');
   const [amountB, setAmountB] = React.useState('200');
+  const [balances, setBalances] = React.useState<FungibleTokenBalance[]>([]);
   const [status, setStatus] = React.useState('');
   const [sending, setSending] = React.useState(false);
   const { connectWallet, stxAddress } = useWallet();
+
+  React.useEffect(() => {
+    if (stxAddress) {
+      getFungibleTokenBalances(stxAddress).then(setBalances);
+    }
+  }, [stxAddress]);
 
   React.useEffect(() => {
     let nextA: string | undefined;
@@ -145,6 +154,9 @@ export default function AddLiquidityPage() {
         // Contracts typically sort.
         // Let's perform a lightweight sort here.
         
+        const tokenAInfo = Tokens.find(t => t.id === tokenA);
+        const tokenBInfo = Tokens.find(t => t.id === tokenB);
+
         const sorted = [tokenA, tokenB].sort();
         const t0 = sorted[0];
         const t1 = sorted[1];
@@ -153,16 +165,11 @@ export default function AddLiquidityPage() {
         const amt0 = t0 === tokenA ? amountA : amountB;
         const amt1 = t1 === tokenB ? amountB : amountA;
 
-        // Amounts need to be integers (scaled). Assuming decimals are handled or inputs are raw.
-        // Using inputs as raw integers for now as simplified example, but should use parseAmount.
-        // Re-using logic:
-        // const t0Decimals = Tokens.find(t => t.id === t0)?.decimals || 6;
-        // const t1Decimals = Tokens.find(t => t.id === t1)?.decimals || 6;
-        // const amt0Int = BigInt(parseFloat(amt0) * (10 ** t0Decimals)); // Rough
-        
-        // Let's assume input is raw for simplicity or apply simple scaling
-        const amt0Int = BigInt(Math.floor(parseFloat(amt0) * 1000000)); // Default 6 decimals
-        const amt1Int = BigInt(Math.floor(parseFloat(amt1) * 1000000));
+        const t0Info = t0 === tokenA ? tokenAInfo : tokenBInfo;
+        const t1Info = t1 === tokenB ? tokenBInfo : tokenAInfo;
+
+        const amt0Int = BigInt(parseAmount(amt0, t0Info?.decimals || 6));
+        const amt1Int = BigInt(parseAmount(amt1, t1Info?.decimals || 6));
 
         const [poolAddr, poolName] = poolPrincipal.split(".");
 
@@ -213,14 +220,13 @@ export default function AddLiquidityPage() {
           <div className="space-y-2">
             <label htmlFor="token-a" className="text-sm text-text-secondary">Token A</label>
             <div className="flex items-center gap-2">
-              <select
-                id="token-a"
-                value={tokenA}
-                onChange={(e) => setTokenA(e.target.value)}
-                className="w-full rounded-md border border-accent/20 bg-background-light text-text py-2 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                {Tokens.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
-              </select>
+              <TokenSelect
+                tokens={Tokens}
+                selectedToken={tokenA}
+                onSelect={(id) => setTokenA(id)}
+                balances={balances}
+                className="w-full"
+              />
               <Input
                 type="number"
                 id="amount-a"
@@ -236,14 +242,13 @@ export default function AddLiquidityPage() {
           <div className="space-y-2">
             <label htmlFor="token-b" className="text-sm text-text-secondary">Token B</label>
             <div className="flex items-center gap-2">
-              <select
-                id="token-b"
-                value={tokenB}
-                onChange={(e) => setTokenB(e.target.value)}
-                className="w-full rounded-md border border-accent/20 bg-background-light text-text py-2 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                {Tokens.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
-              </select>
+              <TokenSelect
+                tokens={Tokens}
+                selectedToken={tokenB}
+                onSelect={(id) => setTokenB(id)}
+                balances={balances}
+                className="w-full"
+              />
               <Input
                 type="number"
                 id="amount-b"
@@ -277,5 +282,13 @@ export default function AddLiquidityPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function AddLiquidityPage() {
+  return (
+    <React.Suspense fallback={<div className="p-10 text-center">Loading...</div>}>
+      <AddLiquidityContent />
+    </React.Suspense>
   );
 }
