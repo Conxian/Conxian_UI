@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import TokenSelect from "@/components/ui/TokenSelect";
+import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 
 
 // --- Helper Functions ---
@@ -306,7 +307,7 @@ export default function SwapPage() {
               {/* From Token */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-sm">
-                  <label htmlFor="from-token" className="text-text-secondary">From</label>
+                  <label htmlFor="from-amount" className="text-text-secondary">From</label>
                   <span className="text-text-muted">
                     Balance: {fromTokenBalance ? formatAmount(fromTokenBalance.balance, fromTokenInfo?.decimals ?? 6) : 0}
                   </span>
@@ -331,16 +332,20 @@ export default function SwapPage() {
 
               {/* Invert Button */}
               <div className="flex justify-center">
-                <Button onClick={invertTokens} variant="outline" size="icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 12l-4-4m4 4l4-4m6 8v-12m0 12l4-4m-4 4l-4-4" />
-                  </svg>
+                <Button
+                  onClick={invertTokens}
+                  variant="outline"
+                  size="icon"
+                  aria-label="Invert tokens"
+                  title="Invert tokens"
+                >
+                  <ArrowsUpDownIcon className="h-5 w-5" />
                 </Button>
               </div>
 
               {/* To Token */}
               <div className="space-y-2">
-                <label htmlFor="to-token" className="text-sm text-text-secondary">To</label>
+                <label htmlFor="to-amount" className="text-sm text-text-secondary">To</label>
                 <div className="flex items-center gap-2">
                   <TokenSelect
                     tokens={Tokens}
@@ -362,9 +367,14 @@ export default function SwapPage() {
 
               {/* Slippage */}
               <div className="flex justify-between items-center text-sm">
-                <span className="text-text-secondary">Slippage Tolerance</span>
+                <label
+                  htmlFor="slippage-input"
+                  className="text-text-secondary cursor-pointer"
+                >
+                  Slippage Tolerance
+                </label>
                 <div className="flex items-center gap-2">
-                  {[0.1, 0.5, 1.0].map(val => (
+                  {[0.1, 0.5, 1.0].map((val) => (
                     <Badge
                       key={val}
                       onClick={() => setSlippage(val)}
@@ -375,10 +385,12 @@ export default function SwapPage() {
                     </Badge>
                   ))}
                   <Input
+                    id="slippage-input"
                     type="number"
                     value={slippage}
-                    onChange={e => setSlippage(parseFloat(e.target.value))}
+                    onChange={(e) => setSlippage(parseFloat(e.target.value))}
                     className="w-20 text-right"
+                    aria-label="Slippage tolerance percentage"
                   />
                 </div>
               </div>
