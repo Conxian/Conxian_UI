@@ -3,3 +3,9 @@
 **Learning:** Conditionally rendering an `aria-live` region can cause screen readers to miss announcements. To ensure reliability, the element with the `aria-live` attribute should be persistently rendered in the DOM, with only its content changing dynamically.
 
 **Action:** When implementing announcements or status updates for screen readers, I will always ensure the `aria-live` container element is rendered unconditionally, and only update its child content.
+
+## 2025-05-15 - Improving Interactive Badge Accessibility
+
+**Learning:** Using a `div` or `span` for interactive elements like slippage selection prevents keyboard users and screen readers from interacting with them correctly.
+
+**Action:** I will use `<button>` elements styled with `badgeVariants` and `aria-pressed` for toggleable selection groups to ensure full accessibility and consistent styling.
