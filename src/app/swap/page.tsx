@@ -368,7 +368,7 @@ export default function SwapPage() {
                   aria-label="Invert tokens"
                   title="Invert tokens"
                 >
-                  <ArrowsUpDownIcon className="h-5 w-5" />
+                  <ArrowsUpDownIcon className="h-5 w-5 transition-transform duration-500 active:rotate-180" />
                 </Button>
               </div>
 
@@ -447,14 +447,15 @@ export default function SwapPage() {
                 )}
               </div>
               
-              {status && (
-                <p
-                  className="text-center text-sm text-text-muted mt-4"
-                  aria-live="polite"
-                >
-                  {status}
-                </p>
-              )}
+              <p
+                className={cn(
+                  "text-center text-sm text-text-muted mt-4 min-h-[1.25rem] transition-opacity duration-300",
+                  status ? "opacity-100" : "opacity-0"
+                )}
+                aria-live="polite"
+              >
+                {status}
+              </p>
 
             </CardContent>
           </Card>
