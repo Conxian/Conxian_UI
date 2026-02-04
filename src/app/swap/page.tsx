@@ -8,7 +8,7 @@ import { callReadOnly, getFungibleTokenBalances, FungibleTokenBalance } from "@/
 import { decodeResultHex, getTupleField, getUint } from "@/lib/clarity";
 import { useWallet } from "@/lib/wallet";
 import ConnectWallet from "@/components/ConnectWallet";
-import { formatAmount, parseAmount } from "@/lib/utils";
+import { formatAmount, parseAmount, cn } from "@/lib/utils";
 // Removed useApi import as we are using direct contract calls
 // import { useApi } from "@/lib/api-client"; 
 
@@ -17,7 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
+import { badgeVariants } from "@/components/ui/Badge";
 import TokenSelect from "@/components/ui/TokenSelect";
 import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 
@@ -256,7 +256,13 @@ export default function SwapPage() {
       setFromAmount(parseAmount(value, fromTokenInfo?.decimals ?? 6));
     }
   };
-  
+
+  const handleMax = () => {
+    if (fromTokenBalance) {
+      setFromAmount(fromTokenBalance.balance);
+    }
+  };
+
   const handleFromTokenChange = (tokenId: string) => {
     setFromToken(tokenId);
     setToAmount("");
@@ -307,10 +313,33 @@ export default function SwapPage() {
               {/* From Token */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-sm">
-                  <label htmlFor="from-amount" className="text-text-secondary">From</label>
-                  <span className="text-text-muted">
-                    Balance: {fromTokenBalance ? formatAmount(fromTokenBalance.balance, fromTokenInfo?.decimals ?? 6) : 0}
-                  </span>
+                  <label htmlFor="from-amount" className="text-text-secondary">
+                    From
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-text-muted">
+                      Balance:{" "}
+                      {fromTokenBalance
+                        ? formatAmount(
+                            fromTokenBalance.balance,
+                            fromTokenInfo?.decimals ?? 6
+                          )
+                        : 0}
+                    </span>
+                    {fromTokenBalance && (
+                      <button
+                        type="button"
+                        onClick={handleMax}
+                        className="text-xs font-bold text-accent hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded px-1"
+                        aria-label={`Set maximum amount (${formatAmount(
+                          fromTokenBalance.balance,
+                          fromTokenInfo?.decimals ?? 6
+                        )})`}
+                      >
+                        MAX
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <TokenSelect
@@ -375,14 +404,20 @@ export default function SwapPage() {
                 </label>
                 <div className="flex items-center gap-2">
                   {[0.1, 0.5, 1.0].map((val) => (
-                    <Badge
+                    <button
                       key={val}
+                      type="button"
                       onClick={() => setSlippage(val)}
-                      variant={slippage === val ? "default" : "secondary"}
-                      className="cursor-pointer"
+                      className={cn(
+                        badgeVariants({
+                          variant: slippage === val ? "default" : "secondary",
+                        }),
+                        "cursor-pointer"
+                      )}
+                      aria-pressed={slippage === val}
                     >
                       {val}%
-                    </Badge>
+                    </button>
                   ))}
                   <Input
                     id="slippage-input"
@@ -412,7 +447,14 @@ export default function SwapPage() {
                 )}
               </div>
               
-              {status && <p className="text-center text-sm text-text-muted mt-4">{status}</p>}
+              {status && (
+                <p
+                  className="text-center text-sm text-text-muted mt-4"
+                  aria-live="polite"
+                >
+                  {status}
+                </p>
+              )}
 
             </CardContent>
           </Card>

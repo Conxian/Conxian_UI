@@ -48,23 +48,54 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
       <button
         onClick={() => setIsOpen(!isOpen)}
         type="button"
-        className="flex items-center justify-between w-full px-4 py-2 rounded-md border border-accent/20 bg-background-light text-text hover:bg-accent/10 transition-colors"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-label={`Select token, current selection is ${selectedTokenInfo?.label}`}
+        className="flex items-center justify-between w-full px-4 py-2 rounded-md border border-accent/20 bg-background-light text-text hover:bg-accent/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <div className="flex items-center">
-          {selectedTokenInfo && <TokenIcon token={selectedTokenInfo.label} className="w-6 h-6 mr-3" />}
+          {selectedTokenInfo && (
+            <TokenIcon
+              token={selectedTokenInfo.label}
+              className="w-6 h-6 mr-3"
+            />
+          )}
           <span>{selectedTokenInfo?.label}</span>
         </div>
-        <svg className={`w-4 h-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+        <svg
+          className={`w-4 h-4 transition-transform ${isOpen ? "transform rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          ></path>
+        </svg>
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-background-light border border-accent/20 rounded-md shadow-lg">
-          <ul className="py-1">
-            {tokens.map(token => (
+        <div className="absolute z-10 w-full mt-1 bg-background-light border border-accent/20 rounded-md shadow-lg overflow-hidden">
+          <ul className="py-1" role="listbox">
+            {tokens.map((token) => (
               <li
                 key={token.id}
+                role="option"
+                aria-selected={token.id === selectedToken}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelect(token.id);
+                  }
+                }}
                 onClick={() => handleSelect(token.id)}
-                className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-accent/10 text-text"
+                className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-accent/10 text-text transition-colors focus:bg-accent/10 focus:outline-none"
               >
                 <div className="flex items-center">
                   <TokenIcon token={token.label} className="w-6 h-6 mr-3" />
