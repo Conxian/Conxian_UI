@@ -15,6 +15,7 @@ import type { StacksNetwork } from "@stacks/network";
 import { getContractInterface } from "@/lib/coreApi";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { cn } from "@/lib/utils";
 
 type AbiArg = { name?: string; type?: unknown };
 type AbiFn = { name?: string; args?: AbiArg[] };
@@ -564,15 +565,16 @@ function TxContent() {
           >
             {sending ? "Sending..." : "Open Wallet"}
           </Button>
-          {status && (
-            <div
-              role="status"
-              aria-live="polite"
-              className="text-xs text-text-secondary"
-            >
-              {status}
-            </div>
-          )}
+          <div
+            role="status"
+            aria-live="polite"
+            className={cn(
+              "text-xs text-text-secondary transition-opacity duration-300 min-h-[1rem]",
+              status ? "opacity-100" : "opacity-0"
+            )}
+          >
+            {status}
+          </div>
         </div>
       </form>
     </div>

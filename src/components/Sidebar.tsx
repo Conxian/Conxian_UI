@@ -30,7 +30,7 @@ export default function Sidebar() {
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/conxian-mark-b.svg"
-            alt="Conxian"
+            alt=""
             width={28}
             height={28}
             className="h-7 w-7"
@@ -47,6 +47,7 @@ export default function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
+              aria-current={pathname === item.href ? "page" : undefined}
               className={cn(
                 "group flex items-center px-3 py-2 text-sm font-medium rounded-md",
                 pathname === item.href

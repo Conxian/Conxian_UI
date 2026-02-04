@@ -9,3 +9,9 @@
 **Learning:** Using a `div` or `span` for interactive elements like slippage selection prevents keyboard users and screen readers from interacting with them correctly.
 
 **Action:** I will use `<button>` elements styled with `badgeVariants` and `aria-pressed` for toggleable selection groups to ensure full accessibility and consistent styling.
+
+## 2025-12-29 - Layout Stability and Persistence for a11y
+
+**Learning:** Combining persistent `aria-live` regions with `min-h` and `opacity` transitions solves both accessibility (reliable announcements) and UX (eliminating layout shift/CLS) issues simultaneously.
+
+**Action:** Prefer persistent containers with `min-h` and opacity transitions over conditional rendering for status messages and live announcements.
