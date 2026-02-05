@@ -15,3 +15,9 @@
 **Learning:** Combining persistent `aria-live` regions with `min-h` and `opacity` transitions solves both accessibility (reliable announcements) and UX (eliminating layout shift/CLS) issues simultaneously.
 
 **Action:** Prefer persistent containers with `min-h` and opacity transitions over conditional rendering for status messages and live announcements.
+
+## 2025-05-20 - Enhanced Blockchain Transaction Feedback
+
+**Learning:** Providing immediate, actionable feedback after a blockchain transaction significantly reduces user anxiety. A plain "Transaction submitted" message is insufficient.
+
+**Action:** Always include a truncated transaction ID as a link to the relevant block explorer and a `CopyButton` for one-click utility. Use monospaced fonts for IDs to improve readability.

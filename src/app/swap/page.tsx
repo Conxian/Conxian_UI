@@ -8,7 +8,9 @@ import { callReadOnly, getFungibleTokenBalances, FungibleTokenBalance } from "@/
 import { decodeResultHex, getTupleField, getUint } from "@/lib/clarity";
 import { useWallet } from "@/lib/wallet";
 import ConnectWallet from "@/components/ConnectWallet";
+import CopyButton from "@/components/CopyButton";
 import { formatAmount, parseAmount, cn } from "@/lib/utils";
+import { AppConfig } from "@/lib/config";
 // Removed useApi import as we are using direct contract calls
 // import { useApi } from "@/lib/api-client"; 
 
@@ -61,6 +63,7 @@ export default function SwapPage() {
   const [loading, setLoading] = React.useState(false);
   const [sending, setSending] = React.useState(false);
   const [status, setStatus] = React.useState<string>("");
+  const [txId, setTxId] = React.useState<string | null>(null);
   const { connectWallet, stxAddress } = useWallet();
   // const api = useApi(); // Unused
 
@@ -189,6 +192,7 @@ export default function SwapPage() {
 
     setSending(true);
     setStatus("");
+    setTxId(null);
 
     try {
       const amountIn = BigInt(fromAmount);
@@ -234,7 +238,8 @@ export default function SwapPage() {
           postConditionMode: PostConditionMode.Allow, // Using Allow for ease of testing
           postConditions: [],
           onFinish: (data) => {
-              setStatus(`Submitted. Tx ID: ${data.txId}`);
+              setTxId(data.txId);
+              setStatus("Transaction submitted!");
               setSending(false);
           },
           onCancel: () => {
@@ -388,7 +393,7 @@ export default function SwapPage() {
                     id="to-amount"
                     value={formatAmount(toAmount, toTokenInfo?.decimals ?? 6)}
                     readOnly
-                    className="w-full text-right"
+                    className="w-full text-right bg-neutral-light"
                     placeholder="0.0"
                   />
                 </div>
@@ -419,14 +424,17 @@ export default function SwapPage() {
                       {val}%
                     </button>
                   ))}
-                  <Input
-                    id="slippage-input"
-                    type="number"
-                    value={slippage}
-                    onChange={(e) => setSlippage(parseFloat(e.target.value))}
-                    className="w-20 text-right"
-                    aria-label="Slippage tolerance percentage"
-                  />
+                  <div className="relative flex items-center">
+                    <Input
+                      id="slippage-input"
+                      type="number"
+                      value={slippage}
+                      onChange={(e) => setSlippage(parseFloat(e.target.value))}
+                      className="w-24 text-right pr-8"
+                      aria-label="Slippage tolerance percentage"
+                    />
+                    <span className="absolute right-3 text-text-muted pointer-events-none text-sm">%</span>
+                  </div>
                 </div>
               </div>
 
@@ -447,15 +455,29 @@ export default function SwapPage() {
                 )}
               </div>
               
-              <p
+              <div
                 className={cn(
-                  "text-center text-sm text-text-muted mt-4 min-h-[1.25rem] transition-opacity duration-300",
-                  status ? "opacity-100" : "opacity-0"
+                  "text-center text-sm mt-4 min-h-[3rem] flex flex-col items-center justify-center transition-opacity duration-300",
+                  (status || txId) ? "opacity-100" : "opacity-0"
                 )}
                 aria-live="polite"
               >
-                {status}
-              </p>
+                {status && <p className="text-text-muted">{status}</p>}
+                {txId && (
+                  <div className="flex items-center gap-2 mt-1">
+                    <a
+                      href={`https://explorer.hiro.so/txid/${txId}?chain=${AppConfig.network}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent hover:underline font-mono text-xs"
+                      title="View on Stacks Explorer"
+                    >
+                      {txId.substring(0, 10)}...{txId.substring(txId.length - 10)}
+                    </a>
+                    <CopyButton textToCopy={txId} ariaLabel="Transaction ID" className="h-6 w-6 p-1" />
+                  </div>
+                )}
+              </div>
 
             </CardContent>
           </Card>
