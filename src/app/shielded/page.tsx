@@ -107,7 +107,7 @@ export default function Shielded() {
           {wallets.map((wallet) => (
             <li
               key={wallet.id}
-              className="p-4 rounded-md border border-accent/20 bg-background-light"
+              className="p-4 rounded-md border border-accent/20 bg-background-paper"
             >
               <p className="font-medium text-text">{wallet.id}</p>
               <p className="text-sm text-text/80">Balance: {wallet.balance}</p>

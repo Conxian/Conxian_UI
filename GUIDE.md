@@ -65,12 +65,12 @@ git clone https://github.com/Conxian/Conxian-UI.git
 ```
 ### Step 2: Install Dependencies
 ```bash
-npm install
+pnpm install
 ```
 ### Step 3: Run the Dev Server
 
 ```bash
-NEXT_PUBLIC_CORE_API_URL=https://api.testnet.hiro.so npm run dev
+NEXT_PUBLIC_CORE_API_URL=https://api.testnet.hiro.so pnpm run dev
 ```
 And that's it! You're ready to start building.
 

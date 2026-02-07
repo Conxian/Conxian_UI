@@ -15,6 +15,8 @@ import {
   noneCV,
   someCV,
 } from "@stacks/transactions";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 
 export type ArgType =
   | "uint"
@@ -129,7 +131,7 @@ const ArgRow = React.memo(function ArgRow({
           return (
             <>
               <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
-              <input id={`arg-value-${row.id}`} className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text opacity-50" disabled aria-disabled="true" value="" readOnly />
+              <Input id={`arg-value-${row.id}`} className="col-span-2 opacity-50" disabled aria-disabled="true" value="" readOnly />
             </>
           );
         }
@@ -152,13 +154,13 @@ const ArgRow = React.memo(function ArgRow({
           return (
             <>
               <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
-              <input
+              <Input
                 id={`arg-value-${row.id}`}
                 type="number"
                 inputMode="numeric"
                 step="1"
                 {...(base === 'uint' ? { min: 0 } : {})}
-                className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="col-span-2"
                 value={row.value}
                 onChange={(e) => onUpdate(row.id, { value: e.target.value })}
               />
@@ -169,9 +171,9 @@ const ArgRow = React.memo(function ArgRow({
           return (
             <>
               <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
-              <input
+              <Input
                 id={`arg-value-${row.id}`}
-                className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="col-span-2"
                 value={row.value}
                 onChange={(e) => onUpdate(row.id, { value: e.target.value })}
                 placeholder="0x..."
@@ -184,9 +186,9 @@ const ArgRow = React.memo(function ArgRow({
         return (
           <>
             <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
-            <input
+            <Input
               id={`arg-value-${row.id}`}
-              className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="col-span-2"
               value={row.value}
               onChange={(e) => onUpdate(row.id, { value: e.target.value })}
               placeholder={base === 'principal' ? 'ST...' : ''}
@@ -195,9 +197,15 @@ const ArgRow = React.memo(function ArgRow({
         );
       })()}
       <div className="text-right">
-        <button type="button" onClick={() => onRemove(row.id)} className="text-xs px-2 py-1 rounded border border-accent/20 bg-background-light text-text hover:bg-accent/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => onRemove(row.id)}
+          className="text-xs h-7 px-2"
+        >
           Remove
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -285,13 +293,15 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
     <fieldset className="space-y-3" aria-describedby="args-help">
       <legend className="font-medium">Function Arguments</legend>
       <div className="flex items-center justify-end">
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="sm"
           onClick={addRow}
-          className="text-xs px-2 py-1 rounded border border-accent/20 bg-background-light text-text hover:bg-accent/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="text-xs h-7 px-2"
         >
           Add Arg
-        </button>
+        </Button>
       </div>
       {rows.length === 0 && (
         <div id="args-help" className="text-xs text-text-secondary">
