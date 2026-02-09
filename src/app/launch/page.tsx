@@ -89,7 +89,7 @@ export default function LaunchPage() {
       )}
 
       <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4 bg-background border border-accent/20">
+        <TabsList className="grid w-full grid-cols-4 border border-accent/20">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="contribute">Contribute</TabsTrigger>
           <TabsTrigger value="progress">Progress</TabsTrigger>
@@ -223,7 +223,7 @@ export default function LaunchPage() {
                   communityStats.topContributors.map((contrib, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center p-3 border border-accent/20 rounded bg-background-light"
+                      className="flex justify-between items-center p-3 border border-accent/20 rounded-md bg-background-light"
                     >
                       <div>
                         <div className="font-medium text-text">

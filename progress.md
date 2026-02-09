@@ -19,4 +19,5 @@ This document tracks the progress of fixing the failing tests in the Conxian UI 
 
 *   [x] Fix API Service Tests
 *   [x] Fix UI Tests
-*   [ ] Run Tests
+*   [x] Run Tests
+*   [x] Unified UI Design Tokens (P0 Polish)

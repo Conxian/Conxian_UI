@@ -38,9 +38,9 @@ export default function ConnectWallet() {
   if (stxAddress) {
     return (
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-2 rounded-md border border-input bg-background p-2">
+        <div className="flex items-center gap-2 rounded-md border border-accent/30 bg-background-light p-2">
           <span
-            className="text-sm font-mono text-muted-foreground"
+            className="text-sm font-mono text-text-muted"
             title={stxAddress}
           >
             {stxAddress.substring(0, 4)}...

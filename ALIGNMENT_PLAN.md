@@ -9,7 +9,7 @@ This document outlines the strategy to align the Conxian UI (`Conxian_UI`) with 
 **Goal:** Ensure consistency with the official StacksOrbit/Conxian brand palette.
 
 - [x] **Tailwind Configuration:** Updated `tailwind.config.ts` to include `primary-dark`, `text-primary`, `text-secondary`, and `background-paper` to match design system tokens.
-- [ ] **Component Review:**
+- [x] **Component Review:**
   - **Card:** Verify `Card`, `CardHeader`, `CardTitle` utilize the new color tokens.
   - **Buttons:** Ensure hover states use `primary-dark`.
   - **Inputs:** Check borders and focus states for `accent` color usage.
@@ -20,7 +20,7 @@ This document outlines the strategy to align the Conxian UI (`Conxian_UI`) with 
 
 - [x] **Self-Launch Service:** Updated `SelfLaunchContract` class to use `STSZXAKV7DWTDZN2601WR31BM51BD3YTQXKCF9EZ.self-launch-coordinator`.
 - [x] **Swap Estimation:** Refactored `src/app/swap/page.tsx` to use `dex-factory-v2` for pool discovery and `get-quote` for pricing, replacing the obsolete `multi-hop-router` estimation.
-- [ ] **Liquidity Pages:**
+- [x] **Liquidity Pages:**
   - Audit `src/app/add-liquidity/page.tsx` (if exists) or equivalent.
   - Ensure it uses `dex-factory-v2.create-pool` or `concentrated-liquidity-pool.add-liquidity`.
 - [ ] **Token List:** Validate `src/lib/contracts.ts` token list against deployed tokens on Testnet.
