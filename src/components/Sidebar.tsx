@@ -5,7 +5,8 @@ import {
   HomeIcon,
   ShieldCheckIcon,
   PlusCircleIcon,
-  CurrencyDollarIcon,
+  ArrowsUpDownIcon,
+  RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -16,7 +17,8 @@ import { cn } from "@/lib/utils";
 // This prevents the array from being recreated on every render, which is more memory-efficient.
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
-  { name: "Invest", href: "/invest", icon: CurrencyDollarIcon },
+  { name: "Swap", href: "/swap", icon: ArrowsUpDownIcon },
+  { name: "Launch", href: "/launch", icon: RocketLaunchIcon },
   { name: "Add Liquidity", href: "/add-liquidity", icon: PlusCircleIcon },
   { name: "My Positions", href: "/positions", icon: CreditCardIcon },
   { name: "Shielded Wallets", href: "/shielded", icon: ShieldCheckIcon },
