@@ -2,20 +2,17 @@
 
 import React from 'react';
 import { useSearchParams } from 'next/navigation';
-import { openContractCall, openContractDeploy } from "@stacks/connect";
+import { openContractCall } from "@stacks/connect";
 import { 
   uintCV, 
-  intCV,
-  stringAsciiCV,
   cvToHex, 
   contractPrincipalCV, 
   PostConditionMode
 } from "@stacks/transactions";
 import { Tokens, CoreContracts } from '@/lib/contracts';
-import { callReadOnly, getContractSource, waitForTx, getFungibleTokenBalances, FungibleTokenBalance } from "@/lib/coreApi";
+import { callReadOnly, getFungibleTokenBalances, FungibleTokenBalance } from "@/lib/coreApi";
 import { decodeResultHex, getTupleField } from "@/lib/clarity";
 import { useWallet } from '@/lib/wallet';
-import ConnectWallet from '@/components/ConnectWallet';
 import { parseAmount } from "@/lib/utils";
 // import { IntentManager } from '@/lib/intent-manager'; // Unused
 
@@ -203,14 +200,13 @@ function AddLiquidityContent() {
   };
 
   return (
-    <div className="min-h-screen w-full p-6 sm:p-10 space-y-8 bg-background">
-      <header className="flex items-center justify-between mb-10">
+    <div className="space-y-8">
+      <div>
         <h1 className="text-3xl font-bold text-text">Add Liquidity</h1>
-        <div className="lg:hidden">
-          <ConnectWallet />
-        </div>
-      </header>
-
+        <p className="mt-2 text-sm text-text/80">
+          Provide liquidity to earn trading fees and rewards.
+        </p>
+      </div>
       <Card className="w-full max-w-md mx-auto bg-background-paper">
         <CardHeader>
           <CardTitle className="text-text-primary">Add Liquidity</CardTitle>

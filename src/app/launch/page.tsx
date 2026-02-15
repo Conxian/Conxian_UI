@@ -18,7 +18,7 @@ import { useSelfLaunch } from "@/lib/hooks/use-self-launch";
 import { Input } from "@/components/ui/Input";
 
 export default function LaunchPage() {
-  const { stxAddress, connectWallet, addToast } = useWallet();
+  const { stxAddress, addToast } = useWallet();
   const {
     currentPhase,
     fundingProgress,
@@ -72,21 +72,16 @@ export default function LaunchPage() {
   }
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-2 text-text">
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold text-text">
           Conxian Community Launch
         </h1>
-        <p className="text-xl text-text/80">
-          Help bootstrap the future of DeFi through community funding
+        <p className="mt-2 text-sm text-text/80">
+          Help bootstrap the future of DeFi through community funding.
         </p>
       </div>
 
-      {!stxAddress && (
-        <div className="text-center">
-          <Button onClick={connectWallet}>Connect Wallet</Button>
-        </div>
-      )}
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList className="grid w-full grid-cols-4 border border-accent/20">
