@@ -40,9 +40,9 @@ The Conxian UI is built with Next.js and Tailwind CSS. We also use a set of reus
 
 ### Key Pages & Components:
 
-*   **Swap (`src/app/swap/page.tsx`)**: The core trading interface.
-*   **Launch (`src/app/launch/page.tsx`)**: The community self-launch dashboard.
-*   **Shielded (`src/app/shielded/page.tsx`)**: Privacy-focused wallet management.
+*   **Swap (`src/app/swap/page.tsx`)**: The core trading interface for token exchanges.
+*   **Launch (`src/app/launch/page.tsx`)**: The community self-launch dashboard for bootstrap funding.
+*   **Shielded (`src/app/shielded/page.tsx`)**: Privacy-focused wallet management for shielded transactions.
 *   **Reusable UI**: Components in `src/components/ui` like `Card`, `Button`, `VStack`, `StatCard` ensuring consistency.
 
 ## 5. The User's Journey: A Data Flow Story

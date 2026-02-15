@@ -21,6 +21,11 @@ The default landing page provides an overview of the Conxian ecosystem.
 
 ![Homepage](docs/images/homepage.png)
 
+#### Swap
+Our user-friendly interface for exchanging one token for another instantly.
+
+![Swap Page](docs/screenshots/swap.png)
+
 #### Launch (Community Self-Launch)
 Participate in the community-driven launch of the Conxian protocol.
 *   **Overview**: Track the current launch phase, total funds raised, and active contributors.
@@ -43,12 +48,7 @@ Visit "My Positions" to view and manage your current liquidity positions. Here, 
 #### Shielded Wallets
 Explore "Shielded Wallets" for enhanced privacy. Create new shielded wallets, manage existing ones, and perform private transactions (send/receive funds).
 
-![Shielded Wallets](docs/images/shielded_page.png)
-
-#### Swap
-Click on the "Swap" link to access our user-friendly interface for exchanging one token for another.
-
-![Swap Page](docs/images/guide_02_swap_page.png)
+![Shielded Wallets](docs/screenshots/shielded.png)
 
 #### Transaction Feedback
 

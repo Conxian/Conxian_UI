@@ -7,7 +7,6 @@ import { Tokens, CoreContracts } from "@/lib/contracts";
 import { callReadOnly, getFungibleTokenBalances, FungibleTokenBalance } from "@/lib/coreApi";
 import { decodeResultHex, getTupleField, getUint } from "@/lib/clarity";
 import { useWallet } from "@/lib/wallet";
-import ConnectWallet from "@/components/ConnectWallet";
 import CopyButton from "@/components/CopyButton";
 import { formatAmount, parseAmount, cn } from "@/lib/utils";
 import { AppConfig } from "@/lib/config";
@@ -297,13 +296,13 @@ export default function SwapPage() {
   }, [stxAddress]);
 
   return (
-    <div className="min-h-screen w-full p-6 sm:p-10 space-y-8 bg-background">
-      <header className="flex items-center justify-between mb-10">
-        <h1 className="text-3xl font-bold text-text-primary">Swap</h1>
-        <div className="lg:hidden">
-          <ConnectWallet />
-        </div>
-      </header>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold text-text">Swap</h1>
+        <p className="mt-2 text-sm text-text/80">
+          Exchange tokens instantly on the Conxian DEX.
+        </p>
+      </div>
       <Tabs defaultValue="simple" className="w-full max-w-md mx-auto">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="simple">Simple</TabsTrigger>

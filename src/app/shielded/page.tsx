@@ -91,18 +91,25 @@ export default function Shielded() {
   }, [fetchWallets]);
 
   return (
-    <Card className="p-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center">
-          <ShieldCheckIcon className="w-8 h-8 mr-2 text-text/80" />
-          <h2 className="text-xl font-semibold text-text">Shielded Wallets</h2>
-        </div>
-        <Button onClick={handleCreateWallet} variant="outline">
-          <PlusCircleIcon className="w-5 h-5 mr-2" />
-          Create Wallet
-        </Button>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold text-text">Shielded Wallets</h1>
+        <p className="mt-2 text-sm text-text/80">
+          Manage your private, shielded assets and transactions.
+        </p>
       </div>
-      {wallets.length > 0 ? (
+      <Card className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center">
+            <ShieldCheckIcon className="w-8 h-8 mr-2 text-text/80" />
+            <h2 className="text-xl font-semibold text-text">Wallets</h2>
+          </div>
+          <Button onClick={handleCreateWallet} variant="outline">
+            <PlusCircleIcon className="w-5 h-5 mr-2" />
+            Create Wallet
+          </Button>
+        </div>
+        {wallets.length > 0 ? (
         <ul className="space-y-4">
           {wallets.map((wallet) => (
             <li
@@ -149,6 +156,7 @@ export default function Shielded() {
       ) : (
         <p className="text-center text-text/80">No shielded wallets found.</p>
       )}
-    </Card>
+      </Card>
+    </div>
   );
 }

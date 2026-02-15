@@ -45,14 +45,13 @@ export default function PositionsPage() {
   }, [stxAddress, api]);
 
   return (
-    <div className="min-h-screen w-full p-6 sm:p-10 space-y-8 bg-background">
-      <header className="flex items-center justify-between mb-10">
+    <div className="space-y-8">
+      <div>
         <h1 className="text-3xl font-bold text-text">My Positions</h1>
-        <div className="lg:hidden">
-          <ConnectWallet />
-        </div>
-      </header>
-
+        <p className="mt-2 text-sm text-text/80">
+          Manage your active liquidity and staking positions.
+        </p>
+      </div>
       {stxAddress ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {positions.length > 0 ? (
