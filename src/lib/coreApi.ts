@@ -34,6 +34,16 @@ export async function getStatus(): Promise<CoreStatus>{
   }
 }
 
+export async function getV2Info(): Promise<{ burn_block_height?: number } | null> {
+  try {
+    const r = await fetch(`${baseUrl()}/v2/info`, { cache: "no-store" });
+    if (!r.ok) return null;
+    return r.json();
+  } catch {
+    return null;
+  }
+}
+
 export async function getNetworkBlockTimes(): Promise<unknown>{
   try {
     const r = await fetch(`${baseUrl()}/extended/v1/info/network_block_times`, { cache: "no-store" });

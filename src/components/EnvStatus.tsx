@@ -2,7 +2,7 @@
 
 import React from "react";
 import { AppConfig } from "@/lib/config";
-import { getStatus } from "@/lib/coreApi";
+import { getStatus, getV2Info } from "@/lib/coreApi";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 
@@ -13,12 +13,15 @@ export default function EnvStatus() {
     network_id?: string;
     error?: string;
   } | null>(null);
+  const [info, setInfo] = React.useState<{ burn_block_height?: number } | null>(null);
   const [loading, setLoading] = React.useState(false);
 
   const refresh = React.useCallback(async () => {
     setLoading(true);
     const s = await getStatus();
     setStatus(s);
+    const i = await getV2Info();
+    setInfo(i);
     setLoading(false);
   }, []);
 
@@ -48,6 +51,14 @@ export default function EnvStatus() {
           <span className="font-medium text-text">Network:</span>{" "}
           {AppConfig.network}
         </div>
+        {info && info.burn_block_height !== undefined && (
+          <div>
+            <span className="font-medium text-text">Bitcoin Finality:</span>{" "}
+            <span className="text-accent">
+              Burn Block #{info.burn_block_height}
+            </span>
+          </div>
+        )}
         {status && (
           <div>
             <span className="font-medium text-text">Status:</span>{" "}
