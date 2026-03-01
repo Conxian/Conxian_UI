@@ -19,6 +19,7 @@ vi.mock('@/lib/api-services', () => ({
 
 vi.mock('@/lib/coreApi', () => ({
   getStatus: vi.fn().mockResolvedValue({ ok: true }),
+  getV2Info: vi.fn().mockResolvedValue({ burn_block_height: 123456 }),
 }));
 
 // Mock the useWallet hook

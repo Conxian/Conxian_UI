@@ -29,10 +29,10 @@ export default function EnvStatus() {
     refresh();
   }, [refresh]);
 
-  const indicator = status?.ok ? "bg-green-500" : "bg-red-500";
+  const indicator = status?.ok ? "bg-green-600" : "bg-red-600";
 
   return (
-    <Card className="w-full max-w-xl">
+    <Card className="w-full max-w-xl bg-background-light">
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
         <CardTitle className="text-lg">Environment</CardTitle>
         <span

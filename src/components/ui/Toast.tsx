@@ -12,9 +12,9 @@ interface ToastProps {
 }
 
 const icons = {
-  success: <CheckCircleIcon className="w-6 h-6 text-green-400" />,
-  error: <XCircleIcon className="w-6 h-6 text-red-400" />,
-  info: <InformationCircleIcon className="w-6 h-6 text-blue-400" />,
+  success: <CheckCircleIcon className="w-6 h-6 text-green-600" />,
+  error: <XCircleIcon className="w-6 h-6 text-red-600" />,
+  info: <InformationCircleIcon className="w-6 h-6 text-blue-600" />,
 };
 
 export const Toast = ({ message, type, onClose }: ToastProps) => {

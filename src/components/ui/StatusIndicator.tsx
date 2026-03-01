@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 type Status = "operational" | "degraded" | "outage";
 
 const statusStyles: Record<Status, string> = {
-  operational: "bg-green-500",
-  degraded: "bg-yellow-500",
-  outage: "bg-red-500",
+  operational: "bg-green-600",
+  degraded: "bg-yellow-600",
+  outage: "bg-red-600",
 };
 
 export default function StatusIndicator({ status }: { status: Status }) {
