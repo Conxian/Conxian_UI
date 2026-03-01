@@ -22,6 +22,7 @@ const navigation = [
   { name: "Add Liquidity", href: "/add-liquidity", icon: PlusCircleIcon },
   { name: "My Positions", href: "/positions", icon: CreditCardIcon },
   { name: "Shielded Wallets", href: "/shielded", icon: ShieldCheckIcon },
+  { name: "System Overview", href: "/overview", icon: RocketLaunchIcon },
 ];
 
 export default function Sidebar() {

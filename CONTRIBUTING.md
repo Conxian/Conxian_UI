@@ -12,21 +12,21 @@ We welcome contributions from the community. This guide provides all the informa
 ### Installation
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Running the Development Server
 
 ```bash
-NEXT_PUBLIC_CORE_API_URL=https://api.testnet.hiro.so npm run dev
+NEXT_PUBLIC_CORE_API_URL=https://api.testnet.hiro.so pnpm run dev
 # App will start at http://localhost:3000 (or next available port)
 ```
 
 ### Building for Production
 
 ```bash
-npm run build
-npm start
+pnpm run build
+pnpm start
 ```
 
 ## Testing
@@ -36,9 +36,21 @@ We use a combination of unit tests and end-to-end tests to ensure the quality of
 ### Running the Test Suite
 
 ```bash
-npm test        # Interactive test runner
-npm run test:run # Run tests once
-npm run test:ui  # Visual test interface
+pnpm test        # Interactive test runner
+pnpm run test:run # Run tests once
+pnpm run test:ui  # Visual test interface
+```
+
+### End-to-End Testing & UI Audit
+
+We use Playwright for E2E testing and visual verification.
+
+```bash
+# Install browsers (first time only)
+pnpm exec playwright install chromium
+
+# Run UI audit (captures screenshots of all routes)
+pnpm exec playwright test tests/audit_screenshots.spec.ts
 ```
 
 Tests cover:

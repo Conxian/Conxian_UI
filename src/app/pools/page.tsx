@@ -98,7 +98,7 @@ export default function PoolsPage() {
               <label className="text-xs block mb-1 text-text-secondary">Pool Contract</label>
               <select
                 aria-label="Pool contract"
-                className="flex h-10 w-full rounded-md border border-neutral-light bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="flex h-10 w-full rounded-md border border-accent/20 bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 value={selected}
                 onChange={(e) => setSelected(e.target.value)}
               >

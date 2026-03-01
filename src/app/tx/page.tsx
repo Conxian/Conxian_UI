@@ -377,7 +377,7 @@ function TxContent() {
             <select
               id="contract-select"
               aria-label="Contract"
-              className="flex h-10 w-full rounded-md border border-neutral-light bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="flex h-10 w-full rounded-md border border-accent/20 bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
             >
@@ -399,7 +399,7 @@ function TxContent() {
               {abiFunctions.length > 0 ? (
                 <select
                   id="function-select"
-                  className="flex h-10 w-full rounded-md border border-neutral-light bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="flex h-10 w-full rounded-md border border-accent/20 bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   value={fnName}
                   onChange={(e) => setFnName(e.target.value)}
                 >
@@ -451,7 +451,7 @@ function TxContent() {
               id="template-select"
               aria-label="Template"
               aria-describedby="template-help"
-              className="flex h-10 w-full rounded-md border border-neutral-light bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="flex h-10 w-full rounded-md border border-accent/20 bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               onChange={(e) => applyTemplate(e.target.value)}
               defaultValue=""
             >

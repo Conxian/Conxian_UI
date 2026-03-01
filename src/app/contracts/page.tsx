@@ -69,7 +69,7 @@ export default function ContractsPage() {
           <CardContent className="text-sm space-y-2 text-text-secondary">
             <select
               aria-label="Select contract"
-              className="flex h-10 w-full rounded-md border border-neutral-light bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="flex h-10 w-full rounded-md border border-accent/20 bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               value={`${principal}.${name}`}
               onChange={(e) => onSelect(e.target.value)}
             >
@@ -141,7 +141,7 @@ export default function ContractsPage() {
               <textarea
                 value={args}
                 onChange={(e) => setArgs(e.target.value)}
-                className="flex min-h-[80px] w-full rounded-md border border-neutral-light bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="flex min-h-[80px] w-full rounded-md border border-accent/20 bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 placeholder="0x0000000000000000000000000000000000000000\n0x0000000000000000000000000000000000000001"
               />
             </div>

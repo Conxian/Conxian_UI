@@ -113,7 +113,7 @@ export default function RouterPage() {
             </label>
             <select
               aria-label="Router contract"
-              className="flex h-10 w-full rounded-md border border-neutral-light bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="flex h-10 w-full rounded-md border border-accent/20 bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
             >
@@ -131,7 +131,7 @@ export default function RouterPage() {
             {fnList.length > 0 ? (
               <select
                 aria-label="Function"
-                className="flex h-10 w-full rounded-md border border-neutral-light bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="flex h-10 w-full rounded-md border border-accent/20 bg-background-light px-3 py-2 text-sm text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 value={fnName}
                 onChange={(e) => setFnName(e.target.value)}
               >
