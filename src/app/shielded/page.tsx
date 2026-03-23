@@ -181,7 +181,7 @@ export default function Shielded() {
           <div className="py-20 text-center space-y-3">
              <ShieldCheckIcon className="w-12 h-12 mx-auto text-text-muted/20" />
              <p className="text-text-muted">No shielded wallets found.</p>
-             <Button onClick={handleCreateWallet} variant="link" className="text-accent">Create your first wallet</Button>
+             <Button onClick={handleCreateWallet} variant="ghost" className="text-accent">Create your first wallet</Button>
           </div>
         )}
         </CardContent>
