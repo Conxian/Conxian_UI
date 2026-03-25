@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { cn } from "@/lib/utils";
 
 interface StatCardProps {
   title: string;
@@ -6,6 +7,7 @@ interface StatCardProps {
   icon: React.ReactNode;
   subtext?: string;
   tooltipText?: string;
+  loading?: boolean;
 }
 
 export const StatCard = ({
@@ -14,15 +16,27 @@ export const StatCard = ({
   icon,
   subtext,
   tooltipText,
+  loading = false,
 }: StatCardProps) => (
   <Card>
-    <CardHeader className="flex flex-row items-center justify-between pb-2">
-      <CardTitle className="text-sm font-medium">{title}</CardTitle>
-      <div title={tooltipText}>{icon}</div>
+    <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+      <CardTitle className="text-xs font-semibold text-text-secondary uppercase tracking-wider">{title}</CardTitle>
+      <div title={tooltipText} className="text-text-muted">{icon}</div>
     </CardHeader>
     <CardContent>
-      <div className="text-2xl font-bold text-text">{value}</div>
-      {subtext && <p className="text-xs text-text">{subtext}</p>}
+      {loading ? (
+        <div className="h-8 w-24 bg-neutral-light animate-pulse rounded" />
+      ) : (
+        <div className="text-2xl font-bold text-text tracking-tight">{value}</div>
+      )}
+      {subtext && (
+        <p className={cn(
+          "mt-1 text-xs font-medium",
+          loading ? "text-transparent bg-neutral-light animate-pulse rounded w-32 h-3" : "text-text-secondary"
+        )}>
+          {subtext}
+        </p>
+      )}
     </CardContent>
   </Card>
 );
