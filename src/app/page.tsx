@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,14 +15,47 @@ import {
 } from "@heroicons/react/24/outline";
 import { StatCard } from "@/components/ui/StatCard";
 import { VStack } from "@/components/ui/VStack";
+import { useApi } from "@/lib/api-client";
+import { ApiResult } from "@/lib/contract-interactions";
+
+interface DashboardMetrics {
+  systemHealth: ApiResult<Record<string, unknown>>;
+  aggregatedMetrics: ApiResult<Record<string, unknown>>;
+  financialMetrics: ApiResult<Record<string, unknown>>;
+}
 
 export default function Home() {
+  const api = useApi();
+  const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchDashboardData() {
+      try {
+        setLoading(true);
+        const data = await api.getDashboardMetrics() as DashboardMetrics;
+        setMetrics(data);
+      } catch (err) {
+        console.error("Failed to fetch dashboard metrics", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchDashboardData();
+    const interval = setInterval(fetchDashboardData, 30000); // 30s refresh
+    return () => clearInterval(interval);
+  }, [api]);
+
+  const tvl = (metrics?.aggregatedMetrics?.data?.tvl as string) || "0.00";
+  const activeVaults = (metrics?.systemHealth?.data?.["active-vaults"] as string | number) || "0";
+  const apy = (metrics?.financialMetrics?.data?.["median-apy"] as string) || "0.00";
+
   return (
     <>
       <div>
         <h1 className="text-3xl font-bold text-text">Dashboard</h1>
-        <p className="mt-2 text-sm text-text">
-          An overview of the Conxian ecosystem.
+        <p className="mt-2 text-sm text-text-secondary">
+          An overview of the Conxian ecosystem and real-time protocol telemetry.
         </p>
       </div>
 
@@ -31,24 +67,27 @@ export default function Home() {
         <section className="grid gap-6 md:grid-cols-3">
           <StatCard
             title="TVL"
-            value="$0"
+            value={`$${tvl}`}
             icon={<CurrencyDollarIcon className="w-5 h-5 text-text" />}
             subtext="Across Conxian protocols"
             tooltipText="Total Value Locked: The total value of assets currently held across all Conxian smart contracts."
+            loading={loading}
           />
           <StatCard
             title="Active Vaults"
-            value="0"
+            value={activeVaults.toString()}
             icon={<ShieldCheckIcon className="w-5 h-5 text-text" />}
             subtext="Configured & healthy"
             tooltipText="The number of vaults that are currently active and operating within normal parameters."
+            loading={loading}
           />
           <StatCard
             title="APY (Median)"
-            value="0%"
+            value={`${apy}%`}
             icon={<ArrowTrendingUpIcon className="w-5 h-5 text-text" />}
-            subtext="Benchmarks pending"
-            tooltipText="Annual Percentage Yield: The median return on investment across all staking and liquidity pools."
+            subtext="Real-time yield"
+            tooltipText="Annual Percentage Yield: The median return on investment across all active staking and liquidity pools."
+            loading={loading}
           />
         </section>
 
@@ -58,13 +97,13 @@ export default function Home() {
               <CardTitle>Vaults</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-3 gap-4 text-sm text-text font-medium">
+              <div className="grid grid-cols-3 gap-4 text-sm text-text font-medium border-b border-accent/10 pb-2">
                 <div>Name</div>
                 <div>Asset</div>
                 <div className="text-right">APY</div>
               </div>
-              <div className="mt-4 text-sm text-text">
-                No vaults available yet.
+              <div className="mt-4 text-sm text-text-secondary">
+                No vaults available yet. Telemetry syncing...
               </div>
             </CardContent>
           </Card>
@@ -73,13 +112,13 @@ export default function Home() {
               <CardTitle>Staking</CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-2 gap-6">
-              <div className="rounded-lg bg-background p-4">
-                <div className="text-sm text-text mb-2">Total Staked</div>
-                <div className="text-xl font-bold text-text">$0</div>
+              <div className="rounded-lg bg-background p-4 border border-accent/10">
+                <div className="text-sm text-text-secondary mb-2 uppercase tracking-tight font-medium">Total Staked</div>
+                <div className="text-xl font-bold text-text">-bash.00</div>
               </div>
-              <div className="rounded-lg bg-background p-4">
-                <div className="text-sm text-text mb-2">My Staked</div>
-                <div className="text-xl font-bold text-text">$0</div>
+              <div className="rounded-lg bg-background p-4 border border-accent/10">
+                <div className="text-sm text-text-secondary mb-2 uppercase tracking-tight font-medium">My Staked</div>
+                <div className="text-xl font-bold text-text">-bash.00</div>
               </div>
             </CardContent>
           </Card>
@@ -91,9 +130,9 @@ export default function Home() {
               <CardTitle>Benchmarks</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-text">
-                Compare against top DeFi, CeFi, banks, and enterprise finance.
-                KPIs: APY, spread, slippage, uptime, latency.
+              <p className="text-sm text-text-secondary leading-relaxed">
+                Automated benchmarking against top DeFi, CeFi, and traditional enterprise finance.
+                Primary KPIs: APY spreads, slippage efficiency, and hardware-attested latency targets.
               </p>
             </CardContent>
           </Card>

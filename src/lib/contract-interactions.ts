@@ -9,9 +9,10 @@ import { callReadOnly } from './coreApi'; // Import from coreApi
 
 // --- Types ---
 
-interface ApiResult<T> {
+export interface ApiResult<T> {
   success: boolean;
   result?: T;
+  data?: T; // Alias for result to match UI usage
   error?: string;
 }
 
@@ -31,7 +32,7 @@ async function callReadOnlyContractFunction<T>(
     if (!result.ok) {
       throw new Error(`Read-only call failed: ${result.error}`);
     }
-    return { success: true, result: result.result as T };
+    return { success: true, result: result.result as T, data: result.result as T };
   } catch (error: unknown) {
     return { success: false, error: error instanceof Error ? error.message : 'An unknown error occurred' };
   }
@@ -165,18 +166,22 @@ export class ContractInteractions {
 
   // --- System Health & Metrics ---
   static getSystemHealth = () =>
-    this.executeReadOnly("conxian-protocol", "get-protocol-status");
+    this.executeReadOnly<Record<string, unknown>>("conxian-protocol", "get-protocol-status");
   static getAggregatedMetrics = () =>
-    this.executeReadOnly("economic-policy-engine", "get-market-parameters");
+    this.executeReadOnly<Record<string, unknown>>("economic-policy-engine", "get-market-parameters");
   static getFinancialMetrics = () =>
-    this.executeReadOnly("economic-policy-engine", "get-current-rates");
+    this.executeReadOnly<Record<string, unknown>>("economic-policy-engine", "get-current-rates");
 
   // --- Dashboard & Recommendations ---
   static getDashboardData = async () => this.getDashboardMetrics();
   static getPerformanceRecommendations = () =>
     this.executeReadOnly("risk-manager", "get-global-collateral-factor");
 
-  static async getDashboardMetrics() {
+  static async getDashboardMetrics(): Promise<{
+    systemHealth: ApiResult<Record<string, unknown>>;
+    aggregatedMetrics: ApiResult<Record<string, unknown>>;
+    financialMetrics: ApiResult<Record<string, unknown>>;
+  }> {
     const [systemHealth, aggregatedMetrics, financialMetrics] =
       await Promise.all([
         this.getSystemHealth(),
@@ -184,15 +189,9 @@ export class ContractInteractions {
         this.getFinancialMetrics(),
       ]);
     return {
-      systemHealth: systemHealth.success
-        ? systemHealth
-        : { error: systemHealth.error, success: false },
-      aggregatedMetrics: aggregatedMetrics.success
-        ? aggregatedMetrics
-        : { error: aggregatedMetrics.error, success: false },
-      financialMetrics: financialMetrics.success
-        ? financialMetrics
-        : { error: financialMetrics.error, success: false },
+      systemHealth,
+      aggregatedMetrics,
+      financialMetrics,
     };
   }
 
@@ -272,15 +271,8 @@ export class ContractInteractions {
   ) => ({ success: true, txId: "0x" });
 
   static createNewWallet = async () => this.createShieldedWallet();
-  static fetchUserWallets = async (user: string) =>
-    this.getShieldedWallets(user);
-  static fetchWalletBalance = async (walletId: string) =>
-    this.getShieldedWalletBalance(walletId);
-  static sendFunds = async (
-    walletId: string,
-    recipient: string,
-    amount: number
-  ) => this.sendFromShieldedWallet(walletId, recipient, amount);
-  static receiveFunds = async (walletId: string, amount: number) =>
-    this.receiveToShieldedWallet(walletId, amount);
+  static fetchUserWallets = (user: string) => this.getShieldedWallets(user);
+  static fetchWalletBalance = (walletId: string) => this.getShieldedWalletBalance(walletId);
+  static sendFunds = (walletId: string, recipient: string, amount: number) => this.sendFromShieldedWallet(walletId, recipient, amount);
+  static receiveFunds = (walletId: string, amount: number) => this.receiveToShieldedWallet(walletId, amount);
 }
