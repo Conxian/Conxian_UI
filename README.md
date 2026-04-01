@@ -2,7 +2,7 @@
 
 ![Conxian UI Homepage](docs/images/homepage.png)
 
-Conxian UI is the official, Sovereign Earthy–themed interface for interacting with Conxian contracts on the Stacks blockchain. Whether you're a casual user or a seasoned pro, this UI provides a single, unified interface.
+Conxian UI is the official, Sovereign Earthy–themed interface for interacting with Conxian contracts on the Stacks blockchain. Whether you're a casual user or a seasoned pro, it provides a single, unified experience.
 
 ## Purpose
 
