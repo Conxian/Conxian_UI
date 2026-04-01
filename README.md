@@ -2,15 +2,15 @@
 
 ![Conxian UI Homepage](docs/images/homepage.png)
 
-Sovereign Earthy official UI for interacting with Conxian contracts on the Stacks blockchain. Whether you're a casual user or a seasoned pro, we've got you covered with a single, unified interface.
+Conxian UI is the official, Sovereign Earthy–themed interface for interacting with Conxian contracts on the Stacks blockchain. Whether you're a casual user or a seasoned pro, this UI provides a single, unified interface.
 
 ## Purpose
 
-Provide a user-facing dashboard for interacting with Conxian protocol primitives and surfacing protocol and gateway state.
+Conxian UI provides a user-facing dashboard for interacting with Conxian protocol primitives and surfacing protocol and gateway state.
 
 ## Status
 
-Active development. The UI is evolving toward a bright, low-fatigue operational foundation while maintaining the Sovereign Earthy brand.
+Active development (beta). Expect breaking changes in UI and integrations as we standardize toward a brighter, Ivory-led foundation under the Sovereign Earthy brand.
 
 ## Audience
 
@@ -21,7 +21,7 @@ Active development. The UI is evolving toward a bright, low-fatigue operational 
 ## Relationship to the Conxian stack
 
 - Frontend layer for [Conxian Protocol](https://github.com/Conxian/Conxian) and [Conxian Gateway](https://github.com/Conxian/conxian-gateway).
-- Often run and deployed as part of [conxius-platform](https://github.com/Conxian/conxius-platform).
+- Often run and deployed as part of [conxius-platform](https://github.com/Conxian/conxius-platform) (Conxius platform stack).
 
 ## Our Signature Look: The Conxian Color Palette
 
