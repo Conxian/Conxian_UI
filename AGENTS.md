@@ -16,7 +16,7 @@ Purge all heavy, default dark-mode backgrounds from main operational views. The 
 
 *   **Hero / Entry Zones**: Top navigation bars, footers, and initial marketing "Hero" banners may utilize full-width dark brand colors (e.g., bg-primary-dark) to establish immediate brand presence.
 *   **Operational Zones**: The moment the user scrolls or enters a functional workspace (Yield tracking, Treasury Oracle, Protocol Dashboards, Data Tables), the background MUST snap to the bright Ivory/White foundation.
-*   **Data Legibility**: Financial data, yields, and analytics must use stark, high-contrast dark typography (text-text / #333333) against the light background. Primary labels in operational zones should use bold, uppercase styling with tracking (tracking-widest) for an institutional feel.
+*   **Data Legibility**: Financial data, yields, and analytics must use stark, high-contrast dark typography (text-text / #333333) against the light background. Operational labels should use bold, uppercase styling with tracking (tracking-widest) for an institutional feel.
 
 ## 3. EXECUTION & ENFORCEMENT PROTOCOL
 

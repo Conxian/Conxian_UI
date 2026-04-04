@@ -8,6 +8,7 @@ export default function ThemeManager() {
     async function checkNft() {
       const hasNft = await hasBitcoinMonkeyNft();
       if (hasNft) {
+        document.documentElement.classList.remove("dark");
         document.documentElement.classList.add("monkey");
       }
     }
