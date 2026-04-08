@@ -14,6 +14,10 @@ Active development (beta). UI and integrations may change; expect breaking chang
 
 We're iterating on UX toward a brighter, lower-fatigue interface while maintaining the Sovereign Earthy brand. The UI is built on a 60-30-10 palette split: 60% Ivory (#FDFBF7) base, 30% Pure White (#FFFFFF) surface layers, and 10% deep brand accents.
 
+## Ownership
+
+Ownership and review requirements are defined in [`CODEOWNERS`](./CODEOWNERS).
+
 ## Audience
 
 - End users interacting with Conxian protocol features.
