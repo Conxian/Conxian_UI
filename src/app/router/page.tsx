@@ -125,8 +125,8 @@ export default function RouterPage() {
                 Arguments
               </label>
               <ClarityArgBuilder
-                onBuild={onBuild}
-                initialRows={presetRows}
+                onChange={onBuild}
+                preset={presetRows}
               />
             </div>
 
@@ -155,8 +155,8 @@ export default function RouterPage() {
                 <div
                   className={`p-4 rounded-md border ${
                     result.ok
-                      ? "bg-green-500/10 border-green-500/20 text-green-600"
-                      : "bg-red-500/10 border-red-500/20 text-red-600"
+                      ? "bg-success/10 border-success/20 text-success"
+                      : "bg-error/10 border-error/20 text-error"
                   }`}
                 >
                   <p className="text-sm font-bold">

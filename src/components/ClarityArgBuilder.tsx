@@ -9,6 +9,7 @@ import {
   trueCV,
   falseCV,
   standardPrincipalCV,
+  contractPrincipalCV,
   stringAsciiCV,
   stringUtf8CV,
   bufferCV,
@@ -74,7 +75,7 @@ const ArgRow = React.memo(function ArgRow({
 
   return (
     <div className="grid gap-2 md:grid-cols-6 items-center">
-      <label htmlFor={`arg-type-${row.id}`} className="text-xs col-span-1">Type</label>
+      <label htmlFor={`arg-type-${row.id}`} className="text-[10px] font-bold uppercase tracking-widest text-text-secondary col-span-1">Type</label>
       <select
         id={`arg-type-${row.id}`}
         className="border border-accent/20 rounded px-2 py-1 col-span-2 bg-background-light text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
@@ -98,7 +99,7 @@ const ArgRow = React.memo(function ArgRow({
         <option value="optional-some-buffer-hex">optional-some-buffer-hex</option>
       </select>
       <div className="col-span-3 flex items-center gap-2">
-        <label htmlFor={`arg-optional-toggle-${row.id}`} className="text-xs">Optional</label>
+        <label htmlFor={`arg-optional-toggle-${row.id}`} className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Optional</label>
         <input id={`arg-optional-toggle-${row.id}`} type="checkbox" className="accent-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background" checked={Boolean(row.opt) || isOptionalType(row.type)} onChange={(e) => {
           const enabled = e.target.checked;
           if (!enabled) {
@@ -130,7 +131,7 @@ const ArgRow = React.memo(function ArgRow({
         if (isNone) {
           return (
             <>
-              <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
+              <label htmlFor={`arg-value-${row.id}`} className="text-[10px] font-bold uppercase tracking-widest text-text-secondary col-span-1">{labelText}</label>
               <Input id={`arg-value-${row.id}`} className="col-span-2 opacity-50" disabled aria-disabled="true" value="" readOnly />
             </>
           );
@@ -139,7 +140,7 @@ const ArgRow = React.memo(function ArgRow({
           const checked = (row.value || '').toLowerCase() === 'true';
           return (
             <>
-              <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
+              <label htmlFor={`arg-value-${row.id}`} className="text-[10px] font-bold uppercase tracking-widest text-text-secondary col-span-1">{labelText}</label>
               <input
                 id={`arg-value-${row.id}`}
                 type="checkbox"
@@ -153,7 +154,7 @@ const ArgRow = React.memo(function ArgRow({
         if (base === 'uint' || base === 'int') {
           return (
             <>
-              <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
+              <label htmlFor={`arg-value-${row.id}`} className="text-[10px] font-bold uppercase tracking-widest text-text-secondary col-span-1">{labelText}</label>
               <Input
                 id={`arg-value-${row.id}`}
                 type="number"
@@ -170,7 +171,7 @@ const ArgRow = React.memo(function ArgRow({
         if (base === 'buffer-hex') {
           return (
             <>
-              <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
+              <label htmlFor={`arg-value-${row.id}`} className="text-[10px] font-bold uppercase tracking-widest text-text-secondary col-span-1">{labelText}</label>
               <Input
                 id={`arg-value-${row.id}`}
                 className="col-span-2"
@@ -185,7 +186,7 @@ const ArgRow = React.memo(function ArgRow({
         }
         return (
           <>
-            <label htmlFor={`arg-value-${row.id}`} className="text-xs col-span-1">{labelText}</label>
+            <label htmlFor={`arg-value-${row.id}`} className="text-[10px] font-bold uppercase tracking-widest text-text-secondary col-span-1">{labelText}</label>
             <Input
               id={`arg-value-${row.id}`}
               className="col-span-2"
@@ -252,13 +253,25 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
     for (const row of rows) {
       const { type, value, opt } = row;
       const effectiveType: ArgType = isOptionalType(type) ? type : toOptional(type, opt ?? null);
-      switch (effectiveType) {
-        case "uint": cvs.push(uintCV(BigInt(value || "0"))); break;
-        case "int": cvs.push(intCV(BigInt(value || "0"))); break;
-        case "bool": cvs.push((value || "").toLowerCase() === "true" ? trueCV() : falseCV()); break;
-        case "principal": cvs.push(standardPrincipalCV(value)); break;
-        case "ascii": cvs.push(stringAsciiCV(value)); break;
-        case "utf8": cvs.push(stringUtf8CV(value)); break;
+
+      // Helper to handle principal strings correctly (contract vs standard)
+      const parsePrincipal = (p: string) => {
+        if (!p || p.trim() === "") return standardPrincipalCV("SP000000000000000000002Q6VF78"); // default to burn or some safe placeholder if empty
+        if (p.includes(".")) {
+          const [addr, name] = p.split(".");
+          return contractPrincipalCV(addr, name);
+        }
+        return standardPrincipalCV(p);
+      };
+
+      try {
+        switch (effectiveType) {
+          case "uint": cvs.push(uintCV(BigInt(value || "0"))); break;
+          case "int": cvs.push(intCV(BigInt(value || "0"))); break;
+          case "bool": cvs.push((value || "").toLowerCase() === "true" ? trueCV() : falseCV()); break;
+          case "principal": cvs.push(parsePrincipal(value)); break;
+          case "ascii": cvs.push(stringAsciiCV(value)); break;
+          case "utf8": cvs.push(stringUtf8CV(value)); break;
         case "buffer-hex": {
           const hex = value.startsWith("0x") ? value.slice(2) : value;
           const bytes = new Uint8Array(hex.match(/.{1,2}/g)?.map((b) => parseInt(b, 16)) || []);
@@ -269,7 +282,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
         case "optional-some-uint": cvs.push(someCV(uintCV(BigInt(value || "0")))); break;
         case "optional-some-int": cvs.push(someCV(intCV(BigInt(value || "0")))); break;
         case "optional-some-bool": cvs.push(someCV((value || "").toLowerCase() === "true" ? trueCV() : falseCV())); break;
-        case "optional-some-principal": cvs.push(someCV(standardPrincipalCV(value))); break;
+        case "optional-some-principal": cvs.push(someCV(parsePrincipal(value))); break;
         case "optional-some-ascii": cvs.push(someCV(stringAsciiCV(value))); break;
         case "optional-some-utf8": cvs.push(someCV(stringUtf8CV(value))); break;
         case "optional-some-buffer-hex": {
@@ -278,7 +291,10 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
           cvs.push(someCV(bufferCV(bytes)));
           break;
         }
-        default: break;
+          default: break;
+        }
+      } catch (e) {
+        console.warn(`Failed to build CV for ${effectiveType}:`, e);
       }
     }
     const hex = cvs.map((cv) => cvToHex(cv));
@@ -291,7 +307,7 @@ export default function ClarityArgBuilder({ onChange, preset, paramMeta }: { onC
 
   return (
     <fieldset className="space-y-3" aria-describedby="args-help">
-      <legend className="font-medium">Function Arguments</legend>
+      <legend className="text-xs font-bold uppercase tracking-widest text-text-secondary mb-2">Function Arguments</legend>
       <div className="flex items-center justify-end">
         <Button
           type="button"
