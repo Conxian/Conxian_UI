@@ -155,7 +155,7 @@ export default function Shielded() {
                   <p className="font-mono text-sm font-semibold text-text-primary bg-neutral-light px-2 py-1 rounded">
                     {truncate(wallet.id, 12, 10)}
                   </p>
-                  <Badge variant="outline" className="bg-success/10 text-success border-success/20 font-bold uppercase tracking-widest text-[10px]">
+                  <Badge variant="outline" className="bg-info/10 text-info border-info/20 font-bold uppercase tracking-widest text-[10px]">
                     Shielded
                   </Badge>
                 </div>

@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  /* 60% Base Canvas - Sovereign Earthy Foundation */
+  /* MASTER MANIFEST ALIGNMENT - Standardized Palette */
+  /* 60% Base Canvas - Sovereign Earthy Foundation (Ivory) */
   --color-background: #FDFBF7;
   --color-neutral-light: #F9F8F6;
 
@@ -19,8 +20,8 @@
   /* Typography - High Contrast (WCAG AAA) */
   --color-text: #333333;
   --color-text-primary: #333333;
-  --color-text-secondary: #666666;
-  --color-text-muted: #999999;
+  --color-text-secondary: #4D4D4D;
+  --color-text-muted: #737373;
 
   /* Status & Feedback */
   --color-success: #16a34a;
