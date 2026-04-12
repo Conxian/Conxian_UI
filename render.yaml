@@ -3,7 +3,7 @@ services:
     name: conxian-ui
     env: node
     plan: free
-    buildCommand: "NPM_CONFIG_PRODUCTION=false npm ci && npm run build"
+    buildCommand: "corepack pnpm install --frozen-lockfile && corepack pnpm run build && corepack pnpm prune --prod"
     startCommand: "npm start"
     envVars:
       - key: NODE_VERSION
