@@ -3,7 +3,7 @@ services:
     name: conxian-ui
     env: node
     plan: free
-    buildCommand: "npm install && npm run build"
+    buildCommand: "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci && npm run build"
     startCommand: "npm start"
     envVars:
       - key: NODE_VERSION
