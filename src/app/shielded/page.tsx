@@ -119,7 +119,7 @@ export default function Shielded() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-text">Shielded Wallets</h1>
+        <h1 className="text-3xl font-bold text-text tracking-tight uppercase">Shielded Wallets</h1>
         <p className="mt-2 text-sm text-text-secondary">
           Manage your private, shielded assets and transactions using Zero-Knowledge proofs.
         </p>
@@ -149,7 +149,7 @@ export default function Shielded() {
             {wallets.map((wallet) => (
               <li
                 key={wallet.id}
-                className="p-6 rounded-lg border border-accent/20 bg-background-light shadow-sm hover:shadow-md transition-shadow"
+                className="p-6 rounded-lg border border-accent/20 bg-background-light transition-shadow"
               >
                 <div className="flex justify-between items-start mb-4">
                   <p className="font-mono text-sm font-semibold text-text-primary bg-neutral-light px-2 py-1 rounded">
@@ -160,7 +160,7 @@ export default function Shielded() {
                   </Badge>
                 </div>
                 <div className="flex items-baseline gap-2 mb-6 border-b border-accent/10 pb-4">
-                  <span className="text-3xl font-bold text-text-primary">{wallet.balance}</span>
+                  <span className="text-3xl font-bold text-text-primary tabular-nums">{wallet.balance}</span>
                   <span className="text-text-secondary font-semibold text-sm uppercase">STX</span>
                 </div>
 

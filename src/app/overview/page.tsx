@@ -5,7 +5,7 @@ import CoreContracts from "@/components/ui/CoreContracts";
 export default function Overview() {
   return (
     <div>
-      <h1 className="text-3xl font-bold text-text">System Overview</h1>
+      <h1 className="text-3xl font-bold text-text tracking-tight uppercase">System Overview</h1>
       <p className="mt-2 text-sm text-text">
         A high-level view of the Conxian ecosystem.
       </p>

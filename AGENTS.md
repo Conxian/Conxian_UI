@@ -24,4 +24,4 @@ Purge all heavy, default dark-mode backgrounds from main operational views. The 
 *   **Palette**: Strictly apply the 60-30-10 Ivory-led palette (#FDFBF7 base, #FFFFFF surface).
 *   **Contrast**: Ensure all text contrast ratios meet strict institutional accessibility standards (WCAG AAA for financial data, ~12:1 ratio). Primary text should be #333333, secondary text should be #4D4D4D.
 *   **Typography**: Use `tabular-nums` for all financial figures and ensure primary headers use `uppercase tracking-tight`.
-*   **Components**: Use canonical UI components (Button, Input, Card, Badge, Table) and standard `border-accent/20` styling to maintain theme consistency.
+*   **Components**: Use canonical UI components (Button, Input, Card, Badge, Table) and standard `border-accent/20` styling to maintain theme consistency. No heavy drop shadows should be used on data cards or surface layers.

@@ -176,19 +176,19 @@ export default function PoolsPage() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-text-primary">
+              <h3 className="text-[11px] font-bold uppercase tracking-widest text-text-secondary">
                 Fee Configuration
               </h3>
               <div className="space-y-2 border-l-2 border-accent/20 pl-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-text-secondary">Swap Fee</span>
-                  <span className="font-mono">
+                  <span className="font-bold tabular-nums">
                     {feeInfo?.ok ? getTupleField(feeInfo.result!, "swap-fee") : "0"}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-text-secondary">Admin Fee</span>
-                  <span className="font-mono">
+                  <span className="font-bold tabular-nums">
                     {feeInfo?.ok ? getTupleField(feeInfo.result!, "admin-fee") : "0"}
                   </span>
                 </div>
@@ -196,19 +196,19 @@ export default function PoolsPage() {
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-text-primary">
+              <h3 className="text-[11px] font-bold uppercase tracking-widest text-text-secondary">
                 Operational Status
               </h3>
               <div className="space-y-2 border-l-2 border-accent/20 pl-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-text-secondary">Volume (24h)</span>
-                  <span className="font-mono">
+                  <span className="font-bold tabular-nums">
                     {perf?.ok ? getTupleField(perf.result!, "volume-24h") : "0"}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-text-secondary">Utilization</span>
-                  <span className="font-mono">
+                  <span className="font-bold tabular-nums">
                     {perf?.ok ? getTupleField(perf.result!, "utilization") : "0%"}
                   </span>
                 </div>

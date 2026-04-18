@@ -310,8 +310,8 @@ export default function SwapPage() {
             <CardContent className="space-y-6">
               {/* From Token */}
               <div className="space-y-2">
-                <div className="flex justify-between items-center text-sm">
-                  <label htmlFor="from-amount" className="text-text">
+                <div className="flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
+                  <label htmlFor="from-amount" className="text-text-secondary">
                     From
                   </label>
                   <div className="flex items-center gap-2">
@@ -373,7 +373,7 @@ export default function SwapPage() {
 
               {/* To Token */}
               <div className="space-y-2">
-                <label htmlFor="to-amount" className="text-sm text-text">To</label>
+                <label htmlFor="to-amount" className="text-[11px] font-bold uppercase tracking-widest text-text-secondary">To</label>
                 <div className="flex items-center gap-2">
                   <TokenSelect
                     tokens={Tokens}
@@ -394,10 +394,10 @@ export default function SwapPage() {
               </div>
 
               {/* Slippage */}
-              <div className="flex justify-between items-center text-sm">
+              <div className="flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
                 <label
                   htmlFor="slippage-input"
-                  className="text-text cursor-pointer"
+                  className="text-text-secondary cursor-pointer"
                 >
                   Slippage Tolerance
                 </label>
