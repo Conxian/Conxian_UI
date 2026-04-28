@@ -6,10 +6,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-ink text-background hover:bg-ink/90 transition-all duration-300",
+        default: "bg-primary text-primary-foreground hover:bg-primary-dark",
         secondary: "bg-accent text-accent-foreground hover:bg-accent/90",
         outline:
-          "border border-ghost bg-background-light text-text hover:bg-neutral-light",
+          "border border-accent/30 bg-background-light text-text hover:bg-accent/10",
         ghost: "hover:bg-accent/10 text-text",
       },
       size: {

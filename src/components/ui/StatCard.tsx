@@ -1,42 +1,38 @@
-import { Card className="machined border-ghost hover:shadow-lg transition-all duration-500", Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Content, Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Header, Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Title } from "@/components/ui/Card className="machined border-ghost hover:shadow-lg transition-all duration-500"";
+import { Card, CardContent } from "@/components/ui/Card";
 import { cn } from "@/lib/utils";
 
-interface StatCard className="machined border-ghost hover:shadow-lg transition-all duration-500"Props {
+interface StatCardProps {
   title: string;
   value: string;
   icon: React.ReactNode;
   subtext?: string;
-  tooltipText?: string;
   loading?: boolean;
 }
 
-export const StatCard className="machined border-ghost hover:shadow-lg transition-all duration-500" = ({
+export const StatCard = ({
   title,
   value,
   icon,
   subtext,
-  tooltipText,
   loading = false,
-}: StatCard className="machined border-ghost hover:shadow-lg transition-all duration-500"Props) => (
-  <Card className="machined border-ghost hover:shadow-lg transition-all duration-500">
-    <Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Header className="flex flex-row items-center justify-between pb-2 space-y-0">
-      <Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Title className="text-[10px] font-bold text-text-muted uppercase tracking-[0.2em]">{title}</Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Title>
-      <div title={tooltipText} className="text-text-secondary">{icon}</div>
-    </Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Header>
-    <Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Content>
+}: StatCardProps) => (
+  <Card className="machined-card group hover:border-accent transition-all duration-300">
+    <div className="machined-header">
+       <span>{title}</span>
+       <div className="opacity-40 group-hover:opacity-100 transition-opacity">{icon}</div>
+    </div>
+    <CardContent className="p-6">
       {loading ? (
-        <div className="h-8 w-24 bg-neutral-light animate-pulse rounded" />
+        <div className="h-10 w-32 bg-ink/5 animate-pulse rounded-sm" />
       ) : (
-        <div className="text-3xl font-black text-text tracking-tight tabular-nums">{value}</div>
+        <div className="text-4xl font-black text-ink tracking-tighter tabular-nums">{value}</div>
       )}
       {subtext && (
-        <p className={cn(
-          "mt-1 text-xs font-medium",
-          loading ? "text-transparent bg-neutral-light animate-pulse rounded w-32 h-3" : "text-text-secondary"
-        )}>
-          {subtext}
-        </p>
+        <div className="mt-3 flex items-center gap-2">
+           <div className="h-1 w-1 rounded-full bg-accent" />
+           <p className="text-[9px] font-black text-ink/40 uppercase tracking-[0.2em]">{subtext}</p>
+        </div>
       )}
-    </Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Content>
-  </Card className="machined border-ghost hover:shadow-lg transition-all duration-500">
+    </CardContent>
+  </Card>
 );

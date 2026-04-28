@@ -13,7 +13,7 @@ import {
   ArrowTrendingUpIcon,
 } from "@heroicons/react/24/outline";
 import { useApi } from "@/lib/api-client";
-import div className="h-1 w-12 bg-accent mb-4" /><StatusIndicator from "@/components/ui/div className="h-1 w-12 bg-accent mb-4" /><StatusIndicator";
+import StatusIndicator from "@/components/ui/StatusIndicator";
 import { ApiResult } from "@/lib/contract-interactions";
 
 interface DashboardMetrics {
@@ -52,7 +52,7 @@ export default function SystemStatus() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">System Status</CardTitle>
+          <CardTitle>System Status</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center h-24">
@@ -67,7 +67,7 @@ export default function SystemStatus() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">System Status</CardTitle>
+          <CardTitle>System Status</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-sm text-error font-medium">{error}</div>
@@ -83,8 +83,8 @@ export default function SystemStatus() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">System Status</CardTitle>
-        <div className="h-1 w-12 bg-accent mb-4" /><StatusIndicator
+        <CardTitle>System Status</CardTitle>
+        <StatusIndicator
           status={metrics?.systemHealth?.success ? "operational" : "degraded"}
         />
       </CardHeader>
@@ -95,7 +95,7 @@ export default function SystemStatus() {
           </div>
           <div className="ml-4">
             <div className="text-xs font-medium text-text-secondary uppercase tracking-wider">Total Value Locked</div>
-            <div className="text-2xl font-bold text-text tabular-nums">${tvl}</div>
+            <div className="text-2xl font-bold text-text">${tvl}</div>
           </div>
         </div>
         <div className="flex items-center">
@@ -104,7 +104,7 @@ export default function SystemStatus() {
           </div>
           <div className="ml-4">
             <div className="text-xs font-medium text-text-secondary uppercase tracking-wider">Active Vaults</div>
-            <div className="text-2xl font-bold text-text tabular-nums">
+            <div className="text-2xl font-bold text-text">
               {activeVaults}
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function SystemStatus() {
           </div>
           <div className="ml-4">
             <div className="text-xs font-medium text-text-secondary uppercase tracking-wider">APY (Median)</div>
-            <div className="text-2xl font-bold text-text tabular-nums text-success">{apy}%</div>
+            <div className="text-2xl font-bold text-text text-success">{apy}%</div>
           </div>
         </div>
       </CardContent>

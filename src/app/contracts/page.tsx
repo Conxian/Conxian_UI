@@ -29,9 +29,9 @@ export default function ContractsPage() {
   }, [loadInterface]);
 
   return (
-    <div className="space-y-10 bg-background antialiased min-h-screen">
+    <div className="p-6 space-y-6 bg-background min-h-screen">
       <div>
-        <h1 className="text-3xl font-bold tracking-widest text-text-primary uppercase">
+        <h1 className="text-3xl font-black tracking-tight text-text-primary">
           Contract Explorer
         </h1>
         <p className="text-text-secondary">
@@ -41,15 +41,15 @@ export default function ContractsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div className="space-y-6">
-          <Card className="machined border-ghost">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
+              <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-text-secondary">
                 Target Contract
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Principal</label>
+                <label className="text-sm font-medium">Principal</label>
                 <Input
                   value={principal}
                   onChange={(e) => setPrincipal(e.target.value)}
@@ -57,7 +57,7 @@ export default function ContractsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Contract Name</label>
+                <label className="text-sm font-medium">Contract Name</label>
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -74,9 +74,9 @@ export default function ContractsPage() {
             </CardContent>
           </Card>
 
-          <Card className="machined border-ghost">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
+              <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-text-secondary">
                 Registry Quick-Links
               </CardTitle>
             </CardHeader>
@@ -91,7 +91,7 @@ export default function ContractsPage() {
                       setPrincipal(p);
                       setName(n);
                     }}
-                    className="w-full justify-between h-auto p-2 font-normal hover:bg-background antialiased-light"
+                    className="w-full justify-between h-auto p-2 font-normal hover:bg-neutral-light"
                   >
                     <span className="text-text-primary">{c.label}</span>
                     <span className="text-text-muted opacity-0 group-hover:opacity-100 text-[10px] font-mono">
@@ -106,14 +106,14 @@ export default function ContractsPage() {
 
         <div className="space-y-6">
           {iface ? (
-            <Card className="machined border-ghost">
+            <Card>
               <CardHeader>
-                <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
+                <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-text-secondary">
                   Interface Details
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="bg-background antialiased-light p-4 rounded-md border border-accent/20">
+                <div className="bg-neutral-light p-4 rounded-sm border border-ghost">
                   <pre className="text-xs font-mono overflow-auto max-h-[300px] whitespace-pre-wrap">
                     {JSON.stringify(iface, null, 2)}
                   </pre>
@@ -134,7 +134,7 @@ export default function ContractsPage() {
               </CardContent>
             </Card>
           ) : (
-            <div className="flex flex-col items-center justify-center h-[300px] text-text-muted border-2 border-dashed border-accent/10 rounded-md">
+            <div className="flex flex-col items-center justify-center h-[300px] text-text-muted border-2 border-dashed border-accent/10 rounded-sm">
               <p className="text-sm italic">
                 Load a contract interface to see details
               </p>
