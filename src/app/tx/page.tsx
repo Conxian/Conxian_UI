@@ -92,7 +92,7 @@ function TxContent() {
   };
 
   return (
-    <div className="space-y-10 bg-background min-h-screen">
+    <div className="space-y-10 bg-background antialiased min-h-screen">
       <div>
         <h1 className="text-3xl font-bold tracking-widest text-text-primary uppercase">
           Transaction Forge
@@ -104,14 +104,14 @@ function TxContent() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <div className="space-y-6">
-          <div className="p-6 bg-background-paper border border-accent/20 rounded-xl space-y-6">
+          <div className="p-6 bg-background antialiased-paper border border-accent/20 rounded-xl space-y-6">
             <div className="space-y-4">
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-text-secondary">
                   Target Contract
                 </label>
                 <select
-                  className="w-full bg-background-light border border-accent/20 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-accent focus:outline-none"
+                  className="w-full bg-background antialiased-light border border-accent/20 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-accent focus:outline-none"
                   value={selected}
                   onChange={(e) => setSelected(e.target.value)}
                 >
@@ -184,11 +184,11 @@ function TxContent() {
         </div>
 
         <div className="space-y-6">
-          <div className="p-6 bg-background-paper border border-accent/20 rounded-xl space-y-4">
+          <div className="p-6 bg-background antialiased-paper border border-accent/20 rounded-xl space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-widest text-text-secondary font-bold uppercase tracking-widest text-text-secondary">
               Transaction Payload
             </h3>
-            <div className="bg-background-light p-4 rounded-md border border-accent/20">
+            <div className="bg-background antialiased-light p-4 rounded-md border border-accent/20">
               <div className="space-y-2 text-xs font-mono">
                 <p>
                   <span className="text-text-muted">contract:</span>{" "}

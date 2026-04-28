@@ -131,7 +131,7 @@ export default function Shielded() {
         </p>
       </div>
 
-      <Card className="bg-background-paper">
+      <Card className="machined border-ghost bg-background antialiased-paper">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-7">
           <div className="flex items-center">
             <ShieldCheckIcon className="w-8 h-8 mr-3 text-accent" />
@@ -155,7 +155,7 @@ export default function Shielded() {
             {wallets.map((wallet) => (
               <li
                 key={wallet.id}
-                className="p-6 rounded-lg border border-accent/20 bg-background-light shadow-sm hover:shadow-md transition-shadow"
+                className="p-6 rounded-lg border border-accent/20 bg-background antialiased-light shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start mb-4">
                   <p className="font-mono text-sm font-semibold text-text-primary bg-neutral-light px-2 py-1 rounded">

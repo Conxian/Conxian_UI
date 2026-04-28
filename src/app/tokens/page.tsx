@@ -64,7 +64,7 @@ export default function TokensPage() {
   }, [address, refresh]);
 
   return (
-    <div className="space-y-10 bg-background min-h-screen">
+    <div className="space-y-10 bg-background antialiased min-h-screen">
       <div>
         <h1 className="text-3xl font-bold text-text tracking-widest uppercase">My Assets</h1>
         <p className="mt-2 text-sm text-text-secondary">
@@ -73,7 +73,7 @@ export default function TokensPage() {
       </div>
 
       {!address && (
-        <Card>
+        <Card className="machined border-ghost">
           <CardContent className="pt-6">
             <p className="text-center text-text">
               Connect your wallet to view balances.
@@ -85,7 +85,7 @@ export default function TokensPage() {
       {address && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
+            <Card className="machined border-ghost">
               <CardHeader>
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">STX Balance</CardTitle>
               </CardHeader>
@@ -96,7 +96,7 @@ export default function TokensPage() {
                 <p className="text-[10px] text-text-muted mt-1 uppercase font-bold tracking-widest">Available for transaction</p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="machined border-ghost">
               <CardHeader>
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Launch Contribution</CardTitle>
               </CardHeader>
@@ -109,7 +109,7 @@ export default function TokensPage() {
             </Card>
           </div>
 
-          <Card>
+          <Card className="machined border-ghost">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Fungible Tokens</CardTitle>

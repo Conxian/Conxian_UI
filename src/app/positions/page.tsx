@@ -43,7 +43,7 @@ export default function PositionsPage() {
   }, [stxAddress, api]);
 
   return (
-    <div className="space-y-10 bg-background min-h-screen">
+    <div className="space-y-10 bg-background antialiased min-h-screen">
       <div>
         <h1 className="text-3xl font-bold text-text tracking-widest uppercase">My Portfolio</h1>
         <p className="mt-2 text-sm text-text-secondary">
@@ -74,7 +74,7 @@ export default function PositionsPage() {
           )}
         </div>
       ) : (
-        <div className="text-center py-20 bg-background-light border border-accent/20 rounded-xl">
+        <div className="text-center py-20 bg-background antialiased-light border border-accent/20 rounded-xl">
           <p className="text-text-secondary mb-6 font-medium">Connect your wallet to see your portfolio.</p>
           <ConnectWallet />
         </div>

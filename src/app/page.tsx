@@ -2,18 +2,18 @@
 
 import { useEffect, useState } from "react";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/Card";
+  Card className="border-ghost hover:bg-neutral-light transition-colors duration-300",
+  Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Content,
+  Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Header,
+  Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Title,
+} from "@/components/ui/Card className="border-ghost hover:bg-neutral-light transition-colors duration-300";
 import EnvStatus from "@/components/EnvStatus";
 import {
   CurrencyDollarIcon,
   ShieldCheckIcon,
   ArrowTrendingUpIcon,
 } from "@heroicons/react/24/outline";
-import { StatCard } from "@/components/ui/StatCard";
+import { StatCard } from @/components/ui/StatCard;
 import { VStack } from "@/components/ui/VStack";
 import { useApi } from "@/lib/api-client";
 import { ApiResult } from "@/lib/contract-interactions";
@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <div className="space-y-8 bg-background min-h-screen">
       {/* High-Trust Readiness Banner */}
-      <div className="bg-primary-dark text-primary-foreground py-2 px-4 rounded-md flex justify-between items-center border border-accent/20">
+      <div className="glass text-ink py-3 px-6 rounded-none glass flex justify-between items-center border border-accent/20">
         <div className="flex items-center gap-3">
           <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
           <span className="text-[10px] font-black uppercase tracking-[0.2em]">Conxian System Ready</span>
@@ -104,11 +104,11 @@ export default function Home() {
         </section>
 
         <section className="grid gap-6 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Vaults</CardTitle>
-            </CardHeader>
-            <CardContent>
+          <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300">
+            <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Header>
+              <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Title className="text-xs font-bold uppercase tracking-widest text-text-secondary">Vaults</Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Title>
+            </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Header>
+            <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Content>
               <div className="grid grid-cols-3 gap-4 text-sm text-text font-medium border-b border-accent/10 pb-2">
                 <div>Name</div>
                 <div>Asset</div>
@@ -117,13 +117,13 @@ export default function Home() {
               <div className="mt-4 text-sm text-text-secondary">
                 No vaults available yet. Telemetry syncing...
               </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Staking</CardTitle>
-            </CardHeader>
-            <CardContent className="grid grid-cols-2 gap-6">
+            </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Content>
+          </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300">
+          <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300">
+            <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Header>
+              <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Title className="text-xs font-bold uppercase tracking-widest text-text-secondary">Staking</Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Title>
+            </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Header>
+            <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Content className="grid grid-cols-2 gap-6">
               <div className="rounded-lg bg-background-light p-4 border border-accent/10">
                 <div className="text-sm text-text-secondary mb-2 uppercase tracking-tight font-medium">Total Staked</div>
                 <div className="text-xl font-bold text-text">0.00</div>
@@ -132,22 +132,22 @@ export default function Home() {
                 <div className="text-sm text-text-secondary mb-2 uppercase tracking-tight font-medium">My Staked</div>
                 <div className="text-xl font-bold text-text">0.00</div>
               </div>
-            </CardContent>
-          </Card>
+            </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Content>
+          </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300">
         </section>
 
         <section>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Benchmarks</CardTitle>
-            </CardHeader>
-            <CardContent>
+          <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300">
+            <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Header>
+              <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Title className="text-xs font-bold uppercase tracking-widest text-text-secondary">Benchmarks</Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Title>
+            </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Header>
+            <Card className="machined border-ghost border-ghost hover:bg-neutral-light transition-colors duration-300"Content>
               <p className="text-sm text-text-secondary leading-relaxed">
                 Automated benchmarking against top DeFi, CeFi, and traditional enterprise finance.
                 Primary KPIs: APY spreads, slippage efficiency, and hardware-attested latency targets.
               </p>
-            </CardContent>
-          </Card>
+            </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300"Content>
+          </Card className="border-ghost hover:bg-neutral-light transition-colors duration-300">
         </section>
       </VStack>
     </div>

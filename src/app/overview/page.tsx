@@ -6,7 +6,7 @@ import { ReadinessDashboard } from "@/components/ReadinessDashboard";
 
 export default function Overview() {
   return (
-    <div className="space-y-10 bg-background min-h-screen">
+    <div className="space-y-10 bg-background antialiased min-h-screen">
       <div>
         <h1 className="text-3xl font-bold text-text tracking-widest uppercase">System Overview</h1>
         <p className="mt-2 text-sm text-text-secondary">

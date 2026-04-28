@@ -213,7 +213,7 @@ function AddLiquidityContent() {
         </TabsList>
 
         <TabsContent value="standard">
-          <Card className="bg-background-paper">
+          <Card className="machined border-ghost bg-background antialiased-paper">
             <CardHeader>
               <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Standard Liquidity</CardTitle>
               <CardDescription>Full-range liquidity provision for automated market making.</CardDescription>
@@ -286,7 +286,7 @@ function AddLiquidityContent() {
         </TabsContent>
 
         <TabsContent value="concentrated">
-          <Card className="bg-background-paper">
+          <Card className="machined border-ghost bg-background antialiased-paper">
             <CardHeader>
               <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Concentrated Liquidity</CardTitle>
               <CardDescription>Provide liquidity within a specific price range for higher capital efficiency.</CardDescription>

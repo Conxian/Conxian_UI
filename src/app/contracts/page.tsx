@@ -29,7 +29,7 @@ export default function ContractsPage() {
   }, [loadInterface]);
 
   return (
-    <div className="space-y-10 bg-background min-h-screen">
+    <div className="space-y-10 bg-background antialiased min-h-screen">
       <div>
         <h1 className="text-3xl font-bold tracking-widest text-text-primary uppercase">
           Contract Explorer
@@ -41,7 +41,7 @@ export default function ContractsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div className="space-y-6">
-          <Card>
+          <Card className="machined border-ghost">
             <CardHeader>
               <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
                 Target Contract
@@ -74,7 +74,7 @@ export default function ContractsPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="machined border-ghost">
             <CardHeader>
               <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
                 Registry Quick-Links
@@ -91,7 +91,7 @@ export default function ContractsPage() {
                       setPrincipal(p);
                       setName(n);
                     }}
-                    className="w-full justify-between h-auto p-2 font-normal hover:bg-background-light"
+                    className="w-full justify-between h-auto p-2 font-normal hover:bg-background antialiased-light"
                   >
                     <span className="text-text-primary">{c.label}</span>
                     <span className="text-text-muted opacity-0 group-hover:opacity-100 text-[10px] font-mono">
@@ -106,14 +106,14 @@ export default function ContractsPage() {
 
         <div className="space-y-6">
           {iface ? (
-            <Card>
+            <Card className="machined border-ghost">
               <CardHeader>
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
                   Interface Details
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="bg-background-light p-4 rounded-md border border-accent/20">
+                <div className="bg-background antialiased-light p-4 rounded-md border border-accent/20">
                   <pre className="text-xs font-mono overflow-auto max-h-[300px] whitespace-pre-wrap">
                     {JSON.stringify(iface, null, 2)}
                   </pre>

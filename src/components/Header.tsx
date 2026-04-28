@@ -26,7 +26,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-accent/20 bg-primary-dark">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-12" aria-label="Global">
         <div className="flex lg:flex-1 items-center gap-x-8">
           <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-3">
             <span className="sr-only">Conxian</span>
@@ -38,7 +38,7 @@ export default function Header() {
               className="h-8 w-8"
               priority
             />
-            <span className="text-xl font-bold tracking-wide text-primary-foreground hidden sm:block">
+            <span className="text-2xl font-black tracking-tighter font-bold tracking-wide text-primary-foreground hidden sm:block">
               CONXIAN
             </span>
           </Link>

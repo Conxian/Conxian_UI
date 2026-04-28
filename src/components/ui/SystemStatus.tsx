@@ -13,7 +13,7 @@ import {
   ArrowTrendingUpIcon,
 } from "@heroicons/react/24/outline";
 import { useApi } from "@/lib/api-client";
-import StatusIndicator from "@/components/ui/StatusIndicator";
+import div className="h-1 w-12 bg-accent mb-4" /><StatusIndicator from "@/components/ui/div className="h-1 w-12 bg-accent mb-4" /><StatusIndicator";
 import { ApiResult } from "@/lib/contract-interactions";
 
 interface DashboardMetrics {
@@ -84,7 +84,7 @@ export default function SystemStatus() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">System Status</CardTitle>
-        <StatusIndicator
+        <div className="h-1 w-12 bg-accent mb-4" /><StatusIndicator
           status={metrics?.systemHealth?.success ? "operational" : "degraded"}
         />
       </CardHeader>

@@ -5,10 +5,12 @@
   /* 60% Base Canvas - Sovereign Earthy Foundation (Ivory) */
   --color-background: #FDFBF7;
   --color-neutral-light: #F9F8F6;
+  --color-surface-dim: #F2F0ED;
 
   /* 30% Surface Layers - Pure Clarity */
   --color-background-light: #FFFFFF;
   --color-background-paper: #FFFFFF;
+  --color-surface-glass: rgba(255, 255, 255, 0.8);
 
   /* 10% Brand & Interaction - Institutional Depth */
   --color-primary: #2E403B;
@@ -16,6 +18,7 @@
   --color-primary-foreground: #FFFFFF;
   --color-accent: #D4A017;
   --color-accent-foreground: #FFFFFF;
+  --color-ink: #2E403B;
 
   /* Typography - High Contrast (WCAG AAA) */
   --color-text: #333333;
@@ -34,10 +37,35 @@
   --color-info-foreground: #FFFFFF;
 
   --font-family-sans: var(--font-inter);
+  --font-family-mono: var(--font-jetbrains-mono);
 }
 
 body {
   font-family: theme(fontFamily.sans);
   background-color: var(--color-background);
   color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Production Polish: Glassmorphism */
+.glass {
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(212, 160, 23, 0.15);
+}
+
+/* Machined Instrument Gradient */
+.machined {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F9F8F6 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* Ghost Border */
+.border-ghost {
+  border-color: rgba(114, 120, 118, 0.15);
+}
+
+/* Global Production Contrast */
+h1, h2, h3, h4 {
+  color: var(--color-ink);
 }

@@ -44,7 +44,7 @@ export default function NetworkPage() {
   }, [refresh]);
 
   return (
-    <div className="space-y-10 bg-background min-h-screen">
+    <div className="space-y-10 bg-background antialiased min-h-screen">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-text tracking-widest uppercase">Network</h1>
@@ -58,7 +58,7 @@ export default function NetworkPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
+        <Card className="machined border-ghost">
           <CardHeader>
             <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Environment</CardTitle>
           </CardHeader>
@@ -79,7 +79,7 @@ export default function NetworkPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="machined border-ghost">
           <CardHeader>
             <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Block Times</CardTitle>
           </CardHeader>
@@ -91,7 +91,7 @@ export default function NetworkPage() {
         </Card>
       </div>
 
-      <Card>
+      <Card className="machined border-ghost">
         <CardHeader>
           <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Mempool (latest)</CardTitle>
         </CardHeader>

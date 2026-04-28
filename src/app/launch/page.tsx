@@ -91,7 +91,7 @@ export default function LaunchPage() {
   }
 
   return (
-    <div className="space-y-10 bg-background min-h-screen">
+    <div className="space-y-10 bg-background antialiased min-h-screen">
       <div>
         <h1 className="text-3xl font-bold text-text tracking-widest uppercase">
           Community Launch
@@ -102,7 +102,7 @@ export default function LaunchPage() {
       </div>
 
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 border border-accent/20 bg-background-light p-1 h-12">
+        <TabsList className="grid w-full grid-cols-4 border border-accent/20 bg-background antialiased-light p-1 h-12">
           <TabsTrigger value="overview" className="uppercase font-bold tracking-widest text-xs">Overview</TabsTrigger>
           <TabsTrigger value="contribute" className="uppercase font-bold tracking-widest text-xs">Contribute</TabsTrigger>
           <TabsTrigger value="progress" className="uppercase font-bold tracking-widest text-xs">Progress</TabsTrigger>
@@ -111,7 +111,7 @@ export default function LaunchPage() {
 
         <TabsContent value="overview" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
+            <Card className="machined border-ghost">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Current Phase</CardTitle>
               </CardHeader>
@@ -123,7 +123,7 @@ export default function LaunchPage() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="machined border-ghost">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Total Raised</CardTitle>
               </CardHeader>
@@ -135,7 +135,7 @@ export default function LaunchPage() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="machined border-ghost">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">Contributors</CardTitle>
               </CardHeader>
@@ -148,7 +148,7 @@ export default function LaunchPage() {
             </Card>
           </div>
 
-          <Card>
+          <Card className="machined border-ghost">
             <CardHeader>
               <CardTitle className="text-sm font-bold uppercase tracking-widest text-text-secondary">Launch Roadmap</CardTitle>
               <CardDescription className="text-xs text-text-muted">
@@ -192,7 +192,7 @@ export default function LaunchPage() {
         </TabsContent>
 
         <TabsContent value="contribute" className="space-y-6">
-          <Card className="max-w-xl mx-auto">
+          <Card className="machined border-ghost max-w-xl mx-auto">
             <CardHeader>
               <CardTitle className="text-sm font-bold uppercase tracking-widest text-text-secondary">Funding Participation</CardTitle>
               <CardDescription className="text-xs text-text-muted">
@@ -222,7 +222,7 @@ export default function LaunchPage() {
 
               {txId && (
                 <div
-                  className="mt-6 p-4 border border-accent/20 rounded-lg bg-background-light flex items-center justify-between"
+                  className="mt-6 p-4 border border-accent/20 rounded-lg bg-background antialiased-light flex items-center justify-between"
                   aria-live="polite"
                 >
                   <div className="flex flex-col">
@@ -245,7 +245,7 @@ export default function LaunchPage() {
         </TabsContent>
 
         <TabsContent value="leaderboard" className="space-y-6">
-          <Card className="max-w-2xl mx-auto">
+          <Card className="machined border-ghost max-w-2xl mx-auto">
             <CardHeader>
               <CardTitle className="text-sm font-bold uppercase tracking-widest text-text-secondary">Launch Benefactors</CardTitle>
               <CardDescription className="text-xs text-text-muted">
@@ -262,7 +262,7 @@ export default function LaunchPage() {
                   communityStats.topContributors.map((contrib, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center p-4 border border-accent/10 rounded-lg bg-background-light hover:border-accent/30 transition-colors"
+                      className="flex justify-between items-center p-4 border border-accent/10 rounded-lg bg-background antialiased-light hover:border-accent/30 transition-colors"
                     >
                       <div className="flex items-center gap-4">
                         <span className="text-xs font-bold text-text-muted tabular-nums">#0{index + 1}</span>

@@ -76,7 +76,7 @@ export default function PoolsPage() {
   }, [refresh]);
 
   return (
-    <div className="space-y-10 space-y-6 bg-background min-h-screen">
+    <div className="space-y-10 space-y-6 bg-background antialiased min-h-screen">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold tracking-widest text-text-primary uppercase tracking-widest">
@@ -88,7 +88,7 @@ export default function PoolsPage() {
         </div>
         <div className="flex gap-3">
           <select
-            className="bg-background-light border border-accent/20 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-accent focus:outline-none text-text"
+            className="bg-background antialiased-light border border-accent/20 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-accent focus:outline-none text-text"
             value={selected}
             onChange={(e) => setSelected(e.target.value)}
           >
@@ -105,14 +105,14 @@ export default function PoolsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gaspace-y-10">
-        <Card>
+        <Card className="machined border-ghost">
           <CardHeader>
             <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
               Liquidity Reserves
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold tabular-nums text-text">
+            <div className="text-3xl font-black tabular-nums text-text">
               {reserves?.ok ? JSON.stringify(decodeResultHex(reserves.result!)?.value || "0.00") : "0.00"}
             </div>
             <p className="text-xs text-text-muted mt-1 uppercase font-medium">
@@ -121,14 +121,14 @@ export default function PoolsPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="machined border-ghost">
           <CardHeader>
             <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
               Total Supply (LP)
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold tabular-nums text-text">
+            <div className="text-3xl font-black tabular-nums text-text">
               {totalSupply?.ok ? getUint(totalSupply.result!)?.toString() || "0.00" : "0.00"}
             </div>
             <p className="text-xs text-text-muted mt-1 uppercase font-medium">
@@ -137,14 +137,14 @@ export default function PoolsPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="machined border-ghost">
           <CardHeader>
             <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
               Internal Price
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold tabular-nums text-text">
+            <div className="text-3xl font-black tabular-nums text-text">
               {price?.ok ? getUint(price.result!)?.toString() || "0.00" : "0.00"}
             </div>
             <p className="text-xs text-text-muted mt-1 uppercase font-medium">
@@ -154,7 +154,7 @@ export default function PoolsPage() {
         </Card>
       </div>
 
-      <Card>
+      <Card className="machined border-ghost">
         <CardHeader>
           <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">
             Protocol Performance & Fees

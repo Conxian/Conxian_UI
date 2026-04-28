@@ -155,29 +155,42 @@ export default function SwapPage() {
   }, [stxAddress]);
 
   return (
-    <div className="space-y-8 bg-background min-h-screen">
+    <div className="space-y-8 bg-background antialiased min-h-screen">
+      <div className="bg-ink text-background p-10 -mx-4 sm:-mx-6 lg:-mx-8 mb-10 border-b border-accent/30">
+        <div className="max-w-7xl mx-auto flex justify-between items-end">
+          <div>
+            <h1 className="text-5xl font-black tracking-tighter uppercase leading-none">Execution</h1>
+            <p className="mt-4 text-accent font-bold uppercase tracking-[0.3em] text-xs">Institutional Liquidity Engine</p>
+          </div>
+          <div className="text-right opacity-50 font-mono text-[10px] uppercase">
+            <p>Ready: STABLE_V3</p>
+            <p>Latency: 0.12ms</p>
+          </div>
+        </div>
+      </div>
+
       <div>
-        <h1 className="text-3xl font-bold text-text tracking-widest uppercase">Swap</h1>
+        <h1 className="text-2xl font-black text-text tracking-tight uppercase">Swap</h1>
         <p className="mt-2 text-sm text-text-secondary">
           Institutional-grade liquidity engine for instant asset exchange.
         </p>
       </div>
 
       <Tabs defaultValue="simple" className="w-full max-w-md mx-auto">
-        <TabsList className="grid w-full grid-cols-2 bg-background-light border border-accent/20 p-1 h-12">
+        <TabsList className="grid w-full grid-cols-2 bg-background antialiased-light border border-accent/20 p-1 h-12">
           <TabsTrigger value="simple" className="uppercase font-bold tracking-widest text-xs">Standard</TabsTrigger>
           <TabsTrigger value="optimized" disabled className="uppercase font-bold tracking-widest text-xs">Institutional</TabsTrigger>
         </TabsList>
         <TabsContent value="simple" className="mt-6">
-          <Card className="bg-background-paper border-accent/20 shadow-xl">
+          <Card className="machined border-ghost">
             <CardHeader className="pb-6">
-              <CardTitle className="text-xs font-bold uppercase tracking-widest text-text-secondary">EXECUTION MATRIX</CardTitle>
+              <CardTitle className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">EXECUTION MATRIX</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* From Token */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <label htmlFor="from-amount" className="text-xs font-bold uppercase tracking-widest text-text-secondary">
+                  <label htmlFor="from-amount" className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">
                     Asset In
                   </label>
                   <div className="flex items-center gap-2">
@@ -221,7 +234,7 @@ export default function SwapPage() {
                   onClick={invertTokens}
                   variant="outline"
                   size="icon"
-                  className="rounded-full bg-background-paper border-accent/30 h-8 w-8 shadow-md hover:bg-neutral-light"
+                  className="rounded-full bg-background antialiased-paper border-accent/30 h-8 w-8 shadow-md hover:bg-neutral-light"
                   aria-label="Invert tokens"
                 >
                   <ArrowsUpDownIcon className="h-4 w-4 text-accent transition-transform duration-500 active:rotate-180" />
@@ -230,7 +243,7 @@ export default function SwapPage() {
 
               {/* To Token */}
               <div className="space-y-2">
-                <label htmlFor="to-amount" className="text-xs font-bold uppercase tracking-widest text-text-secondary">Asset Out</label>
+                <label htmlFor="to-amount" className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Asset Out</label>
                 <div className="flex items-center gap-2 bg-neutral-light p-2 rounded-lg border border-accent/10">
                   <TokenSelect
                     tokens={Tokens}

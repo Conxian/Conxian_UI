@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Card className="machined border-ghost hover:shadow-lg transition-all duration-500", Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Content, Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Header, Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Title } from "@/components/ui/Card className="machined border-ghost hover:shadow-lg transition-all duration-500"";
 import { cn } from "@/lib/utils";
 
-interface StatCardProps {
+interface StatCard className="machined border-ghost hover:shadow-lg transition-all duration-500"Props {
   title: string;
   value: string;
   icon: React.ReactNode;
@@ -10,24 +10,24 @@ interface StatCardProps {
   loading?: boolean;
 }
 
-export const StatCard = ({
+export const StatCard className="machined border-ghost hover:shadow-lg transition-all duration-500" = ({
   title,
   value,
   icon,
   subtext,
   tooltipText,
   loading = false,
-}: StatCardProps) => (
-  <Card>
-    <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-      <CardTitle className="text-xs font-bold text-text-secondary uppercase tracking-widest">{title}</CardTitle>
+}: StatCard className="machined border-ghost hover:shadow-lg transition-all duration-500"Props) => (
+  <Card className="machined border-ghost hover:shadow-lg transition-all duration-500">
+    <Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Header className="flex flex-row items-center justify-between pb-2 space-y-0">
+      <Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Title className="text-[10px] font-bold text-text-muted uppercase tracking-[0.2em]">{title}</Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Title>
       <div title={tooltipText} className="text-text-secondary">{icon}</div>
-    </CardHeader>
-    <CardContent>
+    </Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Header>
+    <Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Content>
       {loading ? (
         <div className="h-8 w-24 bg-neutral-light animate-pulse rounded" />
       ) : (
-        <div className="text-2xl font-bold text-text tracking-tight tabular-nums">{value}</div>
+        <div className="text-3xl font-black text-text tracking-tight tabular-nums">{value}</div>
       )}
       {subtext && (
         <p className={cn(
@@ -37,6 +37,6 @@ export const StatCard = ({
           {subtext}
         </p>
       )}
-    </CardContent>
-  </Card>
+    </Card className="machined border-ghost hover:shadow-lg transition-all duration-500"Content>
+  </Card className="machined border-ghost hover:shadow-lg transition-all duration-500">
 );
