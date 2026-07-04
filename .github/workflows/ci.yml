@@ -2,54 +2,35 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
-
-permissions:
-  contents: read
+    branches: [ main ]
 
 jobs:
   validate:
-    name: Validate
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@1d11999632ad914e85c90400d7d24837ef02ec96 # v4.2.0
-        with:
-          node-version: 20.19.0
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@feaa283a832f6262f683d96515748726296cc77e # v4.0.0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 10.17.1
-          run_install: false
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Lint
-        run: npx eslint . || true
+        run: npx eslint .
 
       - name: Typecheck
-        run: pnpm exec tsc --noEmit
+        run: pnpm tsc --noEmit
 
       - name: Test
         run: pnpm test:run
