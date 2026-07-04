@@ -20,9 +20,9 @@ Security fixes are applied on a rolling basis to the default branch (`main`). Th
 Use one of the following private channels:
 
 1. GitHub private vulnerability reporting (Security Advisories) on this repository.
-2. Email: **security@conxian-labs.com**.
+2. Email: **security@conxian.org**.
 
-If you cannot use either channel, email **admin@conxian-labs.com** and clearly label the message as a security report.
+If you cannot use either channel, email **admin@conxian.org** and clearly label the message as a security report.
 
 Include, where possible:
 - A clear description of the issue.

@@ -1,12 +1,12 @@
-
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { AppConfig, UserSession, showConnect, AuthOptions } from '@stacks/connect';
+import { AppConfig as StacksAppConfig, UserSession, showConnect, AuthOptions } from '@stacks/connect';
 import { useToasts } from '@/hooks/useToasts';
+import { AppConfig } from './config';
 
-const appConfig = new AppConfig(['store_write', 'publish_data']);
-export const userSession = new UserSession({ appConfig });
+const stacksAppConfig = new StacksAppConfig(['store_write', 'publish_data']);
+export const userSession = new UserSession({ appConfig: stacksAppConfig });
 
 interface WalletContextType {
   stxAddress: string | null;
@@ -23,14 +23,19 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (userSession.isUserSignedIn()) {
-      setStxAddress(userSession.loadUserData().profile.stxAddress.mainnet);
+      const userData = userSession.loadUserData();
+      const network = AppConfig.network;
+      const address = network === 'mainnet'
+        ? userData.profile.stxAddress.mainnet
+        : userData.profile.stxAddress.testnet;
+      setStxAddress(address);
     }
   }, []);
 
   const connectWallet = () => {
     const authOptions: AuthOptions = {
       appDetails: {
-        name: 'Conxian Unified Dashboard',
+        name: 'Conxian Dashboard',
         icon: '/conxian-mark-b.svg',
       },
       redirectTo: '/',

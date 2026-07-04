@@ -20,7 +20,7 @@
 
 ## Boundary rule
 
-If this repo is retained, it must keep a narrow purpose and avoid substantial overlap with `conxius-wallet` or `conxian-labs-site`.
+If this repo is retained, it must keep a narrow purpose and avoid substantial overlap with `conxius-wallet` or `conxian-site`.
 
 ## Strategic role
 

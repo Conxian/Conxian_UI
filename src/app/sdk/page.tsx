@@ -16,9 +16,9 @@ import CopyButton from "@/components/CopyButton";
 
 const installCommand = "cargo add conxius-enclave-sdk && cargo add lib-conxian-core";
 const configSnippet = `{
-  "gateway_url": "https://gateway.conxian-labs.com",
-  "kms_endpoint": "https://vault.conxian-labs.com",
-  "nexus_url": "https://nexus.conxian-labs.com",
+  "gateway_url": "https://gateway.conxian.org",
+  "kms_endpoint": "https://vault.conxian.org",
+  "nexus_url": "https://nexus.conxian.org",
   "api_key": "[AUTH_TOKEN_REQUIRED]"
 }`;
 
