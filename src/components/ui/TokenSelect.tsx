@@ -57,7 +57,7 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
               className="w-6 h-6 mr-3 shrink-0"
             />
           )}
-          <span className="text-[10px] font-black uppercase tracking-widest truncate">{selectedTokenInfo?.label || 'SELECT VECTOR'}</span>
+          <span className="text-[10px] font-black uppercase tracking-widest truncate">{selectedTokenInfo?.label || 'SELECT TOKEN'}</span>
         </div>
         <svg
           className={`w-4 h-4 ml-2 transition-transform shrink-0 ${isOpen ? "transform rotate-180" : ""}`}

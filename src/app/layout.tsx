@@ -10,9 +10,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Conxian UI",
+  title: "Conxian | Sovereign Bitcoin Economy",
   description:
-    "Public interaction layer for the Conxian protocol, maintained by Conxian-Labs.",
+    "The definitive high-integrity interface for the autonomous Bitcoin economy. Accessible at conxian.org.",
+  metadataBase: new URL("https://conxian.org"),
 };
 
 export default function RootLayout({

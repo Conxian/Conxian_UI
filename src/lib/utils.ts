@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { hexToCV } from "@stacks/transactions";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -60,4 +61,24 @@ export function truncate(str: string, startChars = 6, endChars = 4): string {
   if (!str) return "";
   if (str.length <= startChars + endChars) return str;
   return `${str.substring(0, startChars)}...${str.substring(str.length - endChars)}`;
+}
+
+export function decodeResultHex(hex: string) {
+  try {
+    return hexToCV(hex);
+  } catch {
+    return null;
+  }
+}
+
+export function getTupleField(cv: any, field: string) {
+  return cv?.data?.[field];
+}
+
+export function getPrincipalValue(cv: any) {
+  if (!cv) return "";
+  if (cv.type === 5 || cv.type === 6) {
+    return cv.address.hashMode + "." + cv.address.address + "." + cv.contractName;
+  }
+  return "";
 }

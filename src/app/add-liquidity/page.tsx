@@ -3,110 +3,64 @@
 import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  openContractCall,
   PostConditionMode,
   uintCV,
   intCV,
   contractPrincipalCV,
-  cvToHex,
 } from "@stacks/transactions";
+import { openContractCall } from "@stacks/connect";
 import { Tokens } from "@/lib/contracts";
-import { getFungibleTokenBalances, FungibleTokenBalance, callReadOnly } from "@/lib/core-api";
+import { getFungibleTokenBalances, FungibleTokenBalance } from "@/lib/core-api";
 import { userSession } from "@/lib/wallet";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { Badge } from "@/components/ui/Badge";
-import TokenSelect from "@/components/ui/TokenSelect";
-import { parseAmount, decodeResultHex, getTupleField, getPrincipalValue } from "@/lib/utils";
 import {
+  ArrowPathIcon,
   CpuChipIcon,
   BoltIcon,
-  ArrowPathIcon,
 } from "@heroicons/react/24/outline";
+import TokenSelect from "@/components/ui/TokenSelect";
+import { parseAmount } from "@/lib/utils";
 
 function AddLiquidityContent() {
   const searchParams = useSearchParams();
-  const pair = searchParams.get("pair") || "STX-CXD";
+  const poolPrincipal = searchParams.get("pool") || "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.stx-cxd-pool";
+  const urlType = searchParams.get("type");
 
-  const [tokenA, setTokenA] = useState("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.stx-token");
-  const [tokenB, setTokenB] = useState("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cxd-token");
+  const [tokenA, setTokenA] = useState("STX");
+  const [tokenB, setTokenB] = useState("CXD");
   const [amountA, setAmountA] = useState("");
   const [amountB, setAmountB] = useState("");
   const [lowerTick, setLowerTick] = useState("-1000");
   const [upperTick, setUpperTick] = useState("1000");
-  const [sending, setSending] = useState(false);
-  const [status, setStatus] = useState("");
   const [balances, setBalances] = useState<FungibleTokenBalance[]>([]);
+  const [status, setStatus] = useState("");
+  const [sending, setSending] = useState(false);
 
-  useEffect(() => {
-    if (pair) {
-      const parts = pair.split("-");
-      if (parts.length === 2) {
-        const tA = Tokens.find((t) => t.label === parts[0]);
-        const tB = Tokens.find((t) => t.label === parts[1]);
-        if (tA) setTokenA(tA.id);
-        if (tB) setTokenB(tB.id);
-      }
-    }
-  }, [pair]);
-
-  useEffect(() => {
+  const fetchBalances = useCallback(async () => {
     if (userSession.isUserSignedIn()) {
       const userData = userSession.loadUserData();
-      const addr = userData.profile.stxAddress.testnet || userData.profile.stxAddress.mainnet;
-      getFungibleTokenBalances(addr).then(setBalances).catch(console.error);
+      const stxAddress = userData.profile.stxAddress.mainnet;
+      const b = await getFungibleTokenBalances(stxAddress);
+      setBalances(b);
     }
   }, []);
 
+  useEffect(() => {
+    fetchBalances();
+  }, [fetchBalances]);
+
   const handleAddLiquidity = async (isConcentrated: boolean) => {
     if (!userSession.isUserSignedIn()) {
-      setStatus("Please connect your wallet.");
+      setStatus("Please connect your wallet first.");
       return;
     }
 
-    setSending(true);
-    setStatus("Preparing transaction...");
-
     try {
-      // 1. Resolve the pool principal using the factory
-      const factory = Tokens.find((t) => t.label === "FACTORY");
-      if (!factory) {
-        setStatus("Factory contract not found.");
-        setSending(false);
-        return;
-      }
-
-      const [factoryAddress, contractName] = factory.id.split(".");
-      const getPoolArgs = [
-        contractPrincipalCV(...(tokenA.split(".") as [string, string])),
-        contractPrincipalCV(...(tokenB.split(".") as [string, string])),
-      ].map(cvToHex);
-
-      const poolRes = await callReadOnly(
-        factoryAddress,
-        contractName,
-        "get-pool",
-        factoryAddress,
-        getPoolArgs,
-      );
-
-      let poolPrincipal = "";
-      if (poolRes.ok && poolRes.result) {
-        const decoded = decodeResultHex(poolRes.result);
-        if (decoded && decoded.ok) {
-          const poolField = getTupleField(decoded.value, "pool");
-          const principal = getPrincipalValue(poolField);
-          if (principal) poolPrincipal = principal;
-        }
-      }
-
-      if (!poolPrincipal) {
-        setStatus("Pool not found.");
-        setSending(false);
-        return;
-      }
+      setSending(true);
+      setStatus("Preparing transaction...");
 
       const tokenAInfo = Tokens.find((t) => t.id === tokenA);
       const tokenBInfo = Tokens.find((t) => t.id === tokenB);
@@ -180,7 +134,7 @@ function AddLiquidityContent() {
           </div>
         </div>
 
-        <Tabs defaultValue="standard" className="w-full max-w-4xl mx-auto space-y-8">
+        <Tabs defaultValue={urlType === "clmm" ? "concentrated" : "standard"} className="w-full max-w-4xl mx-auto space-y-8">
           <TabsList className="grid w-full grid-cols-2 bg-neutral-light border-accent/20 h-12 p-1">
             <TabsTrigger value="standard" aria-label="Standard V2 liquidity">Standard (v2)</TabsTrigger>
             <TabsTrigger value="concentrated" aria-label="Concentrated CLMM liquidity">Concentrated (CLMM)</TabsTrigger>

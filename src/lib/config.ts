@@ -15,9 +15,9 @@ export function inferNetworkFromUrl(url: string): "devnet" | "testnet" | "mainne
 export const AppConfig = {
   coreApiUrl: getCoreApiUrl(),
   network: inferNetworkFromUrl(getCoreApiUrl()),
-  gatewayUrl: process.env.NEXT_PUBLIC_GATEWAY_URL || "https://gateway.conxian-labs.com",
-  vaultUrl: process.env.NEXT_PUBLIC_VAULT_URL || "https://vault.conxian-labs.com",
-  nexusUrl: process.env.NEXT_PUBLIC_NEXUS_URL || "https://nexus.conxian-labs.com",
+  gatewayUrl: process.env.NEXT_PUBLIC_GATEWAY_URL || "https://gateway.conxian.org",
+  vaultUrl: process.env.NEXT_PUBLIC_VAULT_URL || "https://vault.conxian.org",
+  nexusUrl: process.env.NEXT_PUBLIC_NEXUS_URL || "https://nexus.conxian.org",
   apiKey: process.env.NEXT_PUBLIC_CONXIAN_API_KEY || "",
   contracts: {
     router: `${BASE_PRINCIPAL}.swap-router`,

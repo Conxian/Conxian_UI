@@ -8,7 +8,7 @@ Provide a public interaction layer for Conxian features, demos, and user-facing 
 
 ## Status
 
-**Active development.** This repository is a public interaction and interface layer. It should be treated as an application-facing surface, not as the protocol source of truth and not as the Labs operating authority.
+**Active development.** This repository is a public interaction and interface layer. It should be treated as an application-facing surface, not as the protocol source of truth and not as the operating authority.
 
 ## Scope
 
@@ -16,14 +16,14 @@ This repository contains interface work, UI assets, and application flows. It do
 
 ## Governance relation
 
-This repository is maintained by Conxian-Labs as part of the public interaction layer around the Conxian ecosystem. Governance of the Conxian protocol remains separate from this interface surface.
+This repository is maintained by Conxian as part of the public interaction layer around the Conxian ecosystem. Governance of the Conxian protocol remains separate from this interface surface.
 
 ## Relationship to the Conxian stack
 
 - `Conxian` is the protocol and DAO-facing core.
 - `conxius-wallet` is the wallet and reference client.
 - `conxian-gateway` is the middleware and integration surface.
-- `conxian-labs-site` is the Labs portfolio and public information surface.
+- `conxian-site` is the portfolio and public information surface.
 
 ## Deployment
 
@@ -52,7 +52,7 @@ This repository deploys to Render as a Node web service.
 
 ## Security
 
-Do not disclose vulnerabilities publicly. Use [SECURITY.md](SECURITY.md) or `security@conxian-labs.com`.
+Do not disclose vulnerabilities publicly. Use [SECURITY.md](SECURITY.md) or `security@conxian.org`.
 
 ## Policies
 
@@ -66,9 +66,9 @@ Do not disclose vulnerabilities publicly. Use [SECURITY.md](SECURITY.md) or `sec
 
 ## Contact
 
-- General: [info@conxian-labs.com](mailto:info@conxian-labs.com)
-- Support: [support@conxian-labs.com](mailto:support@conxian-labs.com)
-- Security: [security@conxian-labs.com](mailto:security@conxian-labs.com)
+- General: [info@conxian.org](mailto:info@conxian.org)
+- Support: [support@conxian.org](mailto:support@conxian.org)
+- Security: [security@conxian.org](mailto:security@conxian.org)
 
 ## License
 
