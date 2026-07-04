@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "serve out -l ${PORT:-10000} -s",
+    "start": "serve out -p $PORT -s",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "./scripts/run-tests.sh",
@@ -29,7 +29,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "next": "15.5.18",
-    "path-to-regexp": "6.3.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "serve": "^14.2.6",
