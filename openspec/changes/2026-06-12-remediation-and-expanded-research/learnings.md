@@ -1,14 +1,19 @@
-# Learnings from Expanded Research Cycle (June 2026)
+# Learnings from Expanded Research Cycle (July 2026)
 
 ## 1. Technical Nuance in Bitcoin Adapters
-- **RGB Fork Split**: The distinction between the `rgb-protocol` (v0.11.1) and `rgb-core` (v0.12) is critical. Conxian must target v0.11.1 for mainnet readiness as it has the backing of major institutional players like Tether.
-- **BitVM Chunking**: BitVM2's 364-tap verification system is the current state-of-the-art for SNARKs on Bitcoin. Our `BitVMAdapter` should be designed to handle these multi-transaction verification flows rather than a single atomic check.
-- **Liquid Maturity**: Liquid's 102-confirmation requirement for peg-ins is a significant UX hurdle that must be clearly communicated in the UI.
+- **BitVM Implementation**: Our `BitVMAdapter` must support the 364-tap chunking pattern for Groth16 verification to be mainnet-compatible.
+- **sBTC Delay**: The 3-block deposit delay must be handled asynchronously in the UI with high-trust feedback (e.g., "Awaiting Bitcoin Finality (1/3 blocks)").
+- **RGB Versioning**: Always pin to RGB v0.11.1 for production workflows to avoid the push-back (hard-fork) risks associated with experimental versions.
 
-## 2. UI/UX Terminology
-- **Standardization**: Transitioning from technical/operator-grade terminology (e.g., 'NOMINAL', 'PARTIAL') to product-centric language (e.g., 'READY', 'ACTION REQUIRED') improves user trust and accessibility for non-technical institutional users.
-- **Accessibility**: High-contrast labels (#333333 or #4D4D4D) are non-negotiable for financial dashboards. Opacity-based muting is deprecated.
+## 2. Institutional Authentication
+- **Passkey-First**: The `requireSession: false` configuration in Better Auth is a game-changer for institutional onboarding, allowing "Sign Up with Passkey" as the primary flow.
+- **TEE Security**: Passkey registration should explicitly request `credProps` extensions to verify authenticator properties before mapping to secure enclave keys.
 
-## 3. Deployment & CI/CD
-- **Environment Parity**: The `TypeError: pathToRegExp` issue on Render highlighted the importance of testing in production-like environments (using `serve` locally) even when the build passes.
-- **Port Binding**: Explicitly using the `-l` flag in `serve` is the only reliable way to bind to dynamic ports on certain cloud providers.
+## 3. UI/UX Terminology & Accessibility
+- **WCAG AAA Compliance**: Move away from opacity-based muting for labels on Ivory foundations. Use `#4D4D4D` (text-ink-light) to maintain readability (~12:1 contrast ratio).
+- **Product Language**: Use "Awaiting Finality" instead of "Transaction Pending" for sBTC operations to educate users on the cross-chain security model.
+- **Standardization**: Term 'SELECT VECTOR' has been globally updated to 'SELECT TOKEN' across components like TokenSelect.tsx.
+
+## 4. Vulnerability Management
+- **Vite & Vitest**: High/Critical vulnerabilities in devTools (Vite < 8.0.16, Vitest < 4.1.0) were remediated via `pnpm.overrides` to prevent local environment escalation.
+- **Supply Chain**: Strict version pinning in overrides is the canonical way to handle transitive dependency vulnerabilities without waiting for upstream package updates.
