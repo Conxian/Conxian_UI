@@ -34,4 +34,4 @@ Include, where possible:
 
 We support good-faith security research and coordinated disclosure.
 
-If you act in good faith, avoid privacy violations, data destruction, and service disruption, and give us reasonable time to remediate before public disclosure, Conxian Labs will not pursue legal action for your research activity.
+If you act in good faith, avoid privacy violations, data destruction, and service disruption, and give us reasonable time to remediate before public disclosure, Conxian will not pursue legal action for your research activity.

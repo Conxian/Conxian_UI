@@ -51,7 +51,7 @@ const offerCards = [
   },
   {
     title: "Hosted API",
-    description: "Use Conxian Labs-operated gateways for managed API access and faster integration.",
+    description: "Use Conxian-operated gateways for managed API access and faster integration.",
     icon: BoltIcon,
   },
   {

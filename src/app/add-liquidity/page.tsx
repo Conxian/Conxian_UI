@@ -10,46 +10,47 @@ import {
 } from "@stacks/transactions";
 import { openContractCall } from "@stacks/connect";
 import { Tokens } from "@/lib/contracts";
-import { getFungibleTokenBalances, FungibleTokenBalance, callReadOnly } from "@/lib/core-api";
+import { getFungibleTokenBalances, FungibleTokenBalance } from "@/lib/core-api";
 import { userSession } from "@/lib/wallet";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { Badge } from "@/components/ui/Badge";
 import {
   ArrowPathIcon,
   CpuChipIcon,
   BoltIcon,
 } from "@heroicons/react/24/outline";
-import { parseAmount } from "@/lib/utils";
 import TokenSelect from "@/components/ui/TokenSelect";
-import { AppConfig } from "@/lib/config";
-import { logger } from "@/lib/logger";
-import Link from "next/link";
+import { parseAmount } from "@/lib/utils";
 
 function AddLiquidityContent() {
   const searchParams = useSearchParams();
-  const poolParam = searchParams.get("pool");
+  const poolPrincipal = searchParams.get("pool") || "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.stx-cxd-pool";
+  const urlType = searchParams.get("type");
 
-  const [tokenA, setTokenA] = useState<string>(Tokens[0].id);
-  const [tokenB, setTokenB] = useState<string>(Tokens[1].id);
+  const [tokenA, setTokenA] = useState("STX");
+  const [tokenB, setTokenB] = useState("CXD");
   const [amountA, setAmountA] = useState("");
   const [amountB, setAmountB] = useState("");
   const [lowerTick, setLowerTick] = useState("-1000");
   const [upperTick, setUpperTick] = useState("1000");
   const [balances, setBalances] = useState<FungibleTokenBalance[]>([]);
-  const [sending, setSending] = useState(false);
   const [status, setStatus] = useState("");
+  const [sending, setSending] = useState(false);
 
-  const poolPrincipal = poolParam || AppConfig.contracts.pool;
-
-  useEffect(() => {
+  const fetchBalances = useCallback(async () => {
     if (userSession.isUserSignedIn()) {
-      const addr = userSession.loadUserData().profile.stxAddress.testnet;
-      getFungibleTokenBalances(addr).then(setBalances);
+      const userData = userSession.loadUserData();
+      const stxAddress = userData.profile.stxAddress.mainnet;
+      const b = await getFungibleTokenBalances(stxAddress);
+      setBalances(b);
     }
   }, []);
+
+  useEffect(() => {
+    fetchBalances();
+  }, [fetchBalances]);
 
   const handleAddLiquidity = async (isConcentrated: boolean) => {
     if (!userSession.isUserSignedIn()) {
@@ -133,7 +134,7 @@ function AddLiquidityContent() {
           </div>
         </div>
 
-        <Tabs defaultValue="standard" className="w-full max-w-4xl mx-auto space-y-8">
+        <Tabs defaultValue={urlType === "clmm" ? "concentrated" : "standard"} className="w-full max-w-4xl mx-auto space-y-8">
           <TabsList className="grid w-full grid-cols-2 bg-neutral-light border-accent/20 h-12 p-1">
             <TabsTrigger value="standard" aria-label="Standard V2 liquidity">Standard (v2)</TabsTrigger>
             <TabsTrigger value="concentrated" aria-label="Concentrated CLMM liquidity">Concentrated (CLMM)</TabsTrigger>

@@ -8,7 +8,7 @@ Provide a public interaction layer for Conxian features, demos, and user-facing 
 
 ## Status
 
-**Active development.** This repository is a public interaction and interface layer. It should be treated as an application-facing surface, not as the protocol source of truth and not as the Labs operating authority.
+**Active development.** This repository is a public interaction and interface layer. It should be treated as an application-facing surface, not as the protocol source of truth and not as the operating authority.
 
 ## Scope
 
@@ -23,7 +23,7 @@ This repository is maintained by Conxian as part of the public interaction layer
 - `Conxian` is the protocol and DAO-facing core.
 - `conxius-wallet` is the wallet and reference client.
 - `conxian-gateway` is the middleware and integration surface.
-- `conxian-site` is the Labs portfolio and public information surface.
+- `conxian-site` is the portfolio and public information surface.
 
 ## Deployment
 
