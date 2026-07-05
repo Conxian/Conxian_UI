@@ -1,30 +1,34 @@
-# Research Findings: Cross-Chain Interoperability & Protocol Adapters
+# Research Findings: Cross-Chain Interoperability & Institutional DeFi (Updated July 2026)
 
 ## 1. Bitcoin & Stacks (sBTC)
-- **Security Model**: sBTC uses a decentralized 2-way peg. Stacks and sBTC state automatically fork with Bitcoin, ensuring 100% Bitcoin Finality.
-- **Confirmation Timelines**: Deposits require 3 Bitcoin blocks (~30 mins) before sBTC is minted.
-- **Implementation**: Clarity smart contracts can parse raw Bitcoin transactions using `parse-tx` to extract version, inputs, outputs, and locktime.
+- **Security Model**: sBTC uses a decentralized 2-way peg secured by a 70% threshold of reputable signers.
+- **Finality**: Stacks and sBTC state automatically fork with Bitcoin, ensuring 100% Bitcoin Finality.
+- **Deposit Timeline**: Requires 3 Bitcoin blocks (~30 mins) before sBTC is minted on Stacks.
+- **Clarity Integration**:
+    - Contracts use `contract-call?` to the sBTC token contract (e.g., `SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token`).
+    - Standard functions: `transfer`, `get-balance`.
+    - Supports `restrict-assets?` for fine-grained asset control during execution.
 
-## 2. RGB Protocol (v0.11.1 vs v0.12)
-- **Production Readiness**: RGB v0.11.1 is the current production-ready ecosystem (July 2025). v0.12 is considered experimental/non-production.
-- **Key Features**: Supports Tether (USD₮) with a $170B+ issuance. Uses "Client-Side Validation" and "Single-Use Seals".
-- **Upgrade Path**: Implements "Fast-forward" updates (FFV) at the contract level to enable new rules without breaking backward compatibility for existing owners.
+## 2. BitVM (BitVM2 & BitVM3)
+- **BitVM2 Architecture**: Optimistic bridge with Groth16 SNARK verification on BN254.
+- **Chunking Strategy**: Splitting verification into 364 independent taps (1 validating tap for arithmetic, 363 hashing taps for state chain) to fit within Bitcoin's script limits.
+- **BitVM3 Improvements**: Uses Garbled Circuits and BitHash, reducing dispute costs by ~3000x and improving verifier efficiency.
 
-## 3. BitVM (BitVM2 & BitVM3)
-- **BitVM2 Architecture**: Optimistic bridge with Groth16 SNARK verification on BN254. Verification is split into 364 executable chunks (1 arithmetic validation tap, 363 hashing taps) to stay within Bitcoin's script limits.
-- **BitVM3 Strategy**: Uses Garbled Circuits and BitHash for SNARK verification, reducing dispute costs by ~3000x compared to BitVM2.
-- **Verifier Boundary**: Requires explicit definition of public inputs, witness expectations, and statement format.
+## 3. RGB Protocol (v0.11.1 vs v0.12)
+- **Production Status**: RGB v0.11.1 is the institutional standard (supported by Tether). v0.12 is experimental.
+- **Client-Side Validation**: State transitions are validated by the client (consignments) rather than global consensus.
+- **Consensus Upgrades**:
+    - **Fast-Forward (Ffv)**: Soft-fork equivalent at contract level. New rules valid for updated wallets, old wallets ignore.
+    - **Push-Back**: Hard-fork equivalent, requires asset reissuance.
+- **Commitment Schemes**: Uses `Opret` and `Tapret` for deterministic commitments in Bitcoin transactions.
 
-## 4. Liquid Network (Elements)
-- **Peg-in Mechanics**: Requires 102 Bitcoin confirmations before a peg-in claim can be processed on Liquid.
-- **Sidechain Security**: Managed by 15 functionaries (PowPeg). Elements-based codebase allows for Confidential Transactions and Issued Assets.
-- **Proof Verification**: Peg-in requires a Bitcoin Merkle inclusion proof and headers. Peg-out is processed in batches (~17 mins).
+## 4. Institutional Auth & Identity (Better Auth)
+- **Passkey (WebAuthn)**: Better Auth supports passkeys natively via `@better-auth/passkey`.
+- **Passkey-First Registration**: `requireSession: false` allows registration without an existing session, using a `resolveUser` callback for account creation.
+- **Extensions**: Supports WebAuthn extensions (PRF, credProps, largeBlob) for advanced security.
+- **TEE/HSM Mapping**: Identity mapping from Passkey to TEE/HSM-stored keys is achieved through `clientExtensionResults` and secure context resolution.
 
-## 5. Lightning Network (BOLT Standards)
-- **Routing & Peer Protocol**: Requires explicit `chain_hash` (32-byte hash) to identify the blockchain (e.g., Bitcoin).
-- **Channel Operations**: Strict limits on `push_msat` (max 1000 * funding_satoshis) and `dust_limit_satoshis` to prevent griefing.
-- **LDK Integration**: Moving from simulated backends to LDK Node (Rust-native) is recommended for production.
-
-## 6. Key Considerations for Conxian
-- **Sovereign Tax Extraction**: Integration with Gateway Webhooks is required for automated extraction.
-- **Identity Mapping**: Cross-chain identity mapping (Passkey to TEE/HSM) is a core requirement for secure institutional flows.
+## 5. Bridging & Interoperability
+- **xReserve**: Standard for bridging assets like USDC from Ethereum to Stacks.
+- **Chainhooks**: Canonical way to monitor on-chain events and trigger automated extraction/payouts (Sovereign Tax).
+- **Fee Estimation**: `fetchFeeEstimate` from `@stacks/transactions` is essential for institutional predictability.
