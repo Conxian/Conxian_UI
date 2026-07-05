@@ -14,7 +14,7 @@ overrides:
   cookie: '>=0.7.2'
   cross-spawn: '>=7.0.6'
   nanoid: '>=3.3.8'
-  serve-handler>path-to-regexp: 3.3.0
+  path-to-regexp: 3.3.0
   tar: '>=7.5.16'
   flatted: '>=3.4.2'
   picomatch: '>=4.0.4'

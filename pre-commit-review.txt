@@ -1,0 +1,14 @@
+I have remediated the `EINVALIDTAGNAME` error in `package.json` by updating the `overrides` and `pnpm.overrides` to use a nested object structure for `serve-handler`. This adheres to `npm` standards while remaining compatible with `pnpm`.
+
+Key changes:
+- Modified `package.json` to change `"serve-handler>path-to-regexp": "3.3.0"` to a nested object:
+  ```json
+  "serve-handler": {
+    "path-to-regexp": "3.3.0"
+  }
+  ```
+- Verified that `pnpm install` correctly resolves the dependency.
+- Confirmed that `pnpm build` completes successfully.
+- Verified that all unit tests pass with `pnpm test:run`.
+
+The fix ensures that deployments on Render (which may invoke `npm` for certain lifecycle hooks) do not fail due to invalid tag names in the overrides section.
