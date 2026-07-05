@@ -9,9 +9,8 @@ import { useWallet } from "@/lib/wallet";
 import { useSelfLaunch } from "@/lib/hooks/use-self-launch";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { AppConfig } from "@/lib/config";
 import CopyButton from "@/components/CopyButton";
-import { truncate, cn } from "@/lib/utils";
+import { truncate, cn, explorerTxUrl } from "@/lib/utils";
 import { BoltIcon, GlobeAltIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import { logger } from "@/lib/logger";
 
@@ -209,7 +208,7 @@ export default function LaunchPage() {
                     <div className="flex flex-col">
                       <span className="text-[9px] font-black text-accent uppercase tracking-[0.2em]">Transaction Success</span>
                       <a
-                        href={`https://explorer.hiro.so/txid/${txId}?chain=${AppConfig.network}`}
+                        href={explorerTxUrl(txId)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-ink font-mono text-[10px] font-black mt-1 hover:underline"

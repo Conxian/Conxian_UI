@@ -14,7 +14,7 @@ import { uintCV, PostConditionMode, contractPrincipalCV } from "@stacks/transact
 import { openContractCall } from "@stacks/connect";
 import { AppConfig } from "@/lib/config";
 import { getFungibleTokenBalances, FungibleTokenBalance } from "@/lib/core-api";
-import { formatAmount, parseAmount, truncate } from "@/lib/utils";
+import { formatAmount, parseAmount, truncate, explorerTxUrl } from "@/lib/utils";
 import TokenSelect from "@/components/ui/TokenSelect";
 import CopyButton from "@/components/CopyButton";
 import { cn } from "@/lib/utils";
@@ -336,7 +336,7 @@ export default function SwapPage() {
                     {txId ? (
                       <div className="flex items-center justify-between p-3 bg-neutral-light border border-accent/20 rounded-sm animate-in fade-in slide-in-from-bottom-2 duration-500">
                         <a
-                          href={`https://explorer.hiro.so/txid/${txId}?chain=${AppConfig.network}`}
+                          href={explorerTxUrl(txId)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-[10px] font-mono font-black text-ink hover:underline"

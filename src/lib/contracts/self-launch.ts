@@ -117,29 +117,48 @@ export class SelfLaunchContract {
 
   async getCommunityStats(): Promise<CommunityStats> {
     try {
-      const _result = await this.readOnlyCall("get-community-stats", []);
-      // Placeholder for actual implementation
-      return {
-        totalContributors: 0,
-        totalFunding: 0,
-        averageContribution: 0,
-        topContributors: [],
-      };
+      const result = await this.readOnlyCall("get-community-stats", []);
+      if (result.ok && result.result) {
+        try {
+          const cv = hexToCV(result.result);
+          const data = cvToJSON(cv);
+          const topContributors = Array.isArray(data.value?.topContributors?.value)
+            ? data.value.topContributors.value.map((c: Record<string, { value: string | number }>) => ({
+                address: String(c?.address?.value || ""),
+                amount: Number(c?.amount?.value || 0),
+                level: String(c?.level?.value || "contributor"),
+              }))
+            : [];
+          return {
+            totalContributors: Number(data.value?.totalContributors?.value || 0),
+            totalFunding: Number(data.value?.totalFunding?.value || 0),
+            averageContribution: Number(data.value?.averageContribution?.value || 0),
+            topContributors,
+          };
+        } catch (e) {
+          logger.warn("CV deserialization failed for getCommunityStats", { module: 'SelfLaunch', error: e });
+        }
+      }
+      return { totalContributors: 0, totalFunding: 0, averageContribution: 0, topContributors: [] };
     } catch (e) {
       logger.warn("Failed to fetch community stats", { module: 'SelfLaunch', error: e });
-      return {
-        totalContributors: 0,
-        totalFunding: 0,
-        averageContribution: 0,
-        topContributors: [],
-      };
+      return { totalContributors: 0, totalFunding: 0, averageContribution: 0, topContributors: [] };
     }
   }
 
   async getContributorLevel(contributor: string): Promise<string> {
     try {
       const args = [cvToHex(standardPrincipalCV(contributor))];
-      const _result = await this.readOnlyCall("get-contributor-level", args);
+      const result = await this.readOnlyCall("get-contributor-level", args);
+      if (result.ok && result.result) {
+        try {
+          const cv = hexToCV(result.result);
+          const data = cvToJSON(cv);
+          return String(data.value?.level?.value || data.value?.value || "none");
+        } catch (e) {
+          logger.warn("CV deserialization failed for getContributorLevel", { module: 'SelfLaunch', contributor, error: e });
+        }
+      }
       return "none";
     } catch (e) {
       logger.warn("Failed to fetch contributor level", { module: 'SelfLaunch', contributor, error: e });

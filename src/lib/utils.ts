@@ -1,9 +1,17 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { hexToCV } from "@stacks/transactions";
+import { AppConfig } from "./config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+/**
+ * Generates a Hiro explorer transaction URL for the configured network.
+ */
+export function explorerTxUrl(txId: string): string {
+  return `https://explorer.hiro.so/txid/${txId}?chain=${AppConfig.network}`;
 }
 
 /**

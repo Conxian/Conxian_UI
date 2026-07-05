@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { AppConfig } from "@/lib/config";
 import { CoreContracts, Tokens } from "@/lib/contracts";
+import { logger } from "@/lib/logger";
 import ClarityArgBuilder, { BuiltArgs } from "@/components/ClarityArgBuilder";
 import { openContractCall } from "@stacks/connect";
 import { createNetwork } from "@stacks/network";
@@ -81,7 +82,7 @@ function TxContent() {
         onCancel: () => setSending(false),
       });
     } catch (e) {
-      console.error(e);
+      logger.error("Error sending transaction", { module: 'Tx', error: e });
       setSending(false);
     }
   };
