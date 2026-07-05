@@ -30,7 +30,6 @@ export async function hasBitcoinMonkeyNft(): Promise<boolean> {
 
     // Check if the user's address is in the list of owners
     // This is a simplified example. The actual logic will depend on the contract's response.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return result && (result as any).value.some((owner: any) => owner.value === userAddress);
   } catch (error) {
     logger.error("Error checking for Bitcoin Monkey NFT", {

@@ -1,0 +1,78 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment target'
+        required: true
+        type: choice
+        options:
+          - preview
+          - production
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa  # v4
+        with:
+          version: 10.17.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: npx eslint .
+
+      - name: Typecheck
+        run: pnpm tsc --noEmit
+
+      - name: Unit tests
+        run: pnpm test:run
+
+      - name: Build
+        run: pnpm build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          name: static-out
+          path: out/
+          retention-days: 1
+
+  deploy-preview:
+    needs: verify
+    if: github.event.inputs.environment == 'preview' || github.event_name == 'release'
+    runs-on: ubuntu-latest
+    environment:
+      name: preview
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: Placeholder — deploy to preview
+        run: echo "Deploy preview artifact to preview environment"
+
+  deploy-production:
+    needs: verify
+    if: github.event.inputs.environment == 'production'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://conxian.org
+    steps:
+      - name: Placeholder — deploy to production
+        run: echo "Deploy production artifact — triggered via manual dispatch"

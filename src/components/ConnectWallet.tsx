@@ -8,7 +8,6 @@ import CopyButton from "./CopyButton";
 
 declare global {
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     StacksProvider?: any;
   }
 }

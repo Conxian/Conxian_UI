@@ -6,25 +6,28 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa  # v4
         with:
           version: 10.17.1
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
         with:
           node-version: 22
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
         run: npx eslint .
@@ -32,8 +35,24 @@ jobs:
       - name: Typecheck
         run: pnpm tsc --noEmit
 
-      - name: Test
+      - name: Unit tests
         run: pnpm test:run
 
       - name: Build
         run: pnpm build
+
+      - name: Install Playwright
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E tests
+        run: pnpm exec playwright test
+        env:
+          PLAYWRIGHT_BASE_URL: http://localhost:3001
+
+      - name: Upload E2E report
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

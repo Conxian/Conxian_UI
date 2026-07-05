@@ -202,7 +202,7 @@ export class ContractInteractions {
     amount: number
   ) => this.executeIntent({ type: "set-allowance", tokenId, spender, amount });
 
-  static getBalance = async (address: string) => ({
+  static getBalance = async (_address: string) => ({
     success: true,
     balance: 0,
   });

@@ -20,7 +20,7 @@ if (typeof (React as any).act !== 'function') {
       configurable: true,
       enumerable: true
     });
-  } catch (e) {
+  } catch (_e) {
     (React as any).act = actPolyfill;
   }
 }
@@ -30,7 +30,6 @@ if (typeof (React as any).act !== 'function') {
 
 declare global {
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     StacksProvider?: any;
   }
 }

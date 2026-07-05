@@ -16,7 +16,7 @@ export default function PoolsPage() {
   const [totalSupply, setTotalSupply] = React.useState<ReadOnlyResponse | null>(null);
   const [price, setPrice] = React.useState<ReadOnlyResponse | null>(null);
   const [feeInfo, setFeeInfo] = React.useState<ReadOnlyResponse | null>(null);
-  const [perf, setPerf] = React.useState<ReadOnlyResponse | null>(null);
+  const [_perf, setPerf] = React.useState<ReadOnlyResponse | null>(null);
   const [loading, setLoading] = React.useState(false);
 
   const refresh = React.useCallback(async () => {

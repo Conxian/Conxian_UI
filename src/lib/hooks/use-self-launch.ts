@@ -76,7 +76,6 @@ export function useSelfLaunch(network: 'mainnet' | 'testnet' | 'devnet' = 'testn
   }, [contract]);
 
   const contribute = useCallback(async (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     account: any,
     amount: number
   ): Promise<{ success: boolean; txId?: string; error?: string }> => {

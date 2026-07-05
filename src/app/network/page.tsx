@@ -30,8 +30,8 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function NetworkPage() {
-  const [status, setStatus] = useState<CoreStatus | null>(null);
-  const [blocks, setBlocks] = useState<unknown | null>(null);
+  const [_status, setStatus] = useState<CoreStatus | null>(null);
+  const [_blocks, setBlocks] = useState<unknown | null>(null);
   const [mempool, setMempool] = useState<MempoolTx[]>([]);
   const [loading, setLoading] = useState(false);
 

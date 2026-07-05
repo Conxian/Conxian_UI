@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   dependency-review:
-    uses: Conxian/.github/.github/workflows/dependency-review.yml@main
+    uses: Conxian/.github/.github/workflows/dependency-review.yml@main  # org baseline (pinned via branch protection)
     permissions:
       contents: read
       pull-requests: write

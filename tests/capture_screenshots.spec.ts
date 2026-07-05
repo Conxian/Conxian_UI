@@ -26,7 +26,7 @@ test('capture screenshots', async ({ page }) => {
       await page.waitForTimeout(2000); // Wait for some animations/loading
       const filename = path === '/' ? 'home' : path.replace(/\//g, '');
       await page.screenshot({ path: `docs/screenshots/${filename}.png`, fullPage: true });
-    } catch (e) {
+    } catch (_e) {
       console.error(`Failed to capture ${path}: $((e as Error).message)`);
     }
   }
