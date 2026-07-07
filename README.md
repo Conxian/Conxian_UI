@@ -27,6 +27,8 @@ This repository is maintained by Conxian as part of the public interaction layer
 
 ## Deployment
 
+The official production environment is hosted at **[conxian.org](https://conxian.org)**.
+
 This repository deploys to Render as a Node web service.
 
 ### Required Render settings
