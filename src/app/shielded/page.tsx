@@ -154,9 +154,13 @@ export default function ShieldedPage() {
         <div className="flex justify-between items-end border-b border-accent/20 pb-6">
           <div>
             <h1 className="text-5xl font-black tracking-widest uppercase text-ink">SHIELDED</h1>
-            <p className="text-accent font-black uppercase tracking-[0.4em] text-xs mt-2">Private Accounts and Transfers</p>
+            <p className="text-accent font-black uppercase tracking-widest text-xs mt-2">Private Accounts and Transfers</p>
           </div>
-          <Button onClick={handleCreateWallet} className="bg-ink text-background-paper font-black uppercase tracking-[0.2em] text-[10px] h-10 px-6">
+          <Button
+            onClick={handleCreateWallet}
+            aria-label="Create shielded account"
+            className="bg-ink text-background-paper font-black uppercase tracking-widest text-[10px] h-10 px-6"
+          >
             <PlusCircleIcon className="w-4 h-4 mr-2" />
             CREATE ACCOUNT
           </Button>
@@ -194,7 +198,11 @@ export default function ShieldedPage() {
                           <Input type="text" placeholder="RECIPIENT_ADDRESS" value={recipient} onChange={(e) => setRecipient(e.target.value)} className="bg-background-paper border-accent/20 font-black text-[10px] h-10" />
                           <div className="flex items-center space-x-2">
                             <Input type="number" placeholder="AMOUNT" value={sendAmount} onChange={(e) => setSendAmount(e.target.value)} className="bg-background-paper border-accent/20 font-black text-[10px] h-10 flex-1 tabular-nums" />
-                            <Button onClick={() => handleSendFunds(wallet.id)} className="shrink-0 h-10 px-6 bg-ink text-background-paper font-black uppercase text-[10px] tracking-widest">
+                            <Button
+                              onClick={() => handleSendFunds(wallet.id)}
+                              aria-label="Send funds from shielded wallet"
+                              className="shrink-0 h-10 px-6 bg-ink text-background-paper font-black uppercase text-[10px] tracking-widest"
+                            >
                               <ArrowUpCircleIcon className="w-3 h-3 mr-2" />
                               SEND
                             </Button>
@@ -203,10 +211,15 @@ export default function ShieldedPage() {
                       </div>
 
                       <div className="space-y-4 pt-6 border-t border-accent/10">
-                        <label className="text-[9px] font-black text-ink-light uppercase tracking-[0.2em]">Receive Funds</label>
+                        <label className="text-[9px] font-black text-ink-light uppercase tracking-widest">Receive Funds</label>
                         <div className="flex items-center space-x-2">
                           <Input type="number" placeholder="AMOUNT" value={receiveAmount} onChange={(e) => setReceiveAmount(e.target.value)} className="bg-background-paper border-accent/20 font-black text-[10px] h-10 flex-1 tabular-nums" />
-                          <Button onClick={() => handleReceiveFunds(wallet.id)} variant="outline" className="shrink-0 h-10 px-6 font-black uppercase text-[10px] tracking-widest border-accent/20 text-ink-light hover:text-ink">
+                          <Button
+                            onClick={() => handleReceiveFunds(wallet.id)}
+                            variant="outline"
+                            aria-label="Receive funds to shielded wallet"
+                            className="shrink-0 h-10 px-6 font-black uppercase text-[10px] tracking-widest border-accent/20 text-ink-light hover:text-ink"
+                          >
                             <ArrowDownCircleIcon className="w-3 h-3 mr-2" />
                             RECEIVE
                           </Button>

@@ -98,7 +98,7 @@ export default function PositionsPage() {
                 </p>
                 <Button
                   onClick={() => router.push('/swap')} aria-label="Add liquidity"
-                  className="mt-8 bg-ink text-background-paper font-black uppercase tracking-[0.2em] text-[10px] h-12 px-8 rounded-none"
+                  className="mt-8 bg-ink text-background-paper font-black uppercase tracking-widest text-[10px] h-12 px-8 rounded-none"
                 >
                   Add Liquidity
                 </Button>

@@ -4,11 +4,11 @@ Public interaction and application-facing interface work for the broader Conxian
 
 ## Purpose
 
-Provide a public interaction layer for Conxian features, demos, and user-facing flows where a browser-based surface is appropriate.
+Provide a public interaction layer for Conxian features, demos, and user-facing flows where a browser-based surface is appropriate. This interface is designed with an institutional-grade aesthetic, prioritizing high legibility, sovereign asset control, and real-time protocol telemetry.
 
 ## Status
 
-**Active development.** This repository is a public interaction and interface layer. It should be treated as an application-facing surface, not as the protocol source of truth and not as the operating authority.
+**Active development.** This repository is the definitive public interaction and interface layer for the Conxian ecosystem. It serves as an application-facing surface for interacting with decentralized Bitcoin-native infrastructure.
 
 ## Scope
 

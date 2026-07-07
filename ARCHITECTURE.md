@@ -47,10 +47,15 @@ The Conxian UI is built with Next.js 15, React 19, and Tailwind CSS v4. It follo
 *   **Launch (`src/app/launch/page.tsx`)**: Community self-launch dashboard for bootstrap funding.
 *   **Pools Explorer (`src/app/pools/page.tsx`)**: Real-time telemetry for liquidity pools.
 *   **Overview (`src/app/overview/page.tsx`)**: High-level system health and readiness dashboard.
+*   **Governance (`src/app/governance/page.tsx`)**: Intent-based automated mandates and audit trails.
+*   **Network (`src/app/network/page.tsx`)**: Industrial-grade protocol activity and SCADA-inspired telemetry.
 *   **Shielded (`src/app/shielded/page.tsx`)**: Privacy-focused account management.
 *   **Reusable UI**: Components in `src/components/ui` ensuring consistency through the 60-30-10 Ivory foundation.
 
-## 6. The User's Journey: A Data Flow Story
+## 6. UI Naming & Nomenclature
+The Conxian UI adheres to a strict nomenclature matrix defined in `docs/UI_NAMING_STANDARDIZATION_MATRIX.md`. This ensures that public-facing labels remain accessible and standard (e.g., "Swap", "Pools") while reserving technical depth for advanced operator views.
+
+## 7. The User's Journey: A Data Flow Story
 
 1.  **A User's Click**: The journey begins when a user interacts with a UI component.
 2.  **A Call to Action**: The UI calls a function from `src/lib/contract-interactions.ts` or specialized hooks.

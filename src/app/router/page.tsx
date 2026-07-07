@@ -140,9 +140,11 @@ export default function RouterPage() {
                 </div>
 
                 <Button
-                  className="w-full h-14 bg-ink text-background-paper font-black uppercase tracking-[0.3em] text-xs hover:bg-ink-light rounded-none transition-all flex items-center justify-center gap-3"
+                  className="w-full h-14 bg-ink text-background-paper font-black uppercase tracking-widest text-xs hover:bg-ink-light rounded-none transition-all flex items-center justify-center gap-3"
                   onClick={execute}
                   disabled={loading || !fnName}
+                  aria-busy={loading}
+                  aria-label="Execute route simulation"
                 >
                   {loading ? (
                     <>

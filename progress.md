@@ -28,6 +28,7 @@
 - **Accessibility & Contrast:** Hardened accessibility by replacing all low-contrast `text-ink/40` labels with `text-ink-light` to meet institutional WCAG standards.
 - **Institutional Styling:** Enforced `tabular-nums` for all numeric data and standardized `uppercase tracking-widest` across all operational labels and headers.
 - **Terminal Top Bar Hardening:** Standardized the status bar styling and nomenclature across all operational views.
+- **Async Action Polish:** All primary execution buttons across 15+ pages now feature `ArrowPathIcon` loading spinners and accessibility-compliant `aria-busy` and `aria-label` attributes.
 
 ## Current Status
-The application is now production-ready, deployment-hardened, and UI-standardized for public use. Institutional observability and simplified product nomenclature are fully implemented across the entire source tree.
+The application is now production-ready, deployment-hardened, and UI-standardized for public use. Institutional observability and simplified product nomenclature are fully implemented across the entire source tree. All core pages have been audited and repaired to meet the Conxian Master Manifest standards.

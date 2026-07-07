@@ -96,12 +96,15 @@ export default function SdkPage() {
         <div className="flex justify-between items-end border-b border-accent/20 pb-6">
           <div>
             <h1 className="text-5xl font-black tracking-widest uppercase text-ink">SDK</h1>
-            <p className="text-accent font-black uppercase tracking-[0.4em] text-xs mt-2">
+            <p className="text-accent font-black uppercase tracking-widest text-xs mt-2">
               Institutional Integration primitives
             </p>
           </div>
           <div className="flex gap-4">
-            <Button className="h-10 px-6 bg-ink text-background-paper font-black uppercase tracking-[0.2em] text-[10px]">
+            <Button
+              aria-label="Provision new API key"
+              className="h-10 px-6 bg-ink text-background-paper font-black uppercase tracking-widest text-[10px]"
+            >
               PROVISION API KEY
             </Button>
           </div>

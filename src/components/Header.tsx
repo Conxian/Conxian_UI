@@ -53,7 +53,7 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "text-[10px] font-black uppercase tracking-[0.2em] leading-6 transition-all duration-300",
+                    "text-[10px] font-black uppercase tracking-widest leading-6 transition-all duration-300",
                     isActive ? "text-accent" : "text-background-paper/40 hover:text-background-paper",
                   )}
                 >
