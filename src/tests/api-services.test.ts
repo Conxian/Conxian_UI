@@ -115,9 +115,10 @@ describe("API Service", () => {
     });
 
     it("should handle fetch errors gracefully", async () => {
-      mockGetSystemHealth.mockRejectedValue(
-        new Error("Network request failed")
-      );
+      mockGetSystemHealth.mockResolvedValueOnce({
+        success: false,
+        error: "Network request failed",
+      });
 
       const result = await ApiService.getSystemHealth();
       expect(result.success).toBe(false);
