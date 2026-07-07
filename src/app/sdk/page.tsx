@@ -1,78 +1,84 @@
-"use client";
+'use client';
 
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 import {
-  ArrowTopRightOnSquareIcon,
-  BoltIcon,
-  CircleStackIcon,
   CodeBracketIcon,
-  CpuChipIcon,
+  BoltIcon,
   ShieldCheckIcon,
+  CpuChipIcon,
+  CircleStackIcon,
+  ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import CopyButton from "@/components/CopyButton";
 
-const installCommand = "cargo add conxius-enclave-sdk && cargo add lib-conxian-core";
+const installCommand = "cargo add conxian-sdk --features full";
+
 const configSnippet = `{
+  "core_api": "https://api.mainnet.hiro.so",
   "gateway_url": "https://gateway.conxian.org",
   "kms_endpoint": "https://vault.conxian.org",
   "nexus_url": "https://nexus.conxian.org",
-  "api_key": "[AUTH_TOKEN_REQUIRED]"
+  "auth": {
+    "provider": "passkey",
+    "required_attestation": true
+  }
 }`;
 
 const repoCards = [
   {
-    title: "Conxian Protocol",
-    href: "https://github.com/Conxian/Conxian",
-    description: "The core protocol standards, governance logic, and immutable ledger definitions.",
-    badge: "Protocol Root",
+    title: "lib-conxian-core",
+    href: "https://github.com/Conxian/lib-conxian-core",
+    description: "Rust primitives for sBTC bridging, BitVM verification, and Clarity value serialization.",
+    badge: "Core Logic",
   },
   {
-    title: "Conxius Enclave SDK",
-    href: "https://github.com/Conxian/conxius-enclave-sdk",
-    description: "Hardware-backed signing, attestation, and secure transaction coordination.",
-    badge: "Secure Compute",
+    title: "conxian-sdk-js",
+    href: "https://github.com/Conxian/conxian-sdk-js",
+    description: "Type-safe TypeScript SDK for integrating with protocol gateways, vaults, and Nexus.",
+    badge: "Client Layer",
   },
   {
-    title: "Conxian UI",
-    href: "https://github.com/Conxian/conxian_ui",
-    description: "Public web interface for protocol activity, liquidity, and governance surfaces.",
+    title: "conxian-ui-components",
+    href: "https://github.com/Conxian/conxian-ui-components",
+    description: "Institutional-grade React components for treasury, liquidity, and governance surfaces.",
     badge: "Interface Layer",
   },
 ];
 
 const offerCards = [
   {
-    title: "Open SDK Path",
-    description: "Integrate with protocol primitives using open-source building blocks and local verification.",
-    icon: CodeBracketIcon,
+    title: "sBTC & BitVM Verification",
+    description: "Verify 2-way pegs and optimistic bridge state transitions using high-fidelity primitives.",
+    icon: ShieldCheckIcon,
   },
   {
-    title: "Hosted API",
-    description: "Use Conxian-operated gateways for managed API access and faster integration.",
+    title: "Managed Gateway API",
+    description: "Integrate with Conxian-operated gateways for low-latency protocol access and managed telemetry.",
     icon: BoltIcon,
   },
   {
-    title: "Production Support",
-    description: "Get architecture review, production guidance, and enterprise support for launch readiness.",
-    icon: ShieldCheckIcon,
+    title: "Institutional Auth",
+    description: "Leverage Passkey-first registration and TEE-backed signing for sovereign asset control.",
+    icon: CpuChipIcon,
   },
 ];
 
 const renderCards = [
   {
-    title: "API Access",
-    description: "Create and manage API credentials for authenticated integration workflows.",
+    title: "API CREDENTIALS",
+    description: "Provision and rotate API keys for authenticated institutional integration paths.",
   },
   {
-    title: "Live Status",
-    description: "Monitor protocol service availability and synchronization status.",
+    title: "PROTOCOL STATUS",
+    description: "Real-time infrastructure health and synchronization metrics across all protocol layers.",
   },
   {
-    title: "Deployment Support",
-    description: "Move from local validation to production rollout with shared deployment guidance.",
+    title: "DEPLOYMENT PIPELINES",
+    description: "Standardized CI/CD paths for moving institutional integrations from sandbox to production.",
   },
 ];
 
@@ -82,7 +88,7 @@ export default function SdkPage() {
       <div className="bg-neutral-light text-ink py-2 px-6 flex justify-between items-center border-b border-accent/20">
         <span className="text-[10px] font-black uppercase tracking-[0.3em]">Developer Integrations</span>
         <div className="flex gap-4 text-[10px] font-black uppercase tracking-[0.2em] opacity-60">
-          <span>SDK_VERSION: v2.0.4</span>
+          <span>SDK_VERSION: v2.1.0-stable</span>
         </div>
       </div>
 
@@ -91,12 +97,12 @@ export default function SdkPage() {
           <div>
             <h1 className="text-5xl font-black tracking-widest uppercase text-ink">SDK</h1>
             <p className="text-accent font-black uppercase tracking-[0.4em] text-xs mt-2">
-              Developer Integrations
+              Institutional Integration primitives
             </p>
           </div>
           <div className="flex gap-4">
             <Button className="h-10 px-6 bg-ink text-background-paper font-black uppercase tracking-[0.2em] text-[10px]">
-              CREATE API KEY
+              PROVISION API KEY
             </Button>
           </div>
         </div>
@@ -105,33 +111,33 @@ export default function SdkPage() {
           <div className="machined-header">
             <div className="flex items-center gap-3">
               <CpuChipIcon className="w-3 h-3" />
-              <span>INTEGRATION MODELS</span>
+              <span>INTEGRATION ARCHITECTURE</span>
             </div>
-            <span className="opacity-50 font-mono">STATUS: READY</span>
+            <span className="opacity-50 font-mono">STATUS: PRODUCTION_READY</span>
           </div>
           <div className="grid gap-8 px-8 py-10 lg:grid-cols-[1.4fr_0.9fr]">
             <div className="space-y-6">
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" className="font-black">OPEN_SDK</Badge>
+                <Badge variant="secondary" className="font-black">CORE_PRIMITIVES</Badge>
                 <Badge variant="outline" className="font-black border-accent/30 text-accent">
-                  ATTESTED_GATEWAY
+                  INSTITUTIONAL_AUTH
                 </Badge>
               </div>
               <div className="space-y-4">
-                <h2 className="text-3xl font-black tracking-widest text-ink">BUILD WITH SHARED PROTOCOL PRIMITIVES</h2>
+                <h2 className="text-3xl font-black tracking-widest text-ink">SOVEREIGN BITCOIN INFRASTRUCTURE</h2>
                 <p className="max-w-3xl text-xs leading-relaxed text-ink-light font-bold uppercase tracking-widest">
-                  The Conxian SDK family provides the core building blocks for developers integrating with protocol services, hardware-backed signing, and managed APIs.
+                  The Conxian SDK family provides institutional-grade building blocks for sBTC bridging, BitVM2/3 verification, and hardware-backed sovereign identity.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <a href="https://github.com/Conxian/lib-conxian-core" target="_blank" rel="noreferrer">
                   <Button variant="outline" className="font-black tracking-widest uppercase text-[10px]">
-                    View Core Specs
+                    Access Rust Core
                   </Button>
                 </a>
                 <Link href="/network">
                   <Button className="bg-ink text-background-paper font-black tracking-widest uppercase text-[10px]">
-                    Monitor Live Nodes
+                    Live Telemetry
                   </Button>
                 </Link>
               </div>
@@ -139,18 +145,18 @@ export default function SdkPage() {
             <Card className="bg-neutral-light border-accent/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-[10px] font-black uppercase tracking-widest text-accent">
-                  SECURITY_MODEL
+                  TRUST_MODEL
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 text-[10px] leading-relaxed text-ink-light font-bold uppercase tracking-widest">
                 <p>
-                  <span className="text-ink">Open:</span> Protocol primitives and local verification logic.
+                  <span className="text-ink">BITCOIN_FINALITY:</span> 100% security alignment via sBTC 2-way peg.
                 </p>
                 <p>
-                  <span className="text-ink">Managed:</span> Hosted gateway access and institutional support.
+                  <span className="text-ink">MANAGED_ACCESS:</span> Attested gateway endpoints for scale.
                 </p>
                 <p>
-                  <span className="text-ink">Sovereign:</span> Private key custody and signing authority remain with the institution.
+                  <span className="text-ink">LOCAL_VERIFICATION:</span> Client-side state consignment checks (RGB).
                 </p>
               </CardContent>
             </Card>
@@ -200,7 +206,7 @@ export default function SdkPage() {
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-accent hover:underline"
                   >
-                    Access Source
+                    Source Code
                     <ArrowTopRightOnSquareIcon className="h-3 w-3" />
                   </a>
                 </div>
@@ -225,14 +231,14 @@ export default function SdkPage() {
                   </div>
                 </div>
                 <p className="mt-4 text-[9px] text-ink-light font-bold uppercase tracking-widest leading-relaxed">
-                  Install the core crates with standard cargo dependency management.
+                  Utilize standard Cargo dependency management for all core SDK crates.
                 </p>
               </CardContent>
             </Card>
 
             <Card className="machined-card">
               <div className="machined-header">
-                <span>CONFIGURATION</span>
+                <span>BOOTSTRAP_CONFIG</span>
               </div>
               <CardContent className="p-6">
                 <div className="p-4 bg-neutral-light border border-accent/20 font-mono text-[10px] text-ink rounded-sm relative group tabular-nums">

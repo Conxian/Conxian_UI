@@ -3,9 +3,10 @@ import {
   standardPrincipalCV,
   uintCV,
   cvToHex,
+  stringAsciiCV,
 } from '@stacks/transactions';
 import { CoreContracts, BASE_PRINCIPAL } from './contracts';
-import { callReadOnly } from './core-api';
+import { callReadOnly, getAddressBalances, ReadOnlyErr } from './core-api';
 import { IntentManager, Intent } from './intent-manager';
 
 // --- Types ---
@@ -30,7 +31,8 @@ async function callReadOnlyContractFunction<T>(
     const hexArgs = functionArgs.map(arg => cvToHex(arg));
     const result = await callReadOnly(contractAddress, contractName, functionName, senderAddress, hexArgs);
     if (!result.ok) {
-      throw new Error(`Read-only call failed: ${result.error}`);
+      const err = result as ReadOnlyErr;
+      throw new Error(`Read-only call failed: ${err.error}`);
     }
     return { success: true, result: result.result as T, data: result.result as T };
   } catch (error: unknown) {
@@ -135,8 +137,10 @@ export class ContractInteractions {
     ]);
 
   // --- Governance & Staking ---
-  static verifyGovernanceSignature = (_signature: string) =>
-    Promise.resolve({ success: true, verified: true });
+  static verifyGovernanceSignature = (signature: string) =>
+    this.executeReadOnly("proposal-engine", "verify-signature", [
+        stringAsciiCV(signature)
+    ]);
   static getStakingInfo = (user: string) =>
     this.executeReadOnly("cxd-staking", "get-user-stake", [
       standardPrincipalCV(user),
@@ -202,27 +206,38 @@ export class ContractInteractions {
     amount: number
   ) => this.executeIntent({ type: "set-allowance", tokenId, spender, amount });
 
-  static getBalance = async (_address: string) => ({
-    success: true,
-    balance: 0,
-  });
-  static getTokenInfo = async (_tokenId: string) => ({
-    success: true,
-    info: {},
-  });
-  static getRouterInfo = async () => ({ success: true, info: {} });
+  static getBalance = async (address: string) => {
+    const balances = await getAddressBalances(address);
+    return {
+      success: !!balances,
+      balance: balances?.stx?.balance || "0",
+    };
+  };
+
+  static getTokenInfo = async (tokenId: string) =>
+    this.executeReadOnly(tokenId, "get-info");
+
+  static getRouterInfo = async () =>
+    this.executeReadOnly("swap-router", "get-router-status");
+
   static estimateSwap = async (
-    _fromToken: string,
-    _toToken: string,
-    _amount: number
-  ) => ({ success: true, estimate: 0 });
-  static getPoolDetails = async (_poolName: string) => ({
-    success: true,
-    details: {},
-  });
-  static getPositions = async (_address: string) => {
-    // Return empty for mainnet until implemented
-    return [];
+    fromToken: string,
+    toToken: string,
+    amount: number
+  ) => this.executeReadOnly("swap-router", "estimate-swap", [
+    standardPrincipalCV(fromToken),
+    standardPrincipalCV(toToken),
+    uintCV(amount)
+  ]);
+
+  static getPoolDetails = async (poolName: string) =>
+    this.executeReadOnly(poolName, "get-pool-data");
+
+  static getPositions = async (address: string) => {
+    const result = await this.executeReadOnly<any[]>("position-orchestrator", "get-user-positions", [
+        standardPrincipalCV(address)
+    ]);
+    return result.success ? (result.result || []) : [];
   };
 
   // --- Shielded Wallet ---
