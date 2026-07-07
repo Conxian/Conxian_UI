@@ -176,9 +176,11 @@ function TxContent() {
                 </div>
 
                 <Button
-                  className="w-full h-14 bg-ink text-background-paper font-black uppercase tracking-[0.3em] text-xs hover:bg-ink-light rounded-none transition-all flex items-center justify-center gap-3"
+                  className="w-full h-14 bg-ink text-background-paper font-black uppercase tracking-widest text-xs hover:bg-ink-light rounded-none transition-all flex items-center justify-center gap-3"
                   onClick={broadcast}
                   disabled={sending || !fnName || args.cv.length === 0}
+                  aria-busy={sending}
+                  aria-label="Execute manual transaction"
                 >
                   {sending ? (
                     <>

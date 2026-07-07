@@ -154,14 +154,14 @@ export default function TokensPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>ASSET</TableHead>
-                      <TableHead className="text-right">BALANCE</TableHead>
+                      <TableHead className="font-bold uppercase tracking-widest text-ink-light">ASSET</TableHead>
+                      <TableHead className="text-right font-bold uppercase tracking-widest text-ink-light">BALANCE</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {fts.map((t: FungibleTokenBalance) => (
                       <TableRow key={t.asset_identifier}>
-                        <TableCell className="font-mono text-[9px] text-ink break-all font-black">
+                        <TableCell className="font-mono text-[9px] text-ink break-all font-black uppercase tracking-tight">
                           {t.asset_identifier}
                         </TableCell>
                         <TableCell className="text-right font-black tabular-nums text-ink text-[12px]">

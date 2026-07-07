@@ -82,7 +82,7 @@ export default function NetworkPage() {
             disabled={loading}
             aria-busy={loading}
             aria-label="Refresh network data"
-            className="h-10 px-6 bg-ink text-background-paper font-black uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-3"
+            className="h-10 px-6 bg-ink text-background-paper font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3"
           >
             {loading && (
               <ArrowPathIcon className="w-4 h-4 animate-spin" aria-hidden="true" />

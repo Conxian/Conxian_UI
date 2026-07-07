@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { AppConfig } from "@/lib/config";
-import { CodeBracketSquareIcon, LinkIcon } from "@heroicons/react/24/outline";
+import { CodeBracketSquareIcon, LinkIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 
 export default function ContractsPage() {
   const [principal, setPrincipal] = React.useState<string>(BASE_PRINCIPAL);
@@ -80,11 +80,14 @@ export default function ContractsPage() {
                   </div>
                 </div>
                 <Button
-                  className="w-full h-12 bg-ink text-background-paper font-black uppercase tracking-[0.3em] text-[10px]"
+                  className="w-full h-12 bg-ink text-background-paper font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3"
                   onClick={loadInterface}
                   disabled={loading}
+                  aria-busy={loading}
+                  aria-label="Load contract interface"
                 >
-                  {loading ? "SYNCING..." : "LOAD INTERFACE"}
+                  {loading && <ArrowPathIcon className="w-4 h-4 animate-spin" aria-hidden="true" />}
+                  <span>{loading ? "SYNCING..." : "LOAD INTERFACE"}</span>
                 </Button>
               </CardContent>
             </Card>

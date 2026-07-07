@@ -189,7 +189,8 @@ export default function LaunchPage() {
                     onClick={handleContribute}
                     disabled={sending}
                     aria-busy={sending}
-                    className="min-w-[160px] h-14 bg-ink text-background-paper font-black uppercase tracking-[0.2em] text-xs hover:bg-ink-light rounded-none flex items-center justify-center gap-3"
+                    aria-label="Contribute STX"
+                    className="min-w-[160px] h-14 bg-ink text-background-paper font-black uppercase tracking-widest text-xs hover:bg-ink-light rounded-none flex items-center justify-center gap-3"
                   >
                     {sending && (
                       <ArrowPathIcon className="w-5 h-5 animate-spin" aria-hidden="true" />

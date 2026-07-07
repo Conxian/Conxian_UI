@@ -43,13 +43,21 @@ export default function SandboxPage() {
         <div className="flex justify-between items-end border-b border-accent/20 pb-6">
           <div>
             <h1 className="text-5xl font-black tracking-widest uppercase text-ink">SANDBOX</h1>
-            <p className="text-accent font-black uppercase tracking-[0.4em] text-xs mt-2">State Simulation</p>
+            <p className="text-accent font-black uppercase tracking-widest text-xs mt-2">State Simulation</p>
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" className="h-10 px-4 border-accent/40 text-ink font-black uppercase tracking-[0.2em] text-[10px]">
+            <Button
+              variant="outline"
+              aria-label="Undo simulation step"
+              className="h-10 px-4 border-accent/40 text-ink font-black uppercase tracking-widest text-[10px]"
+            >
               <ArrowUturnLeftIcon className="w-4 h-4 mr-2" /> UNDO
             </Button>
-            <Button variant="outline" className="h-10 px-4 border-accent/40 text-ink font-black uppercase tracking-[0.2em] text-[10px]">
+            <Button
+              variant="outline"
+              aria-label="Redo simulation step"
+              className="h-10 px-4 border-accent/40 text-ink font-black uppercase tracking-widest text-[10px]"
+            >
               REDO <ArrowUturnRightIcon className="w-4 h-4 ml-2" />
             </Button>
           </div>

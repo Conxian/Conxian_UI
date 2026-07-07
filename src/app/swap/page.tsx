@@ -313,7 +313,9 @@ export default function SwapPage() {
                   <Button
                     onClick={handleSwap}
                     disabled={sending || loading || isSameToken || !fromAmount}
-                    className="w-full h-14 bg-ink text-background-paper font-black uppercase tracking-[0.3em] text-xs hover:bg-ink-light transition-all rounded-none flex items-center justify-center gap-3"
+                    aria-busy={sending || loading}
+                    aria-label="Swap tokens"
+                    className="w-full h-14 bg-ink text-background-paper font-black uppercase tracking-widest text-xs hover:bg-ink-light transition-all rounded-none flex items-center justify-center gap-3"
                   >
                     {(sending || loading) && <ArrowPathIcon className="w-5 h-5 animate-spin" aria-hidden="true" />}
                     <span>{sending ? "SUBMITTING..." : loading ? "UPDATING QUOTE..." : "SWAP"}</span>
