@@ -9,6 +9,7 @@ This index tracks the alignment of Conxian documentation across the repository a
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines.
 
 ## Standards and Matrices
+- [FRONTEND_PRD.md](docs/FRONTEND_PRD.md) - Global UI/UX standardization and Bright Foundation PRD.
 - [UI_NAMING_STANDARDIZATION_MATRIX.md](docs/UI_NAMING_STANDARDIZATION_MATRIX.md) - UI terminology standards.
 
 ## Research and OpenSpec

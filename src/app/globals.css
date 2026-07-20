@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/*
+ * CONXIAN GLOBAL BRAND STANDARDS
+ * Managed via docs/FRONTEND_PRD.md - Enforcing the 60-30-10 Bright Foundation.
+ */
+
 :root {
   /* MASTER MANIFEST PALETTE - BRIGHT FOUNDATION */
   /* Base Canvas (60%) */
