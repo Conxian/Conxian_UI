@@ -23,7 +23,7 @@ This repository is maintained by Conxian as part of the public interaction layer
 - `Conxian` is the protocol and DAO-facing core.
 - `conxius-wallet` is the wallet and reference client.
 - `conxian-gateway` is the middleware and integration surface.
-- `conxian-site` is the portfolio and public information surface.
+- [`conxian-labs-site`](https://github.com/Conxian/conxian-labs-site) is the portfolio and public information surface.
 
 ## Deployment
 
