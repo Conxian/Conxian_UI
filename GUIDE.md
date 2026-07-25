@@ -61,7 +61,7 @@ Ready to dive in and start building? Here's how to get up and running in no time
 ### Step 1: Clone the Repo
 
 ```bash
-git clone https://github.com/Conxian/Conxian-UI.git
+git clone https://github.com/Conxian/conxian_ui.git
 ```
 ### Step 2: Install Dependencies
 ```bash
