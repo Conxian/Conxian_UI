@@ -14,7 +14,7 @@ This index tracks the alignment of Conxian documentation across the repository a
 
 ## Research and OpenSpec
 - [OpenSpec Index](openspec/specs/) - Specification-driven design docs.
-- [Remediation Research (July 2026)](openspec/changes/2026-06-12-remediation-and-expanded-research/research_findings.md) - Cross-chain and institutional research.
+- [Remediation Research (July 2026)](openspec/changes/2026-06-12-remediation-and-expanded-research/research_findings.md) - Cross-chain and institutional research, containing full multi-cloud alignment audits for Neon, Supabase, and Render.
 
 ## External Docs
 - [Conxian Labs](https://conxian-labs.com) - Portfolio and ecosystem directory.
