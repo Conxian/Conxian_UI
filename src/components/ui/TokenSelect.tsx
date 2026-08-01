@@ -17,6 +17,8 @@ interface TokenSelectProps {
 const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSelect, balances, className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
   const selectedTokenInfo = tokens.find(t => t.id === selectedToken);
 
@@ -30,9 +32,24 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [ref]);
 
+  useEffect(() => {
+    if (isOpen && listRef.current) {
+      const selectedItem = listRef.current.querySelector('[aria-selected="true"]') as HTMLElement;
+      if (selectedItem) {
+        selectedItem.focus();
+      } else {
+        const firstItem = listRef.current.querySelector('li') as HTMLElement;
+        if (firstItem) {
+          firstItem.focus();
+        }
+      }
+    }
+  }, [isOpen]);
+
   const handleSelect = (tokenId: string) => {
     onSelect(tokenId);
     setIsOpen(false);
+    triggerRef.current?.focus();
   };
 
   const getBalance = (tokenId: string) => {
@@ -43,8 +60,20 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
   return (
     <div className={cn('relative', className)} ref={ref}>
       <Button
+        ref={triggerRef}
         variant="outline"
         onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+            if (!isOpen) {
+              setIsOpen(true);
+            }
+          } else if (e.key === "Escape" && isOpen) {
+            e.preventDefault();
+            setIsOpen(false);
+          }
+        }}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label={`Select token, current selection is ${selectedTokenInfo?.label || 'None'}`}
@@ -78,8 +107,8 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
 
       {isOpen && (
         <div className="absolute z-10 w-full mt-1 bg-background-paper border border-ghost rounded-sm shadow-2xl overflow-hidden max-h-60 overflow-y-auto animate-in fade-in slide-in-from-top-2">
-          <ul className="py-1" role="listbox">
-            {tokens.map((token) => (
+          <ul ref={listRef} className="py-1" role="listbox" aria-label="Token options">
+            {tokens.map((token, index) => (
               <li
                 key={token.id}
                 role="option"
@@ -89,6 +118,18 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
                     handleSelect(token.id);
+                  } else if (e.key === "Escape") {
+                    e.preventDefault();
+                    setIsOpen(false);
+                    triggerRef.current?.focus();
+                  } else if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    const nextLi = listRef.current?.children[index + 1] as HTMLElement;
+                    nextLi?.focus();
+                  } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    const prevLi = listRef.current?.children[index - 1] as HTMLElement;
+                    prevLi?.focus();
                   }
                 }}
                 onClick={() => handleSelect(token.id)}
