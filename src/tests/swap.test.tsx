@@ -86,4 +86,37 @@ describe('SwapPage', () => {
     expect(slippageButton).toBeInTheDocument();
     expect(slippageButton).toHaveAttribute('aria-pressed', 'true');
   });
+
+  it('TokenSelect can be opened and navigated using keyboard keys', async () => {
+    const user = userEvent.setup();
+    await act(async () => {
+      render(<SwapPage />);
+    });
+
+    const selectButton = screen.getByRole('button', { name: /Select token, current selection is CXD Token/i });
+    expect(selectButton).toBeInTheDocument();
+
+    // Opening TokenSelect dropdown by pressing ArrowDown on the select button
+    selectButton.focus();
+    await user.keyboard('{ArrowDown}');
+
+    // Dropdown list should be rendered
+    const optionList = screen.getByRole('listbox', { name: /Token options/i });
+    expect(optionList).toBeInTheDocument();
+
+    // Verify currently selected token option (CXD Token) is focused
+    const cxdOption = screen.getByRole('option', { name: /CXD Token/i });
+    expect(cxdOption).toHaveAttribute('aria-selected', 'true');
+    expect(cxdOption).toHaveFocus();
+
+    // Navigate to next option (CXLP Token) via ArrowDown key
+    await user.keyboard('{ArrowDown}');
+    const cxlpOption = screen.getByRole('option', { name: /CXLP Token/i });
+    expect(cxlpOption).toHaveFocus();
+
+    // Press enter to select CXLP Token
+    await user.keyboard('{Enter}');
+    expect(optionList).not.toBeInTheDocument();
+    expect(selectButton).toHaveFocus();
+  });
 });

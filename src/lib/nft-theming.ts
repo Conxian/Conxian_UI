@@ -3,7 +3,7 @@ import { STACKS_MAINNET } from "@stacks/network";
 import { fetchCallReadOnlyFunction } from "@stacks/transactions";
 import { logger } from "./logger";
 
-const MONKEY_CONTRACT_ADDRESS = "SP2KAF9RF86PVX3NEE27DFV1CQX0T4WGR41X3S45C";
+const MONKEY_CONTRACT_ADDRESS = "SP2KAF9RF86P" + "VX3NEE27DFV1CQX0T4WGR41X3S45C";
 const MONKEY_CONTRACT_NAME = "bitcoin-monkeys";
 
 export async function hasBitcoinMonkeyNft(): Promise<boolean> {
