@@ -5,7 +5,7 @@
 ### 1. Render Deployment Remediation
 - **Fixed Fatal Crash:** Resolved `TypeError: pathToRegExp is not a function` by implementing a nested pnpm override for `serve-handler`. This ensures `path-to-regexp@3.3.0` is used for the static server while `path-to-regexp@6.3.0` is available for Next.js.
 - **Port Binding Hardening:** Standardized the `start` script to `serve out -l ${PORT:-10000} -s`. The `-l` flag is the canonical method for reliable binding to the Render-provided port, resolving "Port scan timeout" errors.
-- **Dependency Hardening:** Pinned `next@15.5.18` and `vite@8.0.14` for institutional stability.
+- **Dependency Hardening:** Pinned `next@15.5.18` and `vite@8.1.3` for institutional stability.
 - **Build Fix:** Corrected a broken import in `ShieldedPage` (`useToast` -> `useToasts`).
 
 ### 2. Logging and Telemetry
@@ -29,6 +29,12 @@
 - **Institutional Styling:** Enforced `tabular-nums` for all numeric data and standardized `uppercase tracking-widest` across all operational labels and headers.
 - **Terminal Top Bar Hardening:** Standardized the status bar styling and nomenclature across all operational views.
 - **Async Action Polish:** All primary execution buttons across 15+ pages now feature `ArrowPathIcon` loading spinners and accessibility-compliant `aria-busy` and `aria-label` attributes.
+
+### 5. Security & Lint Audit (Latest Hardening Cycle)
+- **Dependency CVE Remediation:** Successfully resolved security vulnerabilities (specifically `fast-uri`, `postcss` and `tar`) by configuring and upgrading transitives in the `overrides` block.
+- **Vite High Vulnerability Mitigation:** Reverted `vite` from `8.0.14` to `8.1.3` to remediate high-severity vulnerability GHSA-fx2h-pf6j-xcff flagged by GitHub dependency-review actions, ensuring the CI pipeline remains completely secure and passes successfully.
+- **ESLint Zero-Warning Compliance:** Resolved the unused `CodeBracketIcon` import warning on `src/app/sdk/page.tsx`, achieving a 100% warning-free output with `npx eslint .`.
+- **Hybrid Override Pattern:** Implemented a secure hybrid override pattern to handle the `path-to-regexp` dependency cleanly. We utilize the nested object format under `"overrides"` for standard NPM compliance, and string-based `"serve-handler>path-to-regexp": "3.3.0"` syntax in `"pnpm.overrides"` to ensure seamless integration and compatibility across all build and deployment environments.
 
 ## Current Status
 The application is now production-ready, deployment-hardened, and UI-standardized for public use. Institutional observability and simplified product nomenclature are fully implemented across the entire source tree. All core pages have been audited and repaired to meet the Conxian Master Manifest standards.
