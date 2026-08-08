@@ -30,5 +30,10 @@
 - **Terminal Top Bar Hardening:** Standardized the status bar styling and nomenclature across all operational views.
 - **Async Action Polish:** All primary execution buttons across 15+ pages now feature `ArrowPathIcon` loading spinners and accessibility-compliant `aria-busy` and `aria-label` attributes.
 
+### 5. Security & Lint Audit (Latest Hardening Cycle)
+- **Dependency CVE Remediation:** Successfully resolved security vulnerabilities (specifically `fast-uri`, `postcss` and `tar`) by configuring and upgrading transitives in the `overrides` block.
+- **ESLint Zero-Warning Compliance:** Resolved the unused `CodeBracketIcon` import warning on `src/app/sdk/page.tsx`, achieving a 100% warning-free output with `npx eslint .`.
+- **Hybrid Override Pattern:** Implemented a secure hybrid override pattern to handle the `path-to-regexp` dependency cleanly. We utilize the nested object format under `"overrides"` for standard NPM compliance, and string-based `"serve-handler>path-to-regexp": "3.3.0"` syntax in `"pnpm.overrides"` to ensure seamless integration and compatibility across all build and deployment environments.
+
 ## Current Status
 The application is now production-ready, deployment-hardened, and UI-standardized for public use. Institutional observability and simplified product nomenclature are fully implemented across the entire source tree. All core pages have been audited and repaired to meet the Conxian Master Manifest standards.
