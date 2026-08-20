@@ -82,3 +82,23 @@ All code changes undergo rigorous verification:
 1. **Unit Testing**: 24 business-logic tests executed via Vitest and polyfilled for React 19 compatibility (`pnpm test:run`).
 2. **Design Standards**: Alignment with the Conxian Master Manifest (Ivory design foundation `#FDFBF7`, pure white surfaces `#FFFFFF`, and tabular-nums contrast optimization).
 3. **Visual Regressions**: Verified programmatically across 12+ distinct app paths using automated Playwright suites (`tests/screenshots.spec.ts`).
+
+### 6.5 Market Repo Alignment & Legacy Deprecation
+An exhaustive review of organizational repositories and cloud database resources confirms the structural role of the `conxian-market` repository and associated Neon database project `small-math-44741750` (`market`):
+
+1. **Neon Market Database (`small-math-44741750`)**:
+   - Deployed on AWS (eu-central-1) running PostgreSQL v18.
+   - Houses three core schemas: `affiliate` (`conversions`, `partners`), `cnx_bos` (`cxn_external_settlement_logs`, `initiated_candidate_registry`, `m_and_a_readiness`, `operational_metrics`, `treasury_runway`), and `erp_mock` (`agent_decisions`, `ai_agent_budgets`, `compliance_cases`, `customer_accounts`, `invoices`, `l2_settlements`, `network_fees`, `payment_instructions`, `settlement_statuses`, `treasury_positions`, `ubi_payroll`).
+
+2. **Organization Repository Mapping**:
+   - `conxian_ui` (Business UI Surface / Reference Frontend)
+   - `conxius-wallet` (Sovereign Bitcoin / Stacks Client)
+   - `conxius-platform` / `conxian-platform` (Telemetry & Compliance Engine)
+   - `conxian-market` (Market Data, ERP Mock, Affiliate Conversions & Runway Telemetry)
+   - `conxian-gateway` (Middleware Coordinator)
+   - `conxian-nexus` (Multi-Dimensional Telemetry & MMR Ledger)
+   - `conxian-bos` (Operating System & M&A Milestones)
+
+3. **Legacy Repository Deprecation**:
+   - The legacy monolithic repository `conxian/conxian` is officially **DEPRECATED**.
+   - All functional responsibilities are distributed across the dedicated organization repositories above, with `conxian_ui` serving as the canonical business frontend interface.

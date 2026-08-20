@@ -29,3 +29,8 @@ Standardized institutional navigation:
 
 ## 4. Maintenance
 Regular audits should be performed using `tests/enhancements.spec.ts` to prevent design token drift and ensure visual consistency across institutional workspaces.
+
+- [x] **Market Alignment & Deprecation (CON-1620)**:
+    - Integrated `conxian-market` (`small-math-44741750`) via `MarketApi` and `ApiService`.
+    - Mapped organization repositories in `REPO_OWNERSHIP.md`.
+    - Formally deprecated legacy monolithic repo `conxian/conxian`.

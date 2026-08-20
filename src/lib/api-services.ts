@@ -1,4 +1,5 @@
 import { ContractInteractions } from './contract-interactions';
+import { MarketApi } from './market-api';
 
 // --- API Service Wrapper ---
 
@@ -43,6 +44,12 @@ export class ApiService {
   static getDashboardData = ContractInteractions.getDashboardData;
   static getPerformanceRecommendations = ContractInteractions.getPerformanceRecommendations;
   static getDashboardMetrics = ContractInteractions.getDashboardMetrics;
+
+  // --- Market & ERP Telemetry ---
+  static getMarketMetrics = MarketApi.getMarketMetrics;
+  static getAffiliateConversions = MarketApi.getAffiliateConversions;
+  static getErpSettlements = MarketApi.getErpSettlements;
+  static getTreasuryRunway = MarketApi.getTreasuryRunway;
 
   // --- Enterprise ---
   static getEnterpriseConfig = ContractInteractions.getEnterpriseConfig;
