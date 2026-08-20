@@ -22,6 +22,7 @@
 - [x] Audit Neon `market` database (`small-math-44741750`) and map affiliate, BOS, and ERP mock schemas
 - [x] Add `marketUrl` configuration to `AppConfig` in `src/lib/config.ts`
 - [x] Create typed `MarketApi` client in `src/lib/market-api.ts` and integrate with `ApiService`
-- [x] Create comprehensive unit tests in `src/tests/market-api.test.ts`
+- [x] Surface market telemetry (treasury runway, ERP settlement logs) in `SystemStatus.tsx`
+- [x] Create comprehensive unit tests in `src/tests/market-api.test.ts` and `src/tests/ui.test.tsx`
 - [x] Formalize `openspec/specs/market-integration/spec.md`
 - [x] Update `REPO_OWNERSHIP.md` to map all org repos and mark `conxian/conxian` as DEPRECATED
