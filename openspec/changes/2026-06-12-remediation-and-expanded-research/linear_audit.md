@@ -20,3 +20,8 @@ No code changes are required in `conxian_ui` to address these specific issues. H
 
 ## Cross-Repo Alignment
 The research findings in `research_findings.md` regarding identity mapping and sovereign tax extraction should be used to inform future UI updates in `conxian_ui` when these platform features are exposed via API.
+
+## Market Repo & Org Repository Alignment (CON-1620)
+- **Scope**: Align `conxian_ui` to seamlessly query `conxian-market` (`small-math-44741750`) for affiliate conversions, ERP mock settlements, and treasury runway telemetry.
+- **Legacy Repository**: `conxian/conxian` is officially **DEPRECATED**.
+- **Action**: Added `marketUrl` to `AppConfig`, implemented `MarketApi` client and `ApiService` integration with unit tests (`src/tests/market-api.test.ts`), and updated `REPO_OWNERSHIP.md`.

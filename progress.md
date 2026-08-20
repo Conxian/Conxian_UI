@@ -38,3 +38,10 @@
 
 ## Current Status
 The application is now production-ready, deployment-hardened, and UI-standardized for public use. Institutional observability and simplified product nomenclature are fully implemented across the entire source tree. All core pages have been audited and repaired to meet the Conxian Master Manifest standards.
+
+### 6. Market Repo Alignment & Legacy Deprecation (CON-1620)
+- **Market Integration:** Added `marketUrl` to `AppConfig` in `src/lib/config.ts` and created `src/lib/market-api.ts` with typed endpoints for operational metrics, affiliate conversions, mock ERP settlements, and treasury runway telemetry.
+- **Service Layer Integration:** Surface `MarketApi` through `ApiService` in `src/lib/api-services.ts`.
+- **Unit Test Expansion:** Created `src/tests/market-api.test.ts` to verify fallback data models, network error handling, and method delegation. All 31 unit tests pass cleanly (`pnpm test:run`).
+- **Organization Alignment:** Updated `REPO_OWNERSHIP.md` to map all organization repos (`conxian_ui`, `conxius-wallet`, `conxius-platform`, `conxian-market`, `conxian-gateway`, `conxian-nexus`, `conxian-bos`) and explicitly marked legacy repo `conxian/conxian` as **DEPRECATED**.
+- **Specification:** Created `openspec/specs/market-integration/spec.md` and updated research findings in `openspec/changes/2026-06-12-remediation-and-expanded-research/research_findings.md`.

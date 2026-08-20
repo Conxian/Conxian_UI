@@ -17,3 +17,11 @@
 - [x] Run `pnpm test:run` to ensure institutional-grade stability
 - [x] Run `pnpm build` to verify production readiness
 - [x] Verify layout stability and accessibility (WCAG AAA contrast)
+
+## 4. Market Repo Alignment & Legacy Deprecation
+- [x] Audit Neon `market` database (`small-math-44741750`) and map affiliate, BOS, and ERP mock schemas
+- [x] Add `marketUrl` configuration to `AppConfig` in `src/lib/config.ts`
+- [x] Create typed `MarketApi` client in `src/lib/market-api.ts` and integrate with `ApiService`
+- [x] Create comprehensive unit tests in `src/tests/market-api.test.ts`
+- [x] Formalize `openspec/specs/market-integration/spec.md`
+- [x] Update `REPO_OWNERSHIP.md` to map all org repos and mark `conxian/conxian` as DEPRECATED
