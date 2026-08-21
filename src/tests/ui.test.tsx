@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import ConnectWallet from '@/components/ConnectWallet';
 import EnvStatus from '@/components/EnvStatus';
 import LaunchPage from '@/app/launch/page';
+import SystemStatus from '@/components/ui/SystemStatus';
 import { useWallet } from '@/lib/wallet';
 import { ApiService } from '@/lib/api-services';
 
@@ -11,8 +12,27 @@ import { ApiService } from '@/lib/api-services';
 vi.mock('@/lib/api-services', () => ({
   ApiService: {
     getDashboardMetrics: vi.fn().mockResolvedValue({
-      systemHealth: { success: true, result: 'OK' },
+      systemHealth: { success: true, data: { 'active-vaults': 12 } },
+      aggregatedMetrics: { success: true, data: { tvl: '14,250,000' } },
+      financialMetrics: { success: true, data: { 'median-apy': '8.5' } },
     }),
+    getTreasuryRunway: vi.fn().mockResolvedValue({
+      runwayMonths: 36,
+      monthlyBurnUsd: 45000,
+      totalReservesUsd: 1620000,
+      status: 'optimal',
+      lastAuditDate: '2026-08-20',
+    }),
+    getErpSettlements: vi.fn().mockResolvedValue([
+      {
+        id: 'erp-set-808',
+        accountNumber: 'ACC-00912',
+        amountUsd: 12500,
+        l2TxHash: '0x8f2d9c104e7a3b1a205d9e0f21471b3e819a',
+        status: 'reconciled',
+        settledAt: '2026-08-20T10:00:00Z',
+      },
+    ]),
   },
 }));
 
@@ -123,6 +143,17 @@ describe('UI Components', () => {
     await userEvent.click(button);
 
     expect(ApiService.getDashboardMetrics).toHaveBeenCalled();
+  });
+
+  describe('SystemStatus Component', () => {
+    it('renders system metrics and market telemetry (runway and ERP settlements)', async () => {
+      render(<SystemStatus />);
+
+      await waitFor(() => {
+        expect(screen.getByText(/36 Months \(optimal\)/i)).toBeInTheDocument();
+        expect(screen.getByText(/1 Active Log\(s\)/i)).toBeInTheDocument();
+      });
+    });
   });
 
   describe('EnvStatus', () => {

@@ -15,7 +15,7 @@ This index tracks the alignment of Conxian documentation across the repository a
 
 ## Research and OpenSpec
 - [OpenSpec Specs](../openspec/specs/) - Specification-driven design docs.
-- [Market Integration Spec](../openspec/specs/market-integration/spec.md) - Conxian Market API and telemetry specification.
+- [Market Integration Spec](../openspec/specs/market-integration/spec.md) - Conxian Market API, ERP settlements, and treasury runway telemetry specification.
 - [Remediation Research (July 2026)](../openspec/changes/2026-06-12-remediation-and-expanded-research/research_findings.md) - Cross-chain and institutional research, containing full multi-cloud alignment audits for Neon, Supabase, and Render.
 
 ## External Docs

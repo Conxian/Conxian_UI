@@ -1,4 +1,3 @@
-
 import { ApiService } from './api-services';
 
 // --- API Client ---
@@ -44,6 +43,12 @@ export const apiClient = {
   getDashboardData: ApiService.getDashboardData,
   getPerformanceRecommendations: ApiService.getPerformanceRecommendations,
   getDashboardMetrics: ApiService.getDashboardMetrics,
+
+  // --- Market Telemetry ---
+  getMarketMetrics: ApiService.getMarketMetrics,
+  getAffiliateConversions: ApiService.getAffiliateConversions,
+  getErpSettlements: ApiService.getErpSettlements,
+  getTreasuryRunway: ApiService.getTreasuryRunway,
 
   // --- Enterprise ---
   getEnterpriseConfig: ApiService.getEnterpriseConfig,
