@@ -4,6 +4,7 @@ import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import ConnectWallet from '@/components/ConnectWallet';
 import EnvStatus from '@/components/EnvStatus';
 import LaunchPage from '@/app/launch/page';
+import SandboxPage from '@/app/sandbox/page';
 import SystemStatus from '@/components/ui/SystemStatus';
 import { useWallet } from '@/lib/wallet';
 import { ApiService } from '@/lib/api-services';
@@ -161,6 +162,15 @@ describe('UI Components', () => {
       render(<EnvStatus />);
       const statusElement = await screen.findByRole('status');
       expect(statusElement).toBeInTheDocument();
+    });
+  });
+
+  describe('SandboxPage', () => {
+    it('should render playback control buttons with accessible ARIA labels', () => {
+      render(<SandboxPage />);
+      expect(screen.getByRole('button', { name: /step backward/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /play simulation/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /step forward/i })).toBeInTheDocument();
     });
   });
 });

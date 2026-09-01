@@ -98,14 +98,14 @@ export default function SandboxPage() {
                     </div>
                     <div className="flex items-center gap-6">
                       <div className="flex gap-2">
-                        <Button size="icon" variant="outline" className="h-10 w-10 border-accent/20 hover:bg-accent/5">
-                          <BackwardIcon className="w-5 h-5 text-ink" />
+                        <Button size="icon" variant="outline" aria-label="Step backward" className="h-10 w-10 border-accent/20 hover:bg-accent/5">
+                          <BackwardIcon className="w-5 h-5 text-ink" aria-hidden="true" />
                         </Button>
-                        <Button size="icon" variant="outline" className="h-10 w-10 bg-accent border-none hover:bg-accent/80">
-                          <PlayIcon className="w-5 h-5 text-ink" />
+                        <Button size="icon" variant="outline" aria-label="Play simulation" className="h-10 w-10 bg-accent border-none hover:bg-accent/80">
+                          <PlayIcon className="w-5 h-5 text-ink" aria-hidden="true" />
                         </Button>
-                        <Button size="icon" variant="outline" className="h-10 w-10 border-accent/20 hover:bg-accent/5">
-                          <ForwardIcon className="w-5 h-5 text-ink" />
+                        <Button size="icon" variant="outline" aria-label="Step forward" className="h-10 w-10 border-accent/20 hover:bg-accent/5">
+                          <ForwardIcon className="w-5 h-5 text-ink" aria-hidden="true" />
                         </Button>
                       </div>
                       <div className="text-right">
