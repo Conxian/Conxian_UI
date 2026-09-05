@@ -65,11 +65,11 @@ const CopyButton = ({ textToCopy, ariaLabel, className }: CopyButtonProps) => {
         type="button"
       >
         {copied ? (
-          <CheckIcon className="w-5 h-5 text-success" />
+          <CheckIcon className="w-5 h-5 text-success" aria-hidden="true" />
         ) : error ? (
-          <XMarkIcon className="w-5 h-5 text-error" />
+          <XMarkIcon className="w-5 h-5 text-error" aria-hidden="true" />
         ) : (
-          <ClipboardIcon className="w-5 h-5" />
+          <ClipboardIcon className="w-5 h-5" aria-hidden="true" />
         )}
       </Button>
       {/* Visually hidden container for screen reader announcements */}
