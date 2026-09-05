@@ -109,7 +109,7 @@ export default function SystemStatus() {
         <div className="grid gap-6 md:grid-cols-3">
           <div className="flex items-center">
             <div className="p-2 bg-ink/5 rounded-sm border border-accent/10">
-              <CurrencyDollarIcon className="w-6 h-6 text-ink" />
+              <CurrencyDollarIcon className="w-6 h-6 text-ink" aria-hidden="true" />
             </div>
             <div className="ml-4">
               <div className="text-[10px] font-black text-ink-light uppercase tracking-widest">Total Value Locked</div>
@@ -118,7 +118,7 @@ export default function SystemStatus() {
           </div>
           <div className="flex items-center">
             <div className="p-2 bg-accent/5 rounded-sm border border-accent/10">
-              <ShieldCheckIcon className="w-6 h-6 text-accent" />
+              <ShieldCheckIcon className="w-6 h-6 text-accent" aria-hidden="true" />
             </div>
             <div className="ml-4">
               <div className="text-[10px] font-black text-ink-light uppercase tracking-widest">Active Vaults</div>
@@ -129,7 +129,7 @@ export default function SystemStatus() {
           </div>
           <div className="flex items-center">
             <div className="p-2 bg-success/5 rounded-sm border border-accent/10">
-              <ArrowTrendingUpIcon className="w-6 h-6 text-success" />
+              <ArrowTrendingUpIcon className="w-6 h-6 text-success" aria-hidden="true" />
             </div>
             <div className="ml-4">
               <div className="text-[10px] font-black text-ink-light uppercase tracking-widest">APY (Median)</div>
@@ -141,7 +141,7 @@ export default function SystemStatus() {
         <div className="pt-4 border-t border-accent/10 grid gap-6 md:grid-cols-2">
           <div className="flex items-center">
             <div className="p-2 bg-accent/10 rounded-sm border border-accent/20">
-              <BanknotesIcon className="w-5 h-5 text-accent" />
+              <BanknotesIcon className="w-5 h-5 text-accent" aria-hidden="true" />
             </div>
             <div className="ml-3">
               <div className="text-[10px] font-black text-ink-light uppercase tracking-widest">Treasury Runway</div>
@@ -150,7 +150,7 @@ export default function SystemStatus() {
           </div>
           <div className="flex items-center">
             <div className="p-2 bg-ink/5 rounded-sm border border-accent/20">
-              <CheckCircleIcon className="w-5 h-5 text-ink" />
+              <CheckCircleIcon className="w-5 h-5 text-ink" aria-hidden="true" />
             </div>
             <div className="ml-3">
               <div className="text-[10px] font-black text-ink-light uppercase tracking-widest">ERP Reconciled Settlements</div>

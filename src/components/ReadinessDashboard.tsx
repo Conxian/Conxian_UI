@@ -39,7 +39,7 @@ export function ReadinessDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="bg-neutral-light border-accent/30 overflow-hidden relative">
           <div className="absolute top-0 right-0 p-3 opacity-10">
-            <ClockIcon className="w-12 h-12 text-accent" />
+            <ClockIcon className="w-12 h-12 text-accent" aria-hidden="true" />
           </div>
           <CardHeader className="pb-2">
             <CardTitle className="text-[10px] font-black text-accent uppercase tracking-[0.2em]">
@@ -79,7 +79,7 @@ export function ReadinessDashboard() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <ShieldCheckIcon className="w-4 h-4 text-success" />
+              <ShieldCheckIcon className="w-4 h-4 text-success" aria-hidden="true" />
               <span className="text-sm font-black text-ink">98.2% READY</span>
             </div>
             <p className="text-[10px] text-ink-light mt-1 font-mono uppercase font-black">Audit: Halborn v1.4</p>
@@ -94,7 +94,7 @@ export function ReadinessDashboard() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <GlobeAltIcon className="w-4 h-4 text-info" />
+              <GlobeAltIcon className="w-4 h-4 text-info" aria-hidden="true" />
               <span className="text-sm font-black text-ink tabular-nums">1.2ms LATENCY</span>
             </div>
             <p className="text-[10px] text-ink-light mt-1 font-mono uppercase font-black">Region: US-EAST-1</p>
@@ -113,7 +113,7 @@ export function ReadinessDashboard() {
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <div className="mt-1">
-                  <CpuChipIcon className="w-5 h-5 text-accent" />
+                  <CpuChipIcon className="w-5 h-5 text-accent" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="text-sm font-black text-ink uppercase tracking-tight">Computational Integrity</h4>
@@ -124,7 +124,7 @@ export function ReadinessDashboard() {
               </div>
               <div className="flex items-start gap-3">
                 <div className="mt-1">
-                  <ShieldCheckIcon className="w-5 h-5 text-accent" />
+                  <ShieldCheckIcon className="w-5 h-5 text-accent" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="text-sm font-black text-ink uppercase tracking-tight">Compliance Support</h4>

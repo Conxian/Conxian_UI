@@ -6,6 +6,7 @@ import EnvStatus from '@/components/EnvStatus';
 import LaunchPage from '@/app/launch/page';
 import SandboxPage from '@/app/sandbox/page';
 import SystemStatus from '@/components/ui/SystemStatus';
+import { ReadinessDashboard } from '@/components/ReadinessDashboard';
 import { useWallet } from '@/lib/wallet';
 import { ApiService } from '@/lib/api-services';
 
@@ -154,6 +155,17 @@ describe('UI Components', () => {
         expect(screen.getByText(/36 Months \(optimal\)/i)).toBeInTheDocument();
         expect(screen.getByText(/1 Active Log\(s\)/i)).toBeInTheDocument();
       });
+    });
+  });
+
+  describe('ReadinessDashboard Component', () => {
+    it('renders protocol readiness, countdown, and hardware attestation metrics', () => {
+      render(<ReadinessDashboard />);
+
+      expect(screen.getByText(/Mainnet Countdown/i)).toBeInTheDocument();
+      expect(screen.getByText(/SGX-V3 ACTIVE/i)).toBeInTheDocument();
+      expect(screen.getByText(/98.2% READY/i)).toBeInTheDocument();
+      expect(screen.getByText(/Protocol Readiness/i)).toBeInTheDocument();
     });
   });
 
