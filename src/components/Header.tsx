@@ -47,11 +47,12 @@ export default function Header() {
 
           <div className="hidden lg:flex lg:gap-x-8">
             {navigation.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const isActive = item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.name}
                   href={item.href}
+                  aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "text-[10px] font-black uppercase tracking-widest leading-6 transition-all duration-300",
                     isActive ? "text-accent" : "text-background-paper/40 hover:text-background-paper",
@@ -73,10 +74,12 @@ export default function Header() {
           <div className="flex lg:hidden">
             <Button
               variant="ghost"
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
               className="-m-2.5 p-2.5 text-background-paper/80 hover:text-background-paper"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              <span className="sr-only">Open main menu</span>
+              <span className="sr-only">Toggle navigation menu</span>
               {mobileMenuOpen ? (
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               ) : (
@@ -91,11 +94,12 @@ export default function Header() {
         <div className="lg:hidden border-t border-background-paper/10 bg-ink-deep">
           <div className="space-y-1 px-6 pb-6 pt-4">
             {navigation.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const isActive = item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.name}
                   href={item.href}
+                  aria-current={isActive ? "page" : undefined}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
                     "block px-3 py-4 text-xs font-black uppercase tracking-widest",

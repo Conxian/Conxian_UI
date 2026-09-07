@@ -8,7 +8,7 @@ test('Swap page should render and allow token selection', async ({ page }) => {
   await expect(heading).toContainText('SWAP');
 
   // Open token select
-  await page.click('button[aria-label^="Select token"]');
+  await page.click('[data-testid="token-select-trigger"]');
 
   // Verify token list is visible
   const listbox = page.locator('ul[role="listbox"]');
