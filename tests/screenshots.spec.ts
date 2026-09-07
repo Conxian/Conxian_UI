@@ -12,8 +12,9 @@ test('take screenshot of swap page', async ({ page }) => {
 
 test('take screenshot of swap page filled', async ({ page }) => {
   await page.goto('/swap');
-  await page.waitForSelector('#from-amount');
-  await page.fill('#from-amount', '10');
+  const amountInput = page.locator('#from-amount');
+  await amountInput.waitFor({ state: 'visible', timeout: 30000 });
+  await amountInput.fill('10');
   await page.waitForTimeout(500);
   await page.screenshot({ path: 'docs/images/guide_03_swap_form_filled.png', fullPage: true });
 });

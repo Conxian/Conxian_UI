@@ -51,3 +51,8 @@ The application is now production-ready, deployment-hardened, and UI-standardize
 - **Research Expansion:** Deepened technical specs for sBTC 2-way peg Clarity calls (`restrict-assets?`, `contract-call?`), BitVM2/3 364-tap verification scripts, RGB v0.11.1 client validation, and Better Auth passkeys.
 - **Accessibility Hardening:** Standardized `aria-hidden="true"` across decorative SVG icons in `SystemStatus.tsx`, `ReadinessDashboard.tsx`, and `CopyButton.tsx`.
 - **Test & Build Verification:** Expanded unit test suite in `src/tests/ui.test.tsx` (34 passing tests), verified zero ESLint warnings (`npx eslint .`), and validated static production build export (`pnpm build`).
+
+### 8. Complete Website Interface, Functionality & E2E Audit
+- **Playwright E2E Stabilization:** Added `data-testid="token-select-trigger"` to `src/components/ui/TokenSelect.tsx` and updated `tests/verify_swap.spec.ts` to target this explicit test ID. Verified that all 16 Playwright E2E test scenarios now pass without failures or timeouts.
+- **Navigation & Accessibility Hardening:** Updated `src/components/Header.tsx` to include `aria-label="Toggle navigation menu"` and `aria-expanded` attributes on the mobile menu trigger, along with `aria-current="page"` on active navigation links.
+- **Zero-Warning Compliance:** Re-verified codebase with `npx eslint .`, `pnpm test:run`, `npx playwright test`, and `pnpm build`, confirming zero build or test regressions.

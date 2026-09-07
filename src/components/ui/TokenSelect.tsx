@@ -62,6 +62,7 @@ const TokenSelect: React.FC<TokenSelectProps> = ({ tokens, selectedToken, onSele
       <Button
         ref={triggerRef}
         variant="outline"
+        data-testid="token-select-trigger"
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={(e) => {
           if (e.key === "ArrowDown" || e.key === "ArrowUp") {
